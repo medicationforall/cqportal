@@ -14,7 +14,7 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
-from . import PortalBase, Frame
+from . import PortalBase, Frame, Ramp
 
 class Portal(Base):
     def __init__(self):
@@ -23,21 +23,25 @@ class Portal(Base):
         # blueprints
         self.bp_base = PortalBase()
         self.bp_frame = Frame()
+        self.bp_ramp = Ramp()
         
     def make(self, parent=None):
         super().make(parent)
         self.bp_base.make()
         self.bp_frame.make()
+        self.bp_ramp.make()
         
     def build(self):
         super().build()
         portal_base  = self.bp_base.build()
         frame = self.bp_frame.build()
+        ramp = self.bp_ramp.build()
         
         scene = (
             cq.Workplane("XY")
             .union(portal_base.translate((0,0,self.bp_base.height/2)))
             .union(frame.translate((0,0,self.bp_frame.height/2 + self.bp_base.height)))
+            .union(ramp)
         )
         
         return scene

@@ -27,6 +27,7 @@ class Frame(Base):
         self.base_length = 100
         self.base_offset = 35
         self.side_inset = 8
+        self.frame_size = 10
         
         # shapes
         frame = None
@@ -56,6 +57,15 @@ class Frame(Base):
             mid_offset = mid_offset
         ).rotate((1,0,0),(0,0,0),-90)
         
+        center_cut = shape.coffin(
+            self.length-(self.frame_size*2),
+            self.height-(self.frame_size*2),
+            self.width/3,
+            top_length = self.top_length-self.frame_size,
+            base_length = self.base_length-(self.frame_size/2),
+            mid_offset = mid_offset
+        ).rotate((1,0,0),(0,0,0),-90)
+        
         side = shape.coffin(
             self.length - self.side_inset,
             self.height - (self.side_inset/2),
@@ -65,11 +75,23 @@ class Frame(Base):
             mid_offset = mid_offset + (self.side_inset/4)
         ).rotate((1,0,0),(0,0,0),-90)
         
+        side_cut = shape.coffin(
+            self.length-(self.frame_size*2) - self.side_inset,
+            self.height-(self.frame_size*2) - self.side_inset/2,
+            self.width/3,
+            top_length = self.top_length-self.frame_size - self.side_inset,
+            base_length = self.base_length-(self.frame_size/2) - self.side_inset/2,
+            mid_offset = mid_offset  + self.side_inset /4
+        ).rotate((1,0,0),(0,0,0),-90)
+        
         self.frame = (
             cq.Workplane("XY")
-            .add(center)
-            .add(side.translate((0,self.width/3,-1*(self.side_inset/4))))
-            .add(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+            .union(center)
+            .cut(center_cut)
+            .union(side.translate((0,self.width/3,-1*(self.side_inset/4))))
+            .cut(side_cut.translate((0,self.width/3,-1*(self.side_inset/4))))
+            .union(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+            .cut(side_cut.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
         )
         
     def make(self, parent=None):
@@ -79,9 +101,3 @@ class Frame(Base):
     def build(self):
         super().build()
         return self.frame
-        scene = (
-            cq.Workplane("XY")
-            .union(self.frame)
-        )
-        
-        return scene

@@ -21,7 +21,7 @@ class Ramp(Base):
         
         # parameters
         self.length = 150
-        self.width = 15
+        self.width = 10
         self.height = 150
         self.top_length = 90
         self.base_length = 100
