@@ -27,6 +27,7 @@ class Ramp(Base):
         self.base_length = 100
         self.base_offset = 35
         self.side_inset = 8
+        self.render_center = True
         
         # shapes
         self.ramp = None
@@ -47,7 +48,7 @@ class Ramp(Base):
             center = shape.coffin(
                 self.parent.length - side_inset - frame_size,
                 self.parent.height - (side_inset/2) - frame_size,
-                self.parent.width/3,
+                self.width/2,
                 top_length = self.parent.top_length - side_inset - frame_size,
                 base_length = self.parent.base_length - side_inset - frame_size,
                 mid_offset = mid_offset + (side_inset/4) + frame_size/2
@@ -55,6 +56,7 @@ class Ramp(Base):
             
             center = center.translate((0,0,-1*(side_inset/4+frame_size/2)))
         else:
+            mid_offset = self._calculate_mid_offset()
             center = shape.coffin(
                 self.length,
                 self.height,
@@ -67,11 +69,19 @@ class Ramp(Base):
         return center
     
     def _make_ramp(self):
-        
-        center = self.make_center()
+        if self.render_center:
+            center = self.make_center()
         
         if self.parent:
-            side = self.parent.make_side_cut(margin=0.4)
+            self.length = self.parent.length
+            self.height = self.parent.height
+            self.top_length = self.parent.top_length
+            self.base_length = self.parent.base_length
+            self.base_offset = self.parent.base_offset
+            self.side_inset = self.parent.side_inset
+        
+        if self.parent:
+            side = self.parent.make_side_cut(width = self.width/2, margin=0.4)
             side = side.translate((0,0,-1*(self.parent.side_inset/4)))
         else:
             mid_offset = self._calculate_mid_offset()
@@ -84,10 +94,16 @@ class Ramp(Base):
                 mid_offset = mid_offset
             ).rotate((1,0,0),(0,0,0),-90)
             
+        ramp = (
+            cq.Workplane("XY")
+        )
+        
+        if self.render_center:
+            ramp = ramp.add(center)
+            
         
         self.ramp = (
-            cq.Workplane("XY")
-            .add(center)
+            ramp
             .add(side.translate((0,(self.width/2),0)))
         ).translate((0,-1*(self.width/4),0))
         

@@ -36,13 +36,15 @@ class Frame(Base):
         mid_offset = -1*(self.height/2) + self.base_offset
         return mid_offset
     
-    def make_side_cut(self, margin = 0):
+    def make_side_cut(self, width = None, margin = 0):
         mid_offset = self._calculate_mid_offset()
+        if not width:
+            width = self.width/3
 
         side_cut = shape.coffin(
             self.length-(self.frame_size*2) - self.side_inset - margin*2,
             self.height-(self.frame_size*2) - self.side_inset/2 - margin*2,
-            self.width/3,
+            width,
             top_length = self.top_length-self.frame_size - self.side_inset - margin,
             base_length = self.base_length-(self.frame_size/2) - self.side_inset/2 - margin,
             mid_offset = mid_offset  + self.side_inset /4
@@ -88,7 +90,7 @@ class Frame(Base):
             mid_offset = mid_offset + (self.side_inset/4)
         ).rotate((1,0,0),(0,0,0),-90)
         
-        side_cut = self.make_side_cut()
+        side_cut = self.make_side_cut(width = self.width/3)
         #side_cut_margin = self.make_side_cut(margin=.4)
         
         self.frame = (
