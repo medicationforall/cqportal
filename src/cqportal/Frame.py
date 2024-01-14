@@ -30,11 +30,24 @@ class Frame(Base):
         self.frame_size = 10
         
         # shapes
-        frame = None
+        self.frame = None
 
     def _calculate_mid_offset(self):
         mid_offset = -1*(self.height/2) + self.base_offset
         return mid_offset
+    
+    def make_side_cut(self, margin = 0):
+        mid_offset = self._calculate_mid_offset()
+
+        side_cut = shape.coffin(
+            self.length-(self.frame_size*2) - self.side_inset - margin*2,
+            self.height-(self.frame_size*2) - self.side_inset/2 - margin*2,
+            self.width/3,
+            top_length = self.top_length-self.frame_size - self.side_inset - margin,
+            base_length = self.base_length-(self.frame_size/2) - self.side_inset/2 - margin,
+            mid_offset = mid_offset  + self.side_inset /4
+        ).rotate((1,0,0),(0,0,0),-90)
+        return side_cut
         
     def _make_frame(self):
         mid_offset = self._calculate_mid_offset()
@@ -75,14 +88,8 @@ class Frame(Base):
             mid_offset = mid_offset + (self.side_inset/4)
         ).rotate((1,0,0),(0,0,0),-90)
         
-        side_cut = shape.coffin(
-            self.length-(self.frame_size*2) - self.side_inset,
-            self.height-(self.frame_size*2) - self.side_inset/2,
-            self.width/3,
-            top_length = self.top_length-self.frame_size - self.side_inset,
-            base_length = self.base_length-(self.frame_size/2) - self.side_inset/2,
-            mid_offset = mid_offset  + self.side_inset /4
-        ).rotate((1,0,0),(0,0,0),-90)
+        side_cut = self.make_side_cut()
+        #side_cut_margin = self.make_side_cut(margin=.4)
         
         self.frame = (
             cq.Workplane("XY")
@@ -92,6 +99,7 @@ class Frame(Base):
             .cut(side_cut.translate((0,self.width/3,-1*(self.side_inset/4))))
             .union(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
             .cut(side_cut.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+            #.add(side_cut_margin.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
         )
         
     def make(self, parent=None):

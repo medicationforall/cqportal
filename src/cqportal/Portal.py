@@ -29,7 +29,7 @@ class Portal(Base):
         super().make(parent)
         self.bp_base.make()
         self.bp_frame.make()
-        self.bp_ramp.make()
+        self.bp_ramp.make(self.bp_frame)
         
     def build(self):
         super().build()
@@ -41,7 +41,10 @@ class Portal(Base):
             cq.Workplane("XY")
             .union(portal_base.translate((0,0,self.bp_base.height/2)))
             .union(frame.translate((0,0,self.bp_frame.height/2 + self.bp_base.height)))
-            .union(ramp)
+            .add(
+                ramp
+                .translate((0,-1*(self.bp_frame.width/2 + self.bp_ramp.width/2),self.bp_ramp.height/2+self.bp_base.height))
+            )
         )
         
         return scene
