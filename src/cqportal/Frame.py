@@ -26,6 +26,7 @@ class Frame(Base):
         self.top_length = 90
         self.base_length = 100
         self.base_offset = 35
+        self.side_inset = 8
         
         # shapes
         frame = None
@@ -37,16 +38,39 @@ class Frame(Base):
     def _make_frame(self):
         mid_offset = self._calculate_mid_offset()
 
-        outline = shape.coffin(
+        #outline = shape.coffin(
+        #    self.length,
+        #    self.height,
+        #    self.width,
+        #    top_length = self.top_length,
+        #    base_length = self.base_length,
+        #    mid_offset = mid_offset
+        #).rotate((1,0,0),(0,0,0),-90)
+        
+        center = shape.coffin(
             self.length,
             self.height,
-            self.width,
+            self.width/3,
             top_length = self.top_length,
             base_length = self.base_length,
             mid_offset = mid_offset
-        )
+        ).rotate((1,0,0),(0,0,0),-90)
         
-        self.frame = outline.rotate((1,0,0),(0,0,0),-90)
+        side = shape.coffin(
+            self.length - self.side_inset,
+            self.height - (self.side_inset/2),
+            self.width/3,
+            top_length = self.top_length - self.side_inset,
+            base_length = self.base_length - self.side_inset,
+            mid_offset = mid_offset + (self.side_inset/4)
+        ).rotate((1,0,0),(0,0,0),-90)
+        
+        self.frame = (
+            cq.Workplane("XY")
+            .add(center)
+            .add(side.translate((0,self.width/3,-1*(self.side_inset/4))))
+            .add(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+        )
         
     def make(self, parent=None):
         super().make(parent)
@@ -54,6 +78,7 @@ class Frame(Base):
         
     def build(self):
         super().build()
+        return self.frame
         scene = (
             cq.Workplane("XY")
             .union(self.frame)

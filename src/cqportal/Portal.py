@@ -14,25 +14,30 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
+from . import PortalBase, Frame
 
 class Portal(Base):
     def __init__(self):
         super().__init__()
         
-        # parameters
-        self.length = 10
-        self.width = 10
-        self.height = 10
-        
         # blueprints
-        
-        # shapes
+        self.bp_base = PortalBase()
+        self.bp_frame = Frame()
         
     def make(self, parent=None):
         super().make(parent)
+        self.bp_base.make()
+        self.bp_frame.make()
         
     def build(self):
         super().build()
+        portal_base  = self.bp_base.build()
+        frame = self.bp_frame.build()
         
-        return cq.Workplane("XY").box(self.length,self.width,self.height)
-    
+        scene = (
+            cq.Workplane("XY")
+            .union(portal_base.translate((0,0,self.bp_base.height/2)))
+            .union(frame.translate((0,0,self.bp_frame.height/2 + self.bp_base.height)))
+        )
+        
+        return scene
