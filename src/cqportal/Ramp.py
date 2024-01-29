@@ -34,12 +34,38 @@ class Ramp(Base):
         
         # shapes
         self.ramp = None
+        self.inside = None
+        self.outside = None
         
     def _calculate_mid_offset(self):
         mid_offset = -1*(self.height/2) + self.base_offset
         return mid_offset
     
-    def make_outside(self):
+    def _calculate_inside_length(self):
+        return self.length -(self.frame_size*2) - self.side_inset - self.inside_margin*2
+    
+    def _calculate_inside_height(self):
+        return self.height -(self.frame_size*2) - self.side_inset/2 - self.inside_margin*2
+    
+    def _calculate_inside_top_length(self):
+        return self.top_length-self.frame_size - self.side_inset - self.inside_margin
+    
+    def _calculate_inside_base_length(self):
+        return self.base_length-(self.frame_size/2) - self.side_inset/2 - self.inside_margin
+    
+    def _calculate_max_inside_length(self):
+        length = self._calculate_inside_length()
+        top_length = self._calculate_inside_top_length()
+        base_length = self._calculate_inside_base_length()
+        if top_length > length:
+            length = top_length
+            
+        if base_length > length:
+            length = base_length
+        return length
+        
+    
+    def _make_outside(self):
         mid_offset = self._calculate_mid_offset()
         
         side_inset = self.side_inset
@@ -54,22 +80,20 @@ class Ramp(Base):
         ).rotate((1,0,0),(0,0,0),-90)
         
         outside = outside.translate((0,0,-1*(side_inset/4+frame_size/2)))
-        
-        return outside
+        self.outside = outside
     
-    def make_inside(self):
+    def _make_inside(self):
         mid_offset = self._calculate_mid_offset()
         inside = shape.coffin(
-            self.length-(self.frame_size*2) - self.side_inset - self.inside_margin*2,
-            self.height-(self.frame_size*2) - self.side_inset/2 - self.inside_margin*2,
+            self._calculate_inside_length(),
+            self._calculate_inside_height(),
             self.width/2,
-            top_length = self.top_length-self.frame_size - self.side_inset - self.inside_margin,
-            base_length = self.base_length-(self.frame_size/2) - self.side_inset/2 - self.inside_margin,
+            top_length = self._calculate_inside_top_length(),
+            base_length = self._calculate_inside_base_length(),
             mid_offset = mid_offset  + self.side_inset /4
         ).rotate((1,0,0),(0,0,0),-90)
         inside = inside.translate((0,0,-1*(self.side_inset/4)))
-            
-        return inside
+        self.inside = inside
     
     def _make_ramp(self):
         
@@ -78,12 +102,10 @@ class Ramp(Base):
         )
         
         if self.render_outside:
-            outside = self.make_outside()
-            ramp = ramp.add(outside)
+            ramp = ramp.add(self.outside)
         
         if self.render_inside:
-            inside = self.make_inside()
-            ramp = ramp.add(inside.translate((0,(self.width/2),0)))
+            ramp = ramp.add(self.inside.translate((0,(self.width/2),0)))
         
         self.ramp = (ramp).translate((0,-1*(self.width/4),0))
         
@@ -100,6 +122,13 @@ class Ramp(Base):
             self.base_offset = self.parent.base_offset
             self.frame_size = self.parent.frame_size
             self.side_inset = self.parent.side_inset
+            
+        if self.render_outside:
+            self._make_outside()
+            
+        if self.render_inside:
+            self._make_inside()
+            
         self._make_ramp()
         
     def build(self):
