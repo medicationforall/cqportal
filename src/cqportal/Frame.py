@@ -23,9 +23,9 @@ class Frame(Base):
         self.length = 150
         self.width = 15
         self.height = 150
-        self.top_length = 90
-        self.base_length = 100
-        self.base_offset = 35
+        self.top_length = 90 # length at the top of the frame
+        self.base_length = 100 # length at the base of the frame
+        self.base_offset = 35 # offset distance from the center of the frame
         self.side_inset = 8
         self.frame_size = 10
         
@@ -53,15 +53,6 @@ class Frame(Base):
         
     def _make_frame(self):
         mid_offset = self._calculate_mid_offset()
-
-        #outline = shape.coffin(
-        #    self.length,
-        #    self.height,
-        #    self.width,
-        #    top_length = self.top_length,
-        #    base_length = self.base_length,
-        #    mid_offset = mid_offset
-        #).rotate((1,0,0),(0,0,0),-90)
         
         center = shape.coffin(
             self.length,
@@ -91,7 +82,6 @@ class Frame(Base):
         ).rotate((1,0,0),(0,0,0),-90)
         
         side_cut = self.make_side_cut(width = self.width/3)
-        #side_cut_margin = self.make_side_cut(margin=.4)
         
         self.frame = (
             cq.Workplane("XY")
@@ -101,7 +91,6 @@ class Frame(Base):
             .cut(side_cut.translate((0,self.width/3,-1*(self.side_inset/4))))
             .union(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
             .cut(side_cut.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
-            #.add(side_cut_margin.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
         )
         
     def make(self, parent=None):
