@@ -11,6 +11,7 @@ bp_portal.bp_frame.base_length = 100
 bp_portal.bp_ramp = RampGreebled()
 bp_portal.bp_ramp.segment_count = 25
 
+bp_portal.render_base = False
 bp_portal.render_ramps = True
 bp_portal.ramp_push = 0
 bp_portal.bp_ramp.width = 10
