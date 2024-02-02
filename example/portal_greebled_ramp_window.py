@@ -26,3 +26,7 @@ cq.exporters.export(result_closed, 'stl/portal_greebled_ramp_closed.stl')
 result_open = bp_portal.build_open()
 #show_object(result_open)
 cq.exporters.export(result_open, 'stl/portal_greebled_ramp_open.stl')
+
+portal_key = bp_portal.bp_frame.build_key()
+#show_object(portal_key.translate((170,0,0)))
+cq.exporters.export(portal_key, 'stl/portal_window_cut_key.stl')

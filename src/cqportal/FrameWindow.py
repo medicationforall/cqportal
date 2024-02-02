@@ -25,7 +25,10 @@ class FrameWindow(Frame):
         
         self.window_key_width = 2
         self.window_key_padding = 0.8
+        
         self.window_key_text = "Portal Key"
+        self.window_key_text_size = 10
+        self.window_key_text_height = 1
         
         # shapes
         self.window_cut_out = None
@@ -76,7 +79,23 @@ class FrameWindow(Frame):
             mid_offset = mid_offset
         )#.rotate((1,0,0),(0,0,0),-90)
         
-        self.window_cut_key = cut_out
+        key_text = (
+            cq.Workplane("XY")
+            .text(
+                self.window_key_text, 
+                self.window_key_text_size, 
+                self.window_key_text_height
+            )
+            .translate((0,0,width/2))
+        )
+        
+        combined = (
+            cq.Workplane()
+            .union(cut_out)
+            .add(key_text)
+        )
+        
+        self.window_cut_key = combined
         
     def make(self, parent=None):
         super().make(parent)
@@ -94,3 +113,6 @@ class FrameWindow(Frame):
         )
         
         return scene
+    
+    def build_key(self):
+        return self.window_cut_key
