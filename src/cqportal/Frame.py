@@ -29,6 +29,8 @@ class Frame(Base):
         self.side_inset = 8
         self.frame_size = 10
         
+        self.render_sides = True
+        
         # shapes
         self.frame = None
 
@@ -83,15 +85,22 @@ class Frame(Base):
         
         side_cut = self.make_side_cut(width = self.width/3)
         
-        self.frame = (
+        frame = (
             cq.Workplane("XY")
             .union(center)
             .cut(center_cut)
-            .union(side.translate((0,self.width/3,-1*(self.side_inset/4))))
-            .cut(side_cut.translate((0,self.width/3,-1*(self.side_inset/4))))
-            .union(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
-            .cut(side_cut.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
         )
+        
+        if self.render_sides:
+            frame = (
+                frame
+                .union(side.translate((0,self.width/3,-1*(self.side_inset/4))))
+                .cut(side_cut.translate((0,self.width/3,-1*(self.side_inset/4))))
+                .union(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+                .cut(side_cut.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+            )
+        
+        self.frame = frame
         
     def make(self, parent=None):
         super().make(parent)

@@ -1,0 +1,96 @@
+# Copyright 2024 James Adams
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import cadquery as cq
+from cadqueryhelper import shape
+from . import Frame
+
+class FrameWindow(Frame):
+    def __init__(self):
+        super().__init__()
+        
+        self.window_cut_width = 0.4
+        self.window_cut_padding = 1
+        
+        self.window_key_width = 2
+        self.window_key_padding = 0.8
+        self.window_key_text = "Portal Key"
+        
+        # shapes
+        self.window_cut_out = None
+        self.window_cut_key = None
+        
+    def __make_window_cut_out(self):
+        mid_offset = self._calculate_mid_offset()
+        
+        length = self.length-(self.frame_size*2) + (self.window_cut_padding*2)
+        width = self.window_cut_width
+        height = self.height-(self.frame_size*2) + (self.window_cut_padding*2)
+        top_length = top_length = self.top_length-self.frame_size + (self.window_cut_padding*2)
+        base_length = base_length = self.base_length-(self.frame_size/2) + (self.window_cut_padding*2)
+
+        cut_out = shape.coffin(
+            length,
+            height,
+            width,
+            top_length,
+            length,
+            mid_offset = mid_offset
+        ).rotate((1,0,0),(0,0,0),-90).translate((0,0,0))
+        
+        cut_base = cq.Workplane("XY").box(length,width, self.frame_size).translate((0,0,-1*(self.height/2 -self.frame_size/2 )))
+        
+        cut_combined = (
+            cq.Workplane("XY")
+            .union(cut_out)
+            .union(cut_base)
+        )
+        
+        self.window_cut_out = cut_combined
+        
+    def __make_window_cut_key(self):
+        mid_offset = self._calculate_mid_offset()
+        
+        length = self.length-(self.frame_size*2) + (self.window_key_padding*2)
+        width = self.window_key_width
+        height = self.height-(self.frame_size*2) + (self.window_key_padding*2)
+        top_length = top_length = self.top_length-self.frame_size + (self.window_key_padding*2)
+        base_length = base_length = self.base_length-(self.frame_size/2) + (self.window_key_padding*2)
+        cut_out = shape.coffin(
+            length,
+            height,
+            width,
+            top_length,
+            base_length,
+            mid_offset = mid_offset
+        )#.rotate((1,0,0),(0,0,0),-90)
+        
+        self.window_cut_key = cut_out
+        
+    def make(self, parent=None):
+        super().make(parent)
+        self.__make_window_cut_out()
+        self.__make_window_cut_key()
+        
+    def build(self):
+        frame = super().build()
+        
+        scene = (
+            cq.Workplane()
+            .add(frame)
+            .cut(self.window_cut_out)
+            #add(self.window_cut_key)
+        )
+        
+        return scene
