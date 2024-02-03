@@ -12,7 +12,7 @@ bp_portal.bp_frame.base_offset = 35
 bp_portal.bp_frame.render_sides = True
 
 bp_portal.bp_hinge.rotate_deg = -90
-bp_portal.bp_hinge.ramp_bottom_margin = 1
+bp_portal.bp_hinge.ramp_bottom_margin = 0
 
 bp_portal.bp_ramp.render_outside = True
 
