@@ -32,7 +32,7 @@ class PortalHinge(Hinge):
         self.__make_ramp_hinge_cut()
         
     def __build_ramp(self):
-        ramp_y = -(self.parent.height/2 -self.radius - self.plate_spacer)-self.ramp_bottom_margin
+        ramp_y = -(self.parent.height/2 -self.radius - self.plate_spacer)-self.ramp_bottom_margin - self.plate_spacer
         ramp_z = (self.parent.width / 2) - self.radius
         
         ramp = (
