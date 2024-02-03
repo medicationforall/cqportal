@@ -6,6 +6,7 @@
 * Added Floor
 * Modified Container to use floor
 * Fixed a bug where the frame base_length cuts were being calculated at a different ratio then the top_length.
+* Added Floor to container.
 
 ## 1.1.0
 * Added Container class
