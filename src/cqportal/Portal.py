@@ -22,7 +22,6 @@ class Portal(Base):
         
         #parameters
         self.render_base = True
-        self.render_ramps = True
         self.render_hinges = True
         
         self.ramp_push = 0
@@ -80,8 +79,9 @@ class Portal(Base):
         if self.render_base:
             portal_base  = self.bp_base.build()
             scene = scene.union(portal_base.translate((0,0,self.bp_base.height/2)))
-            
-        hinges = self.build_hinges()
-        scene = scene.union(hinges)
+
+        if self.render_hinges:   
+            hinges = self.build_hinges()
+            scene = scene.union(hinges)
         
         return scene

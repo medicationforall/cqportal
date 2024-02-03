@@ -1,6 +1,12 @@
 # CQPortal changelog
 
 ## Main wip
+## 1.1.1
+* Portal wired up hinges render flag
+* Added Floor
+* Modified Container to use floor
+* Fixed a bug where the frame base_length cuts were being calculated at a different ratio then the top_length.
+
 ## 1.1.0
 * Added Container class
 * Added ContainerFrame

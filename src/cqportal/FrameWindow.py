@@ -40,8 +40,7 @@ class FrameWindow(Frame):
         length = self.length-(self.frame_size*2) + (self.window_cut_padding*2)
         width = self.window_cut_width
         height = self.height-(self.frame_size*2) + (self.window_cut_padding*2)
-        top_length = top_length = self.top_length-self.frame_size + (self.window_cut_padding*2)
-        base_length = base_length = self.base_length-(self.frame_size/2) + (self.window_cut_padding*2)
+        top_length = top_length = self.top_length - self.frame_size + (self.window_cut_padding*2)
 
         cut_out = shape.coffin(
             length,

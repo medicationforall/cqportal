@@ -47,8 +47,8 @@ class Frame(Base):
             self.length-(self.frame_size*2) - self.side_inset - margin*2,
             self.height-(self.frame_size*2) - self.side_inset/2 - margin*2,
             width,
-            top_length = self.top_length-self.frame_size - self.side_inset - margin,
-            base_length = self.base_length-(self.frame_size/2) - self.side_inset/2 - margin,
+            top_length = self.top_length - self.frame_size - self.side_inset - margin,
+            base_length = self.base_length - self.frame_size - self.side_inset - margin,
             mid_offset = mid_offset  + self.side_inset /4
         ).rotate((1,0,0),(0,0,0),-90)
         return side_cut
@@ -68,8 +68,8 @@ class Frame(Base):
             self.length-(self.frame_size*2),
             self.height-(self.frame_size*2),
             width,
-            top_length = self.top_length-self.frame_size,
-            base_length = self.base_length-(self.frame_size/2),
+            top_length = self.top_length - self.frame_size,
+            base_length = self.base_length - self.frame_size,
             mid_offset = mid_offset
         ).rotate((1,0,0),(0,0,0),-90)
         

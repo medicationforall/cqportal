@@ -48,10 +48,10 @@ class Ramp(Base):
         return self.height -(self.frame_size*2) - self.side_inset/2 - self.inside_margin*2
     
     def _calculate_inside_top_length(self):
-        return self.top_length-self.frame_size - self.side_inset - self.inside_margin
+        return self.top_length - self.frame_size - self.side_inset - self.inside_margin
     
     def _calculate_inside_base_length(self):
-        return self.base_length-(self.frame_size/2) - self.side_inset/2 - self.inside_margin
+        return self.base_length - self.frame_size - self.side_inset - self.inside_margin
     
     def _calculate_max_inside_length(self):
         length = self._calculate_inside_length()
