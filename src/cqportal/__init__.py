@@ -1,4 +1,5 @@
 from .PortalBase import PortalBase
+from .PortalHinge import PortalHinge
 from .Frame import Frame
 from .FrameWindow import FrameWindow
 from .Ramp import Ramp

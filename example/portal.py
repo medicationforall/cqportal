@@ -12,11 +12,15 @@ bp_portal.ramp_push = 0
 bp_portal.bp_ramp.width = 10
 bp_portal.make()
 
-result_closed = bp_portal.build_closed()
-#show_object(result_closed.translate((-170,0,0)))
 
-result_open = bp_portal.build_open()
+result_open = bp_portal.build()
 #show_object(result_open)
-
-cq.exporters.export(result_closed, 'stl/portal_closed.stl')
 cq.exporters.export(result_open, 'stl/portal_open.stl')
+
+bp_portal.bp_hinge.rotate_deg = -90
+bp_portal.make()
+
+result_closed = bp_portal.build()
+#show_object(result_closed.translate((-170,0,0)))
+cq.exporters.export(result_closed, 'stl/portal_closed.stl')
+

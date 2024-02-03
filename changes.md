@@ -1,6 +1,13 @@
 # CQPortal changelog
 
 ## Main wip
+## 1.0.0
+* Added FrameWindow which makes a cutout for the window piece
+* Added PortalHinge which takes a ramp as a parent and aligns both the hinge and the ramp to a given rotation.
+* Refactored Portal to use PortalHinge which support any rotation for the doors and correctly aligns
+* Added container example
+* Made the repo public
+* Updated the README.md
 
 ## 0.1.2
 * Refactored Ramp to have less convoluted parent if statements
