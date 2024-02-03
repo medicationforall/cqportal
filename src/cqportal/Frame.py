@@ -52,14 +52,13 @@ class Frame(Base):
             mid_offset = mid_offset  + self.side_inset /4
         ).rotate((1,0,0),(0,0,0),-90)
         return side_cut
-        
-    def _make_frame(self):
+    
+    def _make_center(self, width):
         mid_offset = self._calculate_mid_offset()
-        
         center = shape.coffin(
             self.length,
             self.height,
-            self.width/3,
+            width,
             top_length = self.top_length,
             base_length = self.base_length,
             mid_offset = mid_offset
@@ -68,36 +67,58 @@ class Frame(Base):
         center_cut = shape.coffin(
             self.length-(self.frame_size*2),
             self.height-(self.frame_size*2),
-            self.width/3,
+            width,
             top_length = self.top_length-self.frame_size,
             base_length = self.base_length-(self.frame_size/2),
             mid_offset = mid_offset
         ).rotate((1,0,0),(0,0,0),-90)
         
-        side = shape.coffin(
-            self.length - self.side_inset,
-            self.height - (self.side_inset/2),
-            self.width/3,
-            top_length = self.top_length - self.side_inset,
-            base_length = self.base_length - self.side_inset,
-            mid_offset = mid_offset + (self.side_inset/4)
-        ).rotate((1,0,0),(0,0,0),-90)
-        
-        side_cut = self.make_side_cut(width = self.width/3)
-        
-        frame = (
+        center_frame = (
             cq.Workplane("XY")
             .union(center)
             .cut(center_cut)
         )
         
+        return center_frame
+    
+    def _make_side(self, width):
+        mid_offset = self._calculate_mid_offset()
+        
+        side = shape.coffin(
+            self.length - self.side_inset,
+            self.height - (self.side_inset/2),
+            width,
+            top_length = self.top_length - self.side_inset,
+            base_length = self.base_length - self.side_inset,
+            mid_offset = mid_offset + (self.side_inset/4)
+        ).rotate((1,0,0),(0,0,0),-90)
+        
+        side_cut = self.make_side_cut(width = width)
+        
+        side_frame = (
+            cq.Workplane("XY")
+            .union(side)
+            .cut(side_cut)
+        )
+        
+        return side_frame
+        
+    def _make_frame(self):
+        log('make_frame_base')
+        center = self._make_center(self.width/3)
+        side = self._make_side(self.width/3)
+        
+        frame = (
+            cq.Workplane("XY")
+            .union(center)
+        )
+        
         if self.render_sides:
+            side_z = -1*(self.side_inset/4)
             frame = (
                 frame
-                .union(side.translate((0,self.width/3,-1*(self.side_inset/4))))
-                .cut(side_cut.translate((0,self.width/3,-1*(self.side_inset/4))))
-                .union(side.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
-                .cut(side_cut.translate((0,-1*(self.width/3),-1*(self.side_inset/4))))
+                .union(side.translate((0,self.width/3,side_z)))
+                .union(side.translate((0,-1*(self.width/3),side_z)))
             )
         
         self.frame = frame

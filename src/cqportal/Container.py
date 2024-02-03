@@ -29,7 +29,7 @@ class Container(Portal):
         self.bp_hinge.ramp_bottom_margin = 0
         self.plate_spacer = .3
 
-        self.bp_hinge.rotate_deg = -90
+        self.bp_hinge.rotate_deg = 0
         
     def make(self, parent=None):
         super().make(parent)

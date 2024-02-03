@@ -1,10 +1,11 @@
 import cadquery as cq
 from cqportal import Container
 
-bp_portal = Container()
+bp_container = Container()
+bp_container.bp_hinge.rotate_deg = 0
 
-bp_portal.make()
+bp_container.make()
 
-result = bp_portal.build()
+result = bp_container.build()
 #show_object(result)
 cq.exporters.export(result, 'stl/container.stl')
