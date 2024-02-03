@@ -104,7 +104,6 @@ class Frame(Base):
         return side_frame
         
     def _make_frame(self):
-        log('make_frame_base')
         center = self._make_center(self.width/3)
         side = self._make_side(self.width/3)
         
