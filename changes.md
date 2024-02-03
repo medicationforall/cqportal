@@ -1,6 +1,11 @@
 # CQPortal changelog
 
 ## Main wip
+## 1.1.0
+* Added Container class
+* Added ContainerFrame
+* Renamed container example to rotation_demo.py and added new container example file.
+
 ## 1.0.1
 * RampGreebled fixed a bug with the fillet operation on the slots. Added error generation if the segment padding was too high.
 * Added Portal and PortalHinge parameters to allow making better door alignments.
