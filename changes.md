@@ -1,6 +1,9 @@
 # CQPortal changelog
 
 ## Main wip
+## 1.0.1
+* RampGreebled fixed a bug with the fillet operation on the slots. Added error generation if the segment padding was too high.
+
 ## 1.0.0
 * Added FrameWindow which makes a cutout for the window piece
 * Added PortalHinge which takes a ramp as a parent and aligns both the hinge and the ramp to a given rotation.

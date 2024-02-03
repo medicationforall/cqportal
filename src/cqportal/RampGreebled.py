@@ -79,11 +79,18 @@ class RampGreebled(Ramp):
             
             if minus_x_len < x_len:
                 x_len = minus_x_len
+                
+            s_length = x_len-self.segment_x_padding*2
+            s_width = segment_height-self.segment_y_padding
+            
+            if segment_height<0:
+                raise Exception(f"ramp segment_y_padding is too high, {self.segment_y_padding} segment height is in the negatives {s_width}")
             
             slot = cq.Workplane().center(0, y).box(
-                x_len-self.segment_x_padding*2,
-                segment_height-self.segment_y_padding,
-                self.segment_depth)
+                s_length,
+                s_width,
+                self.segment_depth
+            )
             
             if x > 0:
                 slot = slot.translate((x_len/2,0,0))
@@ -91,7 +98,9 @@ class RampGreebled(Ramp):
                 slot = slot.translate((-1*(x_len/2),0,0))
                 
             slot = slot.translate((0,0,self.width/4-self.segment_depth/2))
-            slot = slot.faces(">X or <X").edges(">Y or <Y").fillet((segment_height/4)-.1)
+            
+            s_fillet = (s_width/2)-.01
+            slot = slot.faces(">X or <X").edges(">Y or <Y").fillet(s_fillet)
             
             self._count += 1
             return slot.val()
