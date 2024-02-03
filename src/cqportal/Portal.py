@@ -27,6 +27,7 @@ class Portal(Base):
         
         self.ramp_push = 0
         self.hinge_segments = 3
+        self.plate_spacer = 1
         
         # blueprints
         self.bp_base = PortalBase()
@@ -42,7 +43,7 @@ class Portal(Base):
         
         self.bp_hinge.length = self.bp_frame.base_length - self.bp_frame.side_inset
         self.bp_hinge.segments = self.hinge_segments
-        self.bp_hinge.plate_spacer = 1
+        self.bp_hinge.plate_spacer = self.plate_spacer
         self.bp_hinge.make(self.bp_ramp)
         
     def build_hinges(self):

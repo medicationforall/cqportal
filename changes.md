@@ -3,6 +3,7 @@
 ## Main wip
 ## 1.0.1
 * RampGreebled fixed a bug with the fillet operation on the slots. Added error generation if the segment padding was too high.
+* Added Portal and PortalHinge parameters to allow making better door alignments.
 
 ## 1.0.0
 * Added FrameWindow which makes a cutout for the window piece

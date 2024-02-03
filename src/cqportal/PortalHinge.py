@@ -4,6 +4,7 @@ from cadqueryhelper import Hinge
 class PortalHinge(Hinge):
     def __init__(self):
         super().__init__()
+        self.ramp_bottom_margin = 0
         
         #shapes
         self.ramp_hinge_cut = None
@@ -31,7 +32,7 @@ class PortalHinge(Hinge):
         self.__make_ramp_hinge_cut()
         
     def __build_ramp(self):
-        ramp_y = -(self.parent.height/2 -self.radius - self.plate_spacer)
+        ramp_y = -(self.parent.height/2 -self.radius - self.plate_spacer)-self.ramp_bottom_margin
         ramp_z = (self.parent.width / 2) - self.radius
         
         ramp = (
@@ -41,7 +42,7 @@ class PortalHinge(Hinge):
         )
         
         return ramp
-         
+        
     def build(self):
         hinge = super().build()
         ramp = self.__build_ramp()
