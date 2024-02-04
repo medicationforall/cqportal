@@ -1,4 +1,5 @@
 from .Floor import Floor
+from .FloorTile import FloorTile
 from .PortalBase import PortalBase
 from .PortalHinge import PortalHinge
 from .Frame import Frame

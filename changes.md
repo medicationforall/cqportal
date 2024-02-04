@@ -1,6 +1,9 @@
 # CQPortal changelog
 
 ## Main wip
+## 1.2.0
+* Added FloorTile
+
 ## 1.1.1
 * Portal wired up hinges render flag
 * Added Floor
