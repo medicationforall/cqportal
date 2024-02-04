@@ -15,6 +15,10 @@ def make_custom_tile(length, width, height):
     )
 
 bp_container = Container()
+bp_container.render_ladder = True
+#bp_container.bp_ladder.ladder_rungs = 6
+#bp_container.bp_ladder.ladder_depth = 5
+#bp_container.bp_ladder.ladder_rung_radius = 1.5
 
 bp_container.bp_floor = FloorTile()
 
@@ -24,7 +28,7 @@ bp_container.bp_floor.tile_width = 17
 bp_container.bp_floor.tile_padding = 0
 bp_container.bp_floor.make_tile_method = make_custom_tile
 
-bp_container.bp_hinge.rotate_deg = -90
+bp_container.bp_hinge.rotate_deg = 0
 bp_container.make()
 
 result = bp_container.build()

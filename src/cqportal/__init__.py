@@ -4,6 +4,7 @@ from .PortalBase import PortalBase
 from .PortalHinge import PortalHinge
 from .Frame import Frame
 from .ContainerFrame import ContainerFrame
+from .ContainerLadder import ContainerLadder
 from .FrameWindow import FrameWindow
 from .Ramp import Ramp
 from .RampGreebled import RampGreebled

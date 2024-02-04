@@ -110,7 +110,7 @@ class RampGreebled(Ramp):
         length = self._calculate_max_inside_length()
         segment_height = self._calculate_inside_height() / self.segment_count
         y_count = math.floor(self._calculate_inside_height() / segment_height)
-        lower_height = (self.height /2)-self.base_offset
+        lower_height = (self.height /2) - self.base_offset
         upper_height = self.height - lower_height
         
         result = (

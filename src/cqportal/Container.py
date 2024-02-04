@@ -1,5 +1,5 @@
 import cadquery as cq
-from . import Portal, RampGreebled, ContainerFrame, Floor
+from . import Portal, RampGreebled, ContainerFrame, ContainerLadder, Floor
 
 class Container(Portal):
     def __init__(self):
@@ -31,7 +31,13 @@ class Container(Portal):
         self.bp_hinge.ramp_bottom_margin = 0
         self.plate_spacer = .3
 
+        self.bp_ladder = ContainerLadder()
+        self.bp_ladder.ladder_rungs = 5
+        self.bp_ladder.ladder_depth = 5
+        self.bp_ladder.ladder_rung_radius = 1.5
+
         self.render_floor = True
+        self.render_ladder = True
         
         #blueprints
         self.bp_floor = Floor()
@@ -42,6 +48,9 @@ class Container(Portal):
         self.bp_floor.length = self.bp_frame.base_length - self.bp_frame.frame_size - self.bp_frame.side_inset
         self.bp_floor.width = self.bp_frame.width
         self.bp_floor.make()
+
+        self.bp_ladder.width = self.bp_frame.width/5
+        self.bp_ladder.make(self.bp_frame)
         
     def build(self):
         container = super().build()
@@ -55,10 +64,17 @@ class Container(Portal):
             floor_cut = self.bp_floor.floor_cut
             floor_z = self.bp_frame.height-(self.bp_frame.frame_size*2)+self.bp_floor.height
             
-            
             scene =(
                 scene
                 .cut(floor_cut.translate((0,0,-floor_z/2)))
                 .union(floor.translate((0,0,-floor_z/2)))
+            )
+
+        if self.render_ladder:
+            ladder_cut, ladder_rungs = self.bp_ladder.build()
+            scene=(
+                scene
+                .cut(ladder_cut)
+                .union(ladder_rungs)
             )
         return scene

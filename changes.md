@@ -3,6 +3,7 @@
 ## Main wip
 ## 1.2.0
 * Added FloorTile
+* Added ContainerLadder
 
 ## 1.1.1
 * Portal wired up hinges render flag
