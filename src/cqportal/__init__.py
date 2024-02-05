@@ -1,3 +1,4 @@
+from .BaseCoffin import BaseCoffin
 from .Floor import Floor
 from .FloorTile import FloorTile
 from .PortalBase import PortalBase
@@ -10,3 +11,5 @@ from .Ramp import Ramp
 from .RampGreebled import RampGreebled
 from .Portal import Portal
 from .Container import Container
+
+from .RampRefactor import RampRefactor

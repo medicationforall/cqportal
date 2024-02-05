@@ -1,6 +1,10 @@
 # CQPortal changelog
 
 ## Main wip
+## 2.0.0
+* Refactored Ramp to be an orchestrator
+* Added BaseCoffin 
+
 ## 1.2.0
 * Added FloorTile
 * Added ContainerLadder
