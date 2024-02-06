@@ -1,5 +1,5 @@
 import cadquery as cq
-from . import Portal, RampGreebled, ContainerFrame, ContainerLadder, Floor
+from . import Portal, RampGreebled, ContainerFrame, ContainerLadder, ContainerRamp, Floor
 
 class Container(Portal):
     def __init__(self):
@@ -21,14 +21,18 @@ class Container(Portal):
 
         self.bp_frame.render_sides = True
 
-        self.bp_ramp = RampGreebled()
+        self.bp_ramp = ContainerRamp()
         self.bp_ramp.width = 8
         self.bp_ramp.segment_count = 10
         self.bp_ramp.segment_y_padding = 3
+
         self.bp_ramp.render_outside = True
+        self.bp_ramp.bp_outside.padding = 5
+        self.bp_ramp.bp_outside.x_translate = -10
 
         self.bp_hinge.rotate_deg = 0
         self.bp_hinge.ramp_bottom_margin = 0
+        self.bp_hinge.tab_length = 4
         self.plate_spacer = .3
 
         self.bp_ladder = ContainerLadder()
