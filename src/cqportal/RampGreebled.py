@@ -69,8 +69,9 @@ class RampGreebled(Ramp):
             
             #show_object(greeble)
             #show_object(self.inside.translate((0,0,(self.side_inset/4))).rotate((1,0,0),(0,0,0),90))
-            
-            greeble = greeble.intersect(self.inside.translate((0,0,(self.side_inset/4))).rotate((1,0,0),(0,0,0),90))
+            inside = self.bp_inside.build()
+            greeble = greeble.intersect(inside.translate((0,0,(self.side_inset/4))).rotate((1,0,0),(0,0,0),90))
+            #show_object(greeble)
             
             minus_x_len = greeble.faces("Z").edges("<Y").vals()[0].BoundingBox().xlen
             plux_x_len = greeble.faces("Z").edges(">Y").vals()[0].BoundingBox().xlen
