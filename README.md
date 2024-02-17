@@ -1,9 +1,9 @@
 # cqportal
-python Library for making portal terrain.
+Python library for making portal and container terrain.
 
 ![](./documentation/image/01.png)<br /><br />
 
-### Example Usage
+### Example Portal Code
 
 ``` python
 import cadquery as cq
@@ -18,12 +18,34 @@ bp_portal.render_base = False
 bp_portal.render_ramps = True
 bp_portal.ramp_push = 0
 bp_portal.bp_ramp.width = 10
+
+bp_portal.bp_hinge.rotate_deg = 0
+
 bp_portal.make()
 
 
 result_open = bp_portal.build()
 #show_object(result_open)
 cq.exporters.export(result_open, 'stl/portal_open.stl')
+```
+
+## Container
+![](./documentation/image/34.png)<br /><br />
+
+### Example Container Code
+
+``` python
+import cadquery as cq
+from cqportal import Container
+
+bp_container = Container()
+bp_container.bp_hinge.rotate_deg = -70
+
+bp_container.make()
+
+result = bp_container.build()
+#show_object(result)
+cq.exporters.export(result, 'stl/container.stl')
 ```
 
 ## Dependencies
@@ -34,7 +56,7 @@ cq.exporters.export(result_open, 'stl/portal_open.stl')
 
 
 ### Installation
-To install cqdome directly from GitHub, run the following `pip` command:
+To install cqportal directly from GitHub, run the following `pip` command:
 
 	pip install git+https://github.com/medicationforall/cqportal
 
