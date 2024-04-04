@@ -28,6 +28,7 @@ class Straight(Base):
         self.outline = None
         self.post = None
         self.key_cut = None
+        self.key_template = None
         
     def __make_shape(self):
         self.shape_bp.length = self.height
@@ -84,7 +85,7 @@ class Straight(Base):
         self.mesh_bp.make()
         
     def __make_key_cut(self):
-        key_length = self.length - self.cut_padding_x*2 - self.post_length*2
+        key_length = self.length - self.cut_padding_x*2 - self.post_length*2 + (self.key_margin*2)
         key_height = self.height - 2  + self.key_margin
         self.key_cut = (
             cq.Workplane('XY')
@@ -92,6 +93,15 @@ class Straight(Base):
                 key_length, 
                 .2, 
                 key_height
+            )
+        )
+
+        self.key_template = (
+            cq.Workplane('XY')
+            .box(
+                key_length, 
+                key_height,
+                2 
             )
         )
         
@@ -107,7 +117,7 @@ class Straight(Base):
     def build(self):
         super().build()
         interior_z_translate = 2
-        post_x_translate = self.length/2-self.post_length/2 - self.cut_padding_x - (self.key_margin*2)
+        post_x_translate = self.length/2-self.post_length/2 - self.cut_padding_x 
         mesh = self.mesh_bp.build()
 
         scene = (

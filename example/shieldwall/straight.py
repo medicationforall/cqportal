@@ -21,3 +21,4 @@ cross_section = cq.Workplane('XY').box(10,straight_bp.width,50)
 #show_object(straight_ex)
 
 cq.exporters.export(straight_ex, 'stl/shieldwall_straight.stl')
+cq.exporters.export(straight_bp.key_template, 'stl/shieldwall_straight_key.stl')
