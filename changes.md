@@ -3,9 +3,13 @@
 ## Main wip
 ## 2.1.0
 * synced container tile example.
-* Added initial shieldwall ShieldShape.
-* Added initial shieldwall StraightBasic
+* Added initial shieldwall 
+  * ShieldShape.
+  * StraightBasic
+  * Straight
+  * Mesh 
 * Added stubs for new Shield wall shapes
+
 
 ## 2.0.0
 * Refactored Ramp to be an orchestrator
