@@ -8,10 +8,10 @@ straight_bp.height = 25
 
 straight_bp.mesh_width = 4
 
-straight_bp.mesh_bp.tile_length =4
-straight_bp.mesh_bp.tile_width = 3
+straight_bp.mesh_bp.tile_length =10
+straight_bp.mesh_bp.tile_width = 5
 straight_bp.mesh_bp.tile_padding = 0.3
-straight_bp.mesh_bp.tile_chamfer = 0.5
+straight_bp.mesh_bp.tile_chamfer = 1
 straight_bp.make()
 straight_ex = straight_bp.build()
 

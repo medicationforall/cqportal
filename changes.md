@@ -5,6 +5,7 @@
 ## 3.0.0
 * Separated portal and container into their own sub-modules
 * Updated example import paths
+* Updated README.md
 
 ## 2.1.0
 * synced container tile example.

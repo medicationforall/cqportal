@@ -7,7 +7,7 @@ Python library for making portal and container terrain.
 
 ``` python
 import cadquery as cq
-from cqportal import Portal
+from cqportal.portal import Portal
 
 bp_portal = Portal()
 bp_portal.bp_frame.length = 150
@@ -26,7 +26,7 @@ bp_portal.make()
 
 result_open = bp_portal.build()
 #show_object(result_open)
-cq.exporters.export(result_open, 'stl/portal_open.stl')
+cq.exporters.export(result_open, 'portal_open.stl')
 ```
 
 ## Container
@@ -36,7 +36,7 @@ cq.exporters.export(result_open, 'stl/portal_open.stl')
 
 ``` python
 import cadquery as cq
-from cqportal import Container
+from cqportal.container import Container
 
 bp_container = Container()
 bp_container.bp_hinge.rotate_deg = -70
@@ -45,7 +45,7 @@ bp_container.make()
 
 result = bp_container.build()
 #show_object(result)
-cq.exporters.export(result, 'stl/container.stl')
+cq.exporters.export(result, 'container.stl')
 ```
 
 ## Dependencies
