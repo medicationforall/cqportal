@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import FloorTile, Container
+from cqportal.container import FloorTile, Container
 from cqterrain import tile as terrain_tile
 
 

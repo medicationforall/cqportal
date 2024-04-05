@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Portal
+from cqportal.portal import Portal
 
 bp_portal = Portal()
 bp_portal.render_base = False

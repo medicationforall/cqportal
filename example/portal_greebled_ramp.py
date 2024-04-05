@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Portal, RampGreebled
+from cqportal.portal import Portal, RampGreebled
 
 bp_portal = Portal()
 bp_portal.bp_frame.length = 200

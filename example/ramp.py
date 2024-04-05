@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Ramp
+from cqportal.portal import Ramp
 
 bp_ramp = Ramp()
 bp_ramp.width = 10

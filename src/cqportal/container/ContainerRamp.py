@@ -1,5 +1,6 @@
 import cadquery as cq
-from . import RampGreebled, ContainerDoor
+from . import ContainerDoor
+from ..portal import RampGreebled
 
 class ContainerRamp(RampGreebled):
     def __init__(self):

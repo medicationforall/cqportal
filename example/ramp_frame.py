@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Frame, Ramp
+from cqportal.portal import Frame, Ramp
 
 
 bp_frame = Frame()

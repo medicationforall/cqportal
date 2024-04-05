@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Portal, RampGreebled, FrameWindow
+from cqportal.portal import Portal, RampGreebled, FrameWindow
 
 bp_portal = Portal()
 

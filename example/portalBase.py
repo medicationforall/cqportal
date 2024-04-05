@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import PortalBase
+from cqportal.portal import PortalBase
 
 bp_portal_base = PortalBase()
 bp_portal_base.make()

@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Frame
+from cqportal.portal import Frame
 
 bp_frame = Frame()
 bp_frame.top_length = 90

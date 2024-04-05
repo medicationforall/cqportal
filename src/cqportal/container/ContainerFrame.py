@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import cadquery as cq
-from . import Frame
+from ..portal import Frame
 
 class ContainerFrame(Frame):
     def __init__(self):

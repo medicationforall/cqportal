@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import Container
+from cqportal.container import Container
 
 bp_container = Container()
 bp_container.bp_hinge.rotate_deg = -90

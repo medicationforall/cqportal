@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import cadquery as cq
-from cadqueryhelper import Base, Hinge
+from cadqueryhelper import Base
 from . import PortalBase, Frame, Ramp, PortalHinge
 
 class Portal(Base):

@@ -24,15 +24,12 @@ class PortalBase(Base):
         self.width = 75
         self.height = 10
         
-        # shapes
-        
         
     def make(self, parent=None):
         super().make(parent)
         
     def build(self):
         super().build()
-        
         return cq.Workplane("XY").box(self.length,self.width,self.height)
 
     

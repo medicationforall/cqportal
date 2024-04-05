@@ -1,6 +1,11 @@
 # CQPortal changelog
 
 ## Main wip
+
+## 3.0.0
+* Separated portal and container into their own sub-modules
+* Updated example import paths
+
 ## 2.1.0
 * synced container tile example.
 * Added initial shieldwall 
@@ -9,7 +14,6 @@
   * Straight
   * Mesh 
 * Added stubs for new Shield wall shapes
-
 
 ## 2.0.0
 * Refactored Ramp to be an orchestrator

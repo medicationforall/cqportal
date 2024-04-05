@@ -1,6 +1,6 @@
 import cadquery as cq
 from cadqueryhelper import Base, shape
-from cqportal import RampGreebled
+from cqportal.portal import RampGreebled
 
 bp_ramp = RampGreebled()
 #bp_ramp.length = 70

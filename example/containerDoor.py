@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal import ContainerDoor
+from cqportal.container import ContainerDoor
 
 bp_door = ContainerDoor()
 bp_door.cut_depth = 2
