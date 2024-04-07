@@ -26,7 +26,7 @@ class Mesh(Base):
             .box(self.length,self.height, self.width/2)
         )
         
-    def __make_tile(self):
+    def _make_tile(self):
         self.tile = (
             cq.Workplane('XY')
             .box(
@@ -38,12 +38,14 @@ class Mesh(Base):
             .chamfer(self.tile_chamfer)
         )
         
-    def __make_tiles(self):
+    def _make_tiles(self):
         tile_length = self.tile_length + self.tile_padding * 2
         tile_width = self.tile_width + self.tile_padding * 2
         
         x_count = math.floor(self.length / tile_length)
         y_count = math.floor(self.height / tile_width)
+        
+        #log(f'{y_count=}')
         
         def add_star(loc):
             return self.tile.val().located(loc)
@@ -62,8 +64,8 @@ class Mesh(Base):
     def make(self, parent=None):
         super().make(parent)
         self.__make_outline()
-        self.__make_tile()
-        self.__make_tiles()
+        self._make_tile()
+        self._make_tiles()
         
     def build(self):
         super().build()

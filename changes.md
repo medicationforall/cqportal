@@ -6,6 +6,8 @@
 * Separated portal and container into their own sub-modules
 * Updated example import paths
 * Updated README.md
+* Added HexMesh
+* Added mesh, hexmesh, straight_hex examples
 
 ## 2.1.0
 * synced container tile example.

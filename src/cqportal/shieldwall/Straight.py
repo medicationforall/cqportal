@@ -17,6 +17,7 @@ class Straight(Base):
         self.post_padding_y = 1
         self.mesh_width = 3
         
+        self.cut_width = .8
         self.key_margin = 0.2
         
         #blueprints
@@ -91,7 +92,7 @@ class Straight(Base):
             cq.Workplane('XY')
             .box(
                 key_length, 
-                .2, 
+                self.cut_width, 
                 key_height
             )
         )
