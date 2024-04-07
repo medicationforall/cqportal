@@ -8,6 +8,7 @@
 * Updated README.md
 * Added HexMesh
 * Added mesh, hexmesh, straight_hex examples
+* Added Initial EndCap
 
 ## 2.1.0
 * synced container tile example.

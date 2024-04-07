@@ -3,3 +3,4 @@ from .StraightBasic import StraightBasic
 from .Mesh import Mesh
 from .Straight import Straight
 from .HexMesh import HexMesh
+from .EndCap import EndCap
