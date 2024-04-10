@@ -9,6 +9,8 @@
 * Added HexMesh
 * Added mesh, hexmesh, straight_hex examples
 * Added Initial EndCap
+* Added cap greeble
+* Added HexStraight
 
 ## 2.1.0
 * synced container tile example.
