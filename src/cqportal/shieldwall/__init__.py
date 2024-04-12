@@ -6,3 +6,4 @@ from .HexMesh import HexMesh
 from .CapGreeble import CapGreeble
 from .EndCap import EndCap
 from .HexStraight import HexStraight
+from .CornerConnector import CornerConnector

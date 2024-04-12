@@ -11,6 +11,7 @@
 * Added Initial EndCap
 * Added cap greeble
 * Added HexStraight
+* Added CornerConnector
 
 ## 2.1.0
 * synced container tile example.
