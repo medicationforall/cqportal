@@ -1,4 +1,5 @@
 from .ShieldShape import ShieldShape, shield_shape, shield_shape_mirror
+from .ArchShape import ArchShape
 from .StraightBasic import StraightBasic
 from .Mesh import Mesh
 from .Straight import Straight
@@ -7,3 +8,7 @@ from .CapGreeble import CapGreeble
 from .EndCap import EndCap
 from .HexStraight import HexStraight
 from .CornerConnector import CornerConnector
+
+from .Set import Set
+from .HexSet import HexSet
+from .ArchSet import ArchSet

@@ -6,4 +6,4 @@ mesh_bp.make()
 mesh_ex = mesh_bp.build()
 
 #show_object(mesh_ex)
-cq.exporters.export(mesh_ex, 'stl/mesh.stl')
+cq.exporters.export(mesh_ex, 'stl/shieldwall_mesh.stl')

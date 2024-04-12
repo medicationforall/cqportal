@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqportal.shieldwall import ShieldShape, Mesh 
+from . import ShieldShape, Mesh 
 from cadqueryhelper import Base
 
 class Straight(Base):

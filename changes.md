@@ -2,6 +2,16 @@
 
 ## Main wip
 
+## 3.1.0
+* Added shieldwall Set
+* Added shieldwall HexSet
+* Added shieldwall ArchSet
+* Added shieldwall ArchShape
+* Updated shieldwall STL example paths
+
+## 3.0.1
+* Clean up python imports for shieldwall files.
+
 ## 3.0.0
 * Separated portal and container into their own sub-modules
 * Updated example import paths

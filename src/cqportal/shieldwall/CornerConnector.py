@@ -1,6 +1,6 @@
 import cadquery as cq
 from cadqueryhelper import Base
-from cqportal.shieldwall import ShieldShape, CapGreeble
+from . import ShieldShape, CapGreeble
 
 
 class CornerConnector(Base):
