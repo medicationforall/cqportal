@@ -18,7 +18,10 @@ straight_ex = straight_bp.build()
 
 cross_section = cq.Workplane('XY').box(10,straight_bp.width,50)
 
+straight_ex_assembly = straight_bp.build_assembly()
+
 #show_object(straight_ex)
 cq.exporters.export(straight_ex, 'stl/shieldwall_straight_hex.stl')
+straight_ex_assembly.save("gltf/shieldwall_straight_hex.gltf")
 
 

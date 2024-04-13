@@ -2,6 +2,9 @@
 
 ## Main wip
 
+## 3.2.0
+* Added assembly build to shieldwall straight.
+
 ## 3.1.0
 * Added shieldwall Set
 * Added shieldwall HexSet
