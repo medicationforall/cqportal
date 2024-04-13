@@ -150,29 +150,6 @@ class Straight(Base):
         interior_z_translate = 2
         post_x_translate = self.length/2-self.post_length/2 - self.cut_padding_x 
         mesh = self.mesh_bp.build()
-
-        
-        scene = (
-            cq.Workplane('XY')
-            .add(self.outline)
-            .cut(self.cut.translate((
-                0,
-                0,
-                interior_z_translate
-            )))
-            .add(self.post.translate((
-                post_x_translate,
-                0,
-                interior_z_translate
-            )))
-            .add(self.post.translate((
-                -post_x_translate,
-                0,
-                interior_z_translate
-            )))
-            .union(mesh.translate((0,0,2)))
-            .cut(self.key_cut.translate((0,0,-1+self.key_margin/2)))
-        )
         
         frame = (
             cq.Workplane('XY')
