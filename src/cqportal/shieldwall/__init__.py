@@ -1,3 +1,4 @@
+from .Magnets import Magnets
 from .ShieldShape import ShieldShape, shield_shape
 from .ArchShape import ArchShape
 from .StraightBasic import StraightBasic

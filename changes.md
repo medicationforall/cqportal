@@ -6,6 +6,9 @@
 * Added assembly build to shieldwall straight.
 * Fix ShieldShape bug where the base height would break in a way that made the shape not actually symetrical.
 * Shieldwall set added support for setting base_height to all parts.
+* Shieldwall added Magnets
+* Integrated Magnets into 
+  * StraightBasic
 
 ## 3.1.0
 * Added shieldwall Set
