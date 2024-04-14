@@ -1,7 +1,6 @@
 import cadquery as cq
 from cadqueryhelper import Base
-from . import ShieldShape, CapGreeble
-
+from . import ShieldShape, CapGreeble, Magnets
 
 class CornerConnector(Base):
     def __init__(self):
@@ -11,7 +10,11 @@ class CornerConnector(Base):
         self.width=20
         self.height=25
         
-        self.base_height = 4
+        self.base_height = 5
+        
+        self.render_magnets = True
+        self.magnet_padding = 1
+        
         self.side_margin = -2
         self.side_height = 1
         self.top_height = 2
@@ -25,6 +28,7 @@ class CornerConnector(Base):
         #blueprints
         self.shape_bp = ShieldShape()
         self.greeble_bp = CapGreeble()
+        self.magnets_bp = Magnets()
         
         #shapes
         self.shape = None
@@ -107,18 +111,34 @@ class CornerConnector(Base):
         self.greeble_bp.height = self.height - self.base_height - self.side_height - self.top_height
         self.greeble_bp.make()
         
+    def __make_magnets(self):
+        self.magnets_bp.distance = self.width - self.magnets_bp.pip_radius*2 - self.magnet_padding*2
+        self.magnets_bp.make()
+        
     def make(self, parent=None):
         super().make(parent)
         self.__make_wall_shape()
 
         self.__make_connector()
         self.__make_corner()
+        self.__make_magnets()
         
         if self.render_greeble:
             self.__make_greeble()
         
     def build_connector(self):
         return self.connector
+    
+    def build_magnets(self):
+       magnets = self.magnets_bp.build()
+       magnet_x = self.length/2 - self.magnets_bp.pip_height/2
+       magnet_z = -(self.height/2) + self.base_height - self.magnets_bp.pip_radius - self.magnet_padding
+       scene = (
+           cq.Workplane("XY")
+           .union(magnets.rotate((0,0,1),(0,0,0),90).translate((0,magnet_x,magnet_z)))
+           .union(magnets.translate((-magnet_x,0,magnet_z)))
+       )
+       return scene
         
     def build(self):
         super().build()
@@ -137,6 +157,9 @@ class CornerConnector(Base):
                 .union(greeble.translate((-translate_x,0,translate_z)))
                 .union(greeble.rotate((0,0,1),(0,0,0),90).translate((0,translate_x,translate_z)))
             )
+            
+        if self.render_magnets:
+            magnets = self.build_magnets()
+            scene = scene.cut(magnets)
         return scene
         #return cq.Workplane("XY").box(self.length,self.width,self.height)
-    
