@@ -9,6 +9,7 @@ class Set(Base):
         self.straight_count = 4
         self.padding = 5
         self.height = 25
+        self.base_height = 4
         
         #self.connector_count = 2
         self.corner_count = 2
@@ -28,17 +29,20 @@ class Set(Base):
         self.straight_bp.shape_bp = self.shape_bp
         self.straight_bp.mesh_bp = self.mesh_bp
         self.straight_bp.height = self.height
+        self.straight_bp.base_height = self.base_height
         self.straight_bp.make()
         
     def __make_end_cap(self):
         self.end_bp.shape_bp = self.shape_bp
         self.end_bp.length = self.end_cap_length
         self.end_bp.height = self.height
+        self.end_bp.base_height = self.base_height
         self.end_bp.make()
         
     def __make_corner(self):
         self.corner_bp.shape_bp = self.shape_bp
         self.corner_bp.height = self.height
+        self.corner_bp.base_height = self.base_height
         self.corner_bp.make()
         
     def make(self, parent=None):

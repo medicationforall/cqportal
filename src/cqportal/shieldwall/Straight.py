@@ -9,6 +9,8 @@ class Straight(Base):
         self.length = 75
         self.width = 20
         self.height = 25
+
+        self.base_height = 4
         
         self.cut_padding_x = 3
         self.cut_padding_z = 3
@@ -34,6 +36,7 @@ class Straight(Base):
     def __make_shape(self):
         self.shape_bp.length = self.height
         self.shape_bp.width = self.width
+        self.shape_bp.base_height = self.base_height
         self.shape_bp.make()
         self.shape = self.shape_bp.build()
         
