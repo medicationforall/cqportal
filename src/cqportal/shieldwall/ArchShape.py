@@ -19,8 +19,6 @@ def arch_pointed(length=30, width=5, height=50, inner_height=25):
     return result
 
 
-
-#-------------------
 class ArchShape(Base):
     def __init__(self):
         super().__init__()

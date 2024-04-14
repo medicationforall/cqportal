@@ -1,4 +1,4 @@
-from .ShieldShape import ShieldShape, shield_shape, shield_shape_mirror
+from .ShieldShape import ShieldShape, shield_shape
 from .ArchShape import ArchShape
 from .StraightBasic import StraightBasic
 from .Mesh import Mesh

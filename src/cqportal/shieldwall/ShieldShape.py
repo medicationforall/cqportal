@@ -6,7 +6,7 @@ def shield_shape(
     width = 20,
     base_height = 4,
     middle_width_inset = -6,
-
+    travel_distance = 2
 ):
     pts = [
         (0,0),
@@ -27,12 +27,12 @@ def shield_shape(
     ]
     
     mid_sPnts = [
-        (base_height, width/2 + middle_width_inset+2-0.00001),
+        (base_height, width/2 + middle_width_inset+travel_distance-0.00001),
         (base_height+2, width/2 + middle_width_inset )
     ]
     
     top_sPnts = [
-        (length-2+0.00001 , width/2 + middle_width_inset),
+        (length-travel_distance+0.00001 , width/2 + middle_width_inset),
         (length, width/2 + middle_width_inset -2)
     ]
 
@@ -42,94 +42,23 @@ def shield_shape(
         .lineTo(0, width/2) # base width
         .lineTo(base_height/2, width/2) #base Height
         .threePointArc(base_sPnts[0], base_sPnts[1])
-        .lineTo(base_height, width/2 + middle_width_inset+2)
+        .lineTo(base_height, width/2 + middle_width_inset+travel_distance)
         .threePointArc(mid_sPnts[0], mid_sPnts[1])
-        .lineTo(length-2, width/2 + middle_width_inset)
+        .lineTo(length-travel_distance, width/2 + middle_width_inset)
         .threePointArc(top_sPnts[0], top_sPnts[1])
         .lineTo(length, 0)
-        .close().mirrorX()
-    )
-    return result
-
-#-------------------------
-
-def shield_shape_mirror(
-    length = 20,
-    width = 20,
-    base_height = 4,
-    middle_width_inset = -6,
-
-):
-    #https://github.com/CadQuery/cadquery/issues/1072
-    pts = [
-        (0,0),
-        (0,width),# base width
-        (base_height,width),#base Height
-        (base_height, width + middle_width_inset), # middle
-
-        (length,width + middle_width_inset),# top
-        (length,-1*(middle_width_inset)),# top
-
-        (base_height, -1*(middle_width_inset)), # middle
-        (base_height,0)
-    ]
-    
-    base_sPnts = [
-        (base_height/2+.00001, width/2),
-        (base_height, width/2 - base_height/2 )
-    ]
-    
-    mid_sPnts = [
-        (base_height, width/2 + middle_width_inset+2-0.00001),
-        (base_height+2, width/2 + middle_width_inset )
-    ]
-    
-    top_sPnts = [
-        (length-2+0.00001 , width/2 + middle_width_inset),
-        (length, width/2 + middle_width_inset -2)
-    ]
-    
-    # these are mirror inverses of the arcs....
-    top_sPnts_m = [
-        (length, -1*(width/2 + middle_width_inset -2)-0.00001),
-        (length-2+0.1 , -1*(width/2 + middle_width_inset))
-    ]
-    
-    mid_sPnts_m = [
-        (base_height+2-0.00001, -1*(width/2 + middle_width_inset) ),
-        (base_height, -1*(width/2 + middle_width_inset+2)),
-    ]
-    
-    base_sPnts_m = [
-        (base_height, -1*(width/2 -2)-0.00001),
-        (base_height/2, -1*(width/2))
-    ]
-
-    result_wires = (
-        cq.Workplane("XY")
-        .center(-1*(length/2),0)
-        .lineTo(0, width/2) # base width
-        .lineTo(base_height/2, width/2) #base Height
-        .threePointArc(base_sPnts[0], base_sPnts[1])
-        .lineTo(base_height, width/2 + middle_width_inset+2)
-        .threePointArc(mid_sPnts[0], mid_sPnts[1])
-        .lineTo(length-2, width/2 + middle_width_inset)
-        .threePointArc(top_sPnts[0], top_sPnts[1])
-        .lineTo(length,0)
-        #manual mirror, I dislike this immensely.
-        .lineTo(length, -top_sPnts[1][1])
-        .threePointArc(top_sPnts_m[0], top_sPnts_m[1])
-        .lineTo(base_height+2, -1*(width/2 + middle_width_inset))
-        .threePointArc(mid_sPnts_m[0], mid_sPnts_m[1])
-        .lineTo(base_height, -1*(width/2 -2))
-        .threePointArc(base_sPnts_m[0], base_sPnts_m[1])
-        .lineTo(0, -1*(width/2))
         .close()
     )
     
-    #result = cq.Face.makeFromWires(result_wires.val())
-    #show_object(cq.Shape(sf.Shape()))
-    return result_wires
+    ext = result.extrude(1)
+    mirror = (
+        cq.Workplane("XY")
+        .union(ext.translate((0,0,0-.5)))
+        .union(ext.translate((0,0,0-.5)).rotate((1,0,0),(0,0,0),180))
+    ).translate((0,0,.5))
+    
+    mirrored_face_wires = mirror.faces("<Z").wires().toPending()
+    return mirrored_face_wires
 
 #-------------------------
 
@@ -142,7 +71,8 @@ class ShieldShape(Base):
         self.width = 20
         self.base_height = 4
         self.middle_width_inset = -6
-        self.shape_method = shield_shape_mirror
+        self.travel_distance =2
+        self.shape_method = shield_shape
         
         # shapes
         self.shape=None
@@ -153,6 +83,7 @@ class ShieldShape(Base):
             width = self.width,
             base_height = self.base_height,
             middle_width_inset = self.middle_width_inset,
+            travel_distance = self.travel_distance
         )
         
     def make(self, parent=None):

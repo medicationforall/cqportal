@@ -6,6 +6,8 @@ straight_bp.length = 75
 straight_bp.width = 20
 straight_bp.height = 25
 
+straight_bp.shape_bp.base_height = 7
+
 straight_bp.mesh_width = 4
 
 straight_bp.mesh_bp = HexMesh() 
