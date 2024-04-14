@@ -1,5 +1,5 @@
 import cadquery as cq
-from . import ShieldShape, Mesh 
+from . import ShieldShape, Mesh, Magnets
 from cadqueryhelper import Base
 
 class Straight(Base):
@@ -10,7 +10,10 @@ class Straight(Base):
         self.width = 20
         self.height = 25
 
-        self.base_height = 4
+        self.base_height = 5
+        
+        self.render_magnets = True
+        self.magnet_padding = 1
         
         self.cut_padding_x = 3
         self.cut_padding_z = 3
@@ -25,6 +28,7 @@ class Straight(Base):
         #blueprints
         self.shape_bp = ShieldShape()
         self.mesh_bp = Mesh()
+        self.magnets_bp = Magnets()
         
         #shapes
         self.shape = None
@@ -109,6 +113,10 @@ class Straight(Base):
             )
         )
         
+    def __make_magnets(self):
+        self.magnets_bp.distance = self.width - self.magnets_bp.pip_radius*2 - self.magnet_padding*2
+        self.magnets_bp.make()
+        
     def make(self, parent=None):
         super().make(parent)
         self.__make_shape()
@@ -117,6 +125,18 @@ class Straight(Base):
         self.__make_post()
         self.__make_mesh()
         self.__make_key_cut()
+        self.__make_magnets()
+        
+    def build_magnets(self):
+           magnets = self.magnets_bp.build()
+           magnet_x = self.length/2 - self.magnets_bp.pip_height/2
+           magnet_z = -(self.height/2) + self.base_height - self.magnets_bp.pip_radius - self.magnet_padding
+           scene = (
+               cq.Workplane("XY")
+               .union(magnets.translate((magnet_x,0,magnet_z)))
+               .union(magnets.translate((-magnet_x,0,magnet_z)))
+           )
+           return scene
         
     def build(self):
         super().build()
@@ -145,8 +165,14 @@ class Straight(Base):
             .union(mesh.translate((0,0,2)))
             .cut(self.key_cut.translate((0,0,-1+self.key_margin/2)))
         )
+        
+        if self.render_magnets:
+            magnets = self.build_magnets()
+            scene = scene.cut(magnets)
+ 
         #return self.post
         return scene
+        
     
     def build_assembly(self):
         super().build()
@@ -174,6 +200,10 @@ class Straight(Base):
             )))
             .cut(self.key_cut.translate((0,0,-1+self.key_margin/2)))
         )
+        
+        if self.render_magnets:
+            magnets = self.build_magnets()
+            frame = frame.cut(magnets)
         
         mesh = (
             cq.Workplane('XY')

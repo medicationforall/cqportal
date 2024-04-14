@@ -1,6 +1,6 @@
 import cadquery as cq
 from cadqueryhelper import Base
-from . import ShieldShape, CapGreeble
+from . import ShieldShape, CapGreeble, Magnets
 
 class EndCap(Base):
     def __init__(self):
@@ -9,7 +9,7 @@ class EndCap(Base):
         self.length = 25
         self.width = 20
         self.height = 25
-        self.base_height = 4
+        self.base_height = 5
         self.side_margin = -2
         self.side_height = 1
         self.top_height = 2
@@ -20,9 +20,13 @@ class EndCap(Base):
         self.render_greeble = True
         self.greeble_padding_y = 1
         
+        self.render_magnets = True
+        self.magnet_padding = 1
+        
         #blueprints
         self.shape_bp = ShieldShape()
         self.greeble_bp = CapGreeble()
+        self.magnets_bp = Magnets()
         
         #shapes
         self.end_cap = None
@@ -82,12 +86,29 @@ class EndCap(Base):
         self.greeble_bp.height = self.height - self.base_height - self.side_height - self.top_height
         self.greeble_bp.make()
         
+    def __make_magnets(self):
+        self.magnets_bp.distance = self.width - self.magnets_bp.pip_radius*2 - self.magnet_padding*2
+        self.magnets_bp.make()
+        
     def make(self, parent=None):
         super().make()
         self.__make_end_cap()
         
         if self.render_greeble:
             self.__make_greeble()
+            
+        self.__make_magnets()
+        
+    def build_magnets(self):
+           magnets = self.magnets_bp.build()
+           magnet_x = self.length/2 - self.magnets_bp.pip_height/2
+           magnet_z = -(self.height/2) + self.base_height - self.magnets_bp.pip_radius - self.magnet_padding
+           scene = (
+               cq.Workplane("XY")
+               #.union(magnets.translate((magnet_x,0,magnet_z)))
+               .union(magnets.translate((-magnet_x,0,magnet_z)))
+           )
+           return scene
         
     def build(self):
         super().build()
@@ -101,4 +122,43 @@ class EndCap(Base):
             translate_x = self.length/2 - self.greeble_bp.length/2 - self.cut_width
             translate_z = self.base_height/2+ self.side_height/2 - self.top_height/2
             scene = scene.add(greeble.translate((-translate_x,0,translate_z)))
+            
+        if self.render_magnets:
+            magnets = self.build_magnets()
+            scene = scene.cut(magnets)
         return scene
+    
+    def build_assembly(self):
+        super().build()
+        assembly = cq.Assembly()
+        
+        frame = (
+            cq.Workplane("XY")
+            .union(self.end_cap)
+        )
+        
+        if self.render_magnets:
+            magnets = self.build_magnets()
+            frame = frame.cut(magnets)
+            
+        assembly.add(frame, color=cq.Color(1, 0, 0), name="frame")
+        
+        if self.render_greeble:
+            translate_x = self.length/2 - self.greeble_bp.length/2 - self.cut_width
+            translate_z = self.base_height/2+ self.side_height/2 - self.top_height/2
+            greeble = (
+                self.greeble_bp.build()
+                .translate((-translate_x,0,translate_z))
+                .cut(frame)
+            )
+            
+            if self.greeble_bp.grill_set:
+                grill_set = self.greeble_bp.grill_set.translate((-translate_x+self.greeble_bp.grill_padding_left/2,0,translate_z))
+                greeble = greeble.cut(grill_set)
+            assembly.add(greeble, color=cq.Color(0, 0, 1), name="mesh")
+            
+            if self.greeble_bp.grill_set_internal:
+                grill_set_internal = self.greeble_bp.grill_set_internal.translate((-translate_x,0,translate_z))
+                assembly.add(grill_set_internal, color=cq.Color(0, 1, 0), name="window")
+    
+        return assembly
