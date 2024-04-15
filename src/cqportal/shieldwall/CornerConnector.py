@@ -10,10 +10,11 @@ class CornerConnector(Base):
         self.width=20
         self.height=25
         
-        self.base_height = 5
+        self.base_height = 5.6
         
         self.render_magnets = True
         self.magnet_padding = 1
+        self.magnet_padding_x=2
         
         self.side_margin = -2
         self.side_height = 1
@@ -112,7 +113,7 @@ class CornerConnector(Base):
         self.greeble_bp.make()
         
     def __make_magnets(self):
-        self.magnets_bp.distance = self.width - self.magnets_bp.pip_radius*2 - self.magnet_padding*2
+        self.magnets_bp.distance = self.width - self.magnets_bp.pip_radius*2 - self.magnet_padding*2 - self.magnet_padding_x
         self.magnets_bp.make()
         
     def make(self, parent=None):

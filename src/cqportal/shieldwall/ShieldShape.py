@@ -69,7 +69,7 @@ class ShieldShape(Base):
         # parameters
         self.length = 20
         self.width = 20
-        self.base_height = 4
+        self.base_height = 5.6
         self.middle_width_inset = -6
         self.travel_distance =2
         self.shape_method = shield_shape

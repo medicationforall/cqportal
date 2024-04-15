@@ -14,6 +14,7 @@
   * Straight
   * EndCaps
   * CornerConnector
+* Magnet spacing matches the jersey barrier set.
 
 ## 3.1.0
 * Added shieldwall Set
