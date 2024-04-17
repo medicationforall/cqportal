@@ -37,8 +37,7 @@ class CornerConnector(Base):
         
         self.end_cap = None
         self.greeble = None
-        
-        
+          
     def __make_wall_shape(self):
         self.shape_bp.length = self.height
         self.shape_bp.width = self.width
@@ -164,3 +163,51 @@ class CornerConnector(Base):
             scene = scene.cut(magnets)
         return scene
         #return cq.Workplane("XY").box(self.length,self.width,self.height)
+        
+    def build_assembly(self):
+        super().build()
+        assembly = cq.Assembly()
+        
+        frame = (
+            cq.Workplane("XY")
+            .union(self.corner)
+        )
+        
+        if self.render_magnets:
+            magnets = self.build_magnets()
+            frame = frame.cut(magnets)
+        
+        assembly.add(frame, color=cq.Color(1, 0, 0), name="frame")
+        
+        if self.render_greeble:
+            translate_x = self.length/2 - self.greeble_bp.length/2 - self.cut_width
+            translate_z = self.base_height/2+ self.side_height/2 - self.top_height/2
+            greeble = (
+                self.greeble_bp.build()
+                .translate((-translate_x,0,translate_z))
+                .cut(frame)
+            )
+            
+            if self.greeble_bp.grill_set:
+                grill_set = self.greeble_bp.grill_set.translate((-translate_x+self.greeble_bp.grill_padding_left/2,0,translate_z))
+                greeble = greeble.cut(grill_set)
+                
+            greebles = (
+                cq.Workplane("XY")
+                .union(greeble)
+                .union(greeble.rotate((0,0,1),(0,0,0),90))
+            )
+                
+            assembly.add(greebles, color=cq.Color(0, 0, 1), name="mesh")
+            
+            if self.greeble_bp.grill_set_internal:
+                grill_set_internal = self.greeble_bp.grill_set_internal.translate((-translate_x,0,translate_z))
+                grill_set_internals = (
+                    cq.Workplane("XY")
+                    .union(grill_set_internal)
+                    .union(grill_set_internal.rotate((0,0,1),(0,0,0),90))
+                )
+                assembly.add(grill_set_internals, color=cq.Color(0, 1, 0), name="window")
+            
+        
+        return assembly

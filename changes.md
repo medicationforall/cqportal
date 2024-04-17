@@ -2,6 +2,11 @@
 
 ## Main wip
 
+## 3.3.0
+* Added shieldwall BaseCut and integrated into Straight. 
+* Added assembly build for shieldwall components.
+  * corner_connector
+
 ## 3.2.0
 * Added assembly build for shieldwall components.
   * Straight

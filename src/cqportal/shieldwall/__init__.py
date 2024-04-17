@@ -1,4 +1,5 @@
 from .Magnets import Magnets
+from .BaseCut import BaseCut
 from .ShieldShape import ShieldShape, shield_shape
 from .ArchShape import ArchShape
 from .StraightBasic import StraightBasic
