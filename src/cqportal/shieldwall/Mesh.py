@@ -78,8 +78,8 @@ class Mesh(Base):
         
         scene = (
             cq.Workplane("XY")
-            .union(mesh)
-            .union(mesh.rotate((0,0,1),(0,0,0),180))
+            .union(mesh) #front
+            .union(mesh.rotate((0,0,1),(0,0,0),180)) #back
         )
 
         return scene

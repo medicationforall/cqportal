@@ -4,6 +4,7 @@ from .ShieldShape import ShieldShape, shield_shape
 from .ArchShape import ArchShape
 from .StraightBasic import StraightBasic
 from .Mesh import Mesh
+from .GothicMesh import GothicMesh
 from .Straight import Straight
 from .HexMesh import HexMesh
 from .CapGreeble import CapGreeble

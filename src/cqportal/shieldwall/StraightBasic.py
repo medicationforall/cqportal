@@ -12,8 +12,8 @@ class StraightBasic(Base):
         self.height = 20
         self.base_height = 5.6
 
-        self.magnet_padding = 1
         self.render_magnets = True
+        self.magnet_padding = 1
         self.magnet_padding_x=2
 
         # blueprints

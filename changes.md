@@ -6,6 +6,9 @@
 * Added shieldwall BaseCut and integrated into Straight. 
 * Added assembly build for shieldwall components.
   * corner_connector
+* Added shieldwall GothicMesh
+* Updated Archset to use gothic mesh
+* Updated Arch set example
 
 ## 3.2.0
 * Added assembly build for shieldwall components.
