@@ -7,9 +7,9 @@ class BaseCoffin(Base):
         self.length = 150
         self.width = 5
         self.height = 150
-        self.top_length = 90
-        self.base_length = 100
-        self.base_offset = 35 # offset distance from the base of the ramp
+        self.top_length = 90 # Length at the top of the shape
+        self.base_length = 100 # Length at the base of the shape
+        self.base_offset = 35 # offset distance from the base of the shape
 
         # shapes
         self.coffin = None

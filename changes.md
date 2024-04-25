@@ -2,6 +2,11 @@
 
 ## Main wip
 
+## 3.4.0
+* Added base_coffin.py example and stl
+* Documentation
+  * BaseCoffin
+
 ## 3.3.0
 * Added shieldwall BaseCut and integrated into Straight. 
 * Added assembly build for shieldwall components.

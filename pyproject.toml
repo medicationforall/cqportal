@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cqportal"
-version = "3.2.0"
+version = "3.4.0"
 authors = [
   { name="James Adams", email="inklink28@gmail.com" }
 ]
