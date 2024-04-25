@@ -4,8 +4,12 @@
 
 ## 3.4.0
 * Added base_coffin.py example and stl
+* Added frame_window example and stl
+* Updated Frame example
 * Documentation
   * BaseCoffin
+  * Frame
+  * FrameWindow
 
 ## 3.3.0
 * Added shieldwall BaseCut and integrated into Straight. 

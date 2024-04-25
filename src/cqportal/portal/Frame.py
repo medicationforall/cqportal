@@ -27,7 +27,7 @@ class Frame(Base):
         self.base_length = 100 # length at the base of the frame
         self.base_offset = 35 # offset distance from the center of the frame
         self.side_inset = 8 # The amount the inset the side frames in relation to the center.
-        self.frame_size = 10 # distance fromt he outside wall and the inside wall.
+        self.frame_size = 10 # distance from the outside wall and the inside wall.
         
         self.render_sides = True
         
