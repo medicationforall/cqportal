@@ -1,7 +1,7 @@
 import cadquery as cq
 from cadqueryhelper import Base
 
-def arch_pointed(length=30, width=5, height=50, inner_height=25):
+def arch_pointed(length=30, height=50, inner_height=25):
     m_length = length/2 #mirror length
     sPnts = [
         (inner_height+.00001, m_length+0),
@@ -36,7 +36,6 @@ class ArchShape(Base):
         super().make(parent)
         self.shape = arch_pointed(
           length=self.width,
-          width=0,
           height=self.length,
           inner_height=self.base_height
         )
