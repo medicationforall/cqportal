@@ -20,7 +20,8 @@ Code for creating portal models with print in place hinges.
 * base_length = 100 # Length at the base of the shape
 * base_offset = 35 # offset distance from the base of the shape
 
-
+#### Shape Parameters
+* coffin - Base shape generated in the make lifecycle
 
 ### Example
 
@@ -65,6 +66,9 @@ show_object(ex)
 * frame_size = 10 # distance from the outside wall and the inside wall.
 * render_sides = True
 
+#### Shape Parameters
+* frame - stores the generated from from the make lifecycle
+
 ### Example
 
 ``` python
@@ -108,7 +112,7 @@ show_object(result)
 * base_offset = 35 # offset distance from the center of the frame
 * side_inset = 8 # The amount the inset the side frames in relation to the center.
 * frame_size = 10 # distance from the outside wall and the inside wall.
-* render_sides = True
+* render_sides = True # enable / disable the rendering of the sides
 * window_cut_width = 0.4
 * window_cut_padding = 1
 * window_key_width = 2
@@ -116,6 +120,8 @@ show_object(result)
 * window_key_text = "Portal Key"
 * window_key_text_size = 10
 * window_key_text_height = 1
+
+The width of the center frame and the two side frame is calculated by dividing the width parameter by 3.
 
 ### Example
 
@@ -157,3 +163,40 @@ show_object(bp_frame.window_cut_key.translate((-(bp_frame.length/2),0,0)))
 * [stl](../stl/frame_window.stl)
 
 ---
+
+## Portal
+![](image/portal/05.png)
+
+#### Parameters
+* render_base = True
+* render_hinges = True
+* ramp_push = 0
+* hinge_segments = 3
+* plate_spacer = 1
+
+#### Blueprint Parameters
+* bp_base = [PortalBase](#portal-base)()
+* bp_frame = [Frame](#frame)()
+* bp_ramp = [Ramp](#ramp)()
+* bp_hinge = [PortalHinge](#portal-hinge)()
+
+### Example
+``` python
+import cadquery as cq
+from cqportal.portal import Portal
+
+bp_portal = Portal()
+bp_portal.bp_frame.length = 150
+bp_portal.bp_frame.width = 30
+bp_portal.bp_frame.height = 150
+
+bp_portal.render_base = False
+bp_portal.render_ramps = True
+bp_portal.ramp_push = 0
+bp_portal.bp_ramp.width = 10
+bp_portal.make()
+
+
+result_open = bp_portal.build()
+show_object(result_open)
+```

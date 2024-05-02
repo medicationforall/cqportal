@@ -15,3 +15,5 @@ from .CornerConnector import CornerConnector
 from .Set import Set
 from .HexSet import HexSet
 from .ArchSet import ArchSet
+
+from .CurveBasic import CurveBasic 

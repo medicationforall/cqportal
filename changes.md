@@ -10,6 +10,8 @@
   * BaseCoffin
   * Frame
   * FrameWindow
+* Added shieldwall CurveBasic
+  * Added example.
 
 ## 3.3.0
 * Added shieldwall BaseCut and integrated into Straight. 
