@@ -6,6 +6,7 @@
 * Updgraded cadqueryhelper version 1.0.1
 * Added example_runner.py
 * Added license blocks
+* Updated README.md
 
 ## 3.4.0
 * Added base_coffin.py example and stl

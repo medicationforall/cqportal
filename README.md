@@ -48,11 +48,19 @@ result = bp_container.build()
 cq.exporters.export(result, 'container.stl')
 ```
 
+---
+
+## Project Documention
+* [Portal](documentation/portal.md) 
+
+## Changes
+* [Changelog](./changes.md)
+
 ## Dependencies
-* [CadQuery](https://github.com/CadQuery/cadquery)
-* [cqMore](https://github.com/JustinSDK/cqMore)
-* [cadqueryhelper](https://github.com/medicationforall/cadqueryhelper)
+* [CadQuery 2.x](https://github.com/CadQuery/cadquery)
 * [cqterrain](https://github.com/medicationforall/cqterrain)
+
+---
 
 
 ### Installation
@@ -63,6 +71,29 @@ To install cqportal directly from GitHub, run the following `pip` command:
 **OR**
 
 ### Local Installation
-From the cloned cqdome directory run.
+From the cloned cqportal directory run.
 
 	pip install ./
+
+
+---
+
+## Running Example Scripts
+
+* All of the examples live in the [example directory](./example)
+* The examples generated output stl's are written to the [stl directory](./stl).
+
+[example_runner.py](example_runner.py) runs all examples.
+
+``` bash
+C:\Users\<user>\home\3d\cqportal>python example_runner.py
+```
+
+**OR**
+
+### Running individual examples
+* From the root of the project run one of the example scripts:
+  
+``` bash
+C:\Users\<user>\home\3d\cqportal>python ./example/rampGreebled.py
+```
