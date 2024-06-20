@@ -2,6 +2,11 @@
 
 ## Main wip
 
+## 4.0.0
+* Updgraded cadqueryhelper version 1.0.1
+* Added example_runner.py
+* Added license blocks
+
 ## 3.4.0
 * Added base_coffin.py example and stl
 * Added frame_window example and stl
