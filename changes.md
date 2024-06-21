@@ -7,6 +7,7 @@
 * Added example_runner.py
 * Added license blocks
 * Updated README.md
+* Modified PortalHinge tab_height and tab_z_translate
 
 ## 3.4.0
 * Added base_coffin.py example and stl
