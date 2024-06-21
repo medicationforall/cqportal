@@ -20,6 +20,8 @@ class PortalHinge(Hinge):
     def __init__(self):
         super().__init__()
         self.ramp_bottom_margin = 0
+        self.tab_height = self.radius*2
+        self.tab_z_translate = self.radius
         
         #shapes
         self.ramp_hinge_cut = None
