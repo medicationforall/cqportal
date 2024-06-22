@@ -3,7 +3,7 @@
 ## Main wip
 
 ## 4.0.0
-* Updgraded cadqueryhelper version 1.0.1
+* Updgraded cadqueryhelper version 1.0.2
 * Added example_runner.py
 * Added license blocks
 * Updated README.md
