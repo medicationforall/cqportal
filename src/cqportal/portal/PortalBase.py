@@ -20,15 +20,15 @@ class PortalBase(Base):
         super().__init__()
         
         # parameters
-        self.length = 150
-        self.width = 75
-        self.height = 10
+        self.length:float = 150
+        self.width:float = 75
+        self.height:float = 10
         
         
     def make(self, parent=None):
         super().make(parent)
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         return cq.Workplane("XY").box(self.length,self.width,self.height)
 

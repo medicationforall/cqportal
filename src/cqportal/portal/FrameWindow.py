@@ -20,22 +20,22 @@ class FrameWindow(Frame):
     def __init__(self):
         super().__init__()
         
-        self.window_cut_width = 0.4
-        self.window_cut_padding = 1
+        self.window_cut_width:float = 0.4
+        self.window_cut_padding:float = 1
         
-        self.window_key_width = 2
-        self.window_key_padding = 0.8
+        self.window_key_width:float = 2
+        self.window_key_padding:float = 0.8
         
-        self.window_key_text = "Portal Key"
-        self.window_key_text_size = 10
-        self.window_key_text_height = 1
+        self.window_key_text:str = "Portal Key"
+        self.window_key_text_size:float = 10
+        self.window_key_text_height:float = 1
         
         # shapes
-        self.window_cut_out = None
-        self.window_cut_key = None
+        self.window_cut_out:cq.Workplane|None = None
+        self.window_cut_key:cq.Workplane|None = None
         
     def __make_window_cut_out(self):
-        mid_offset = self._calculate_mid_offset()
+        mid_offset:float = self._calculate_mid_offset()
         
         length = self.length-(self.frame_size*2) + (self.window_cut_padding*2)
         width = self.window_cut_width
@@ -62,7 +62,7 @@ class FrameWindow(Frame):
         self.window_cut_out = cut_combined
         
     def __make_window_cut_key(self):
-        mid_offset = self._calculate_mid_offset()
+        mid_offset:float = self._calculate_mid_offset()
         
         length = self.length-(self.frame_size*2) + (self.window_key_padding*2)
         width = self.window_key_width
@@ -101,17 +101,21 @@ class FrameWindow(Frame):
         self.__make_window_cut_out()
         self.__make_window_cut_key()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         frame = super().build()
         
         scene = (
             cq.Workplane()
             .add(frame)
-            .cut(self.window_cut_out)
-            #add(self.window_cut_key)
         )
+
+        if self.window_cut_out:
+            scene = scene.cut(self.window_cut_out)
         
         return scene
     
-    def build_key(self):
-        return self.window_cut_key
+    def build_key(self) -> cq.Workplane:
+        if self.window_cut_key:
+            return self.window_cut_key
+        else:
+            raise Exception('Unable to resolve window_cut_key')

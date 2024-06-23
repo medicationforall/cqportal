@@ -20,49 +20,49 @@ from . import BaseCoffin
 class Ramp(Base):
     def __init__(self):
         super().__init__()
-        self.length = 150
-        self.width = 10
-        self.height = 150
-        self.top_length = 90
-        self.base_length = 100
-        self.base_offset = 35 # offset distance from the base of the ramp
+        self.length:float = 150
+        self.width:float = 10
+        self.height:float = 150
+        self.top_length:float = 90
+        self.base_length:float = 100
+        self.base_offset:float = 35 # offset distance from the base of the ramp
 
-        self.side_inset = 8
-        self.frame_size = 10
-        self.inside_margin = 0.4
+        self.side_inset:float = 8
+        self.frame_size:float = 10
+        self.inside_margin:float = 0.4
 
-        self.render_outside = True
-        self.render_inside = True
+        self.render_outside:bool = True
+        self.render_inside:bool = True
         
         # Blueprints
         self.bp_outside = BaseCoffin()
         self.bp_inside = BaseCoffin()
 
-    def __calculate_outside_length(self):
+    def __calculate_outside_length(self) -> float:
         return self.length - self.side_inset - (self.frame_size/2)
     
-    def __calculate_outside_height(self):
+    def __calculate_outside_height(self)  -> float:
         return self.height - (self.side_inset/2) - (self.frame_size/2)
     
-    def __calculate_outside_top_length(self):
+    def __calculate_outside_top_length(self) -> float:
         return self.top_length - self.side_inset - (self.frame_size/2)
     
-    def __calculate_outside_base_length(self):
+    def __calculate_outside_base_length(self) -> float:
         return self.base_length - self.side_inset - (self.frame_size/2)
 
-    def __calculate_inside_length(self):
+    def __calculate_inside_length(self) -> float:
         return self.length -(self.frame_size*2) - self.side_inset - self.inside_margin*2
     
-    def _calculate_inside_height(self):
+    def _calculate_inside_height(self) -> float:
         return self.height -(self.frame_size*2) - self.side_inset/2 - self.inside_margin*2
     
-    def __calculate_inside_top_length(self):
+    def __calculate_inside_top_length(self) -> float:
         return self.top_length - self.frame_size - self.side_inset - self.inside_margin
     
-    def __calculate_inside_base_length(self):
+    def __calculate_inside_base_length(self) -> float:
         return self.base_length - self.frame_size - self.side_inset - self.inside_margin
     
-    def _calculate_max_inside_length(self):
+    def _calculate_max_inside_length(self) -> float:
         length = self.__calculate_inside_length()
         top_length = self.__calculate_inside_top_length()
         base_length = self.__calculate_inside_base_length()
@@ -110,7 +110,7 @@ class Ramp(Base):
         self.__make_inside()
         self.__make_outside()
 
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         outside = self.bp_outside.build()
         inside = self.bp_inside.build()

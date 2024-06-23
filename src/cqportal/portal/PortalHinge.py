@@ -19,21 +19,27 @@ from cadqueryhelper import Hinge
 class PortalHinge(Hinge):
     def __init__(self):
         super().__init__()
-        self.ramp_bottom_margin = 0
-        self.tab_height = self.radius*2
-        self.tab_z_translate = self.radius
+        self.ramp_bottom_margin:float = 0
+        self.tab_height:float = self.radius*2
+        self.tab_z_translate:float = self.radius
         
         #shapes
-        self.ramp_hinge_cut = None
+        self.ramp_hinge_cut:cq.Workplane|None = None
         
-    def _calculate_hinge_cut_length(self):
-        return self.parent.base_length - self.parent.side_inset + 10
+    def _calculate_hinge_cut_length(self) -> float:
+        if self.parent:
+            return self.parent.base_length - self.parent.side_inset + 10
+        else:
+            raise Exception('Could not resolve parent for PortalHInge _calculate_hinge_cut_length')
         
-    def _calculate_hinge_cut_width(self):
+    def _calculate_hinge_cut_width(self) -> float:
         return (self.radius+2) + self.plate_spacer +1
     
     def _calculate_hinge_cut_height(self):
-        return self.parent.width /2
+        if self.parent:
+            return self.parent.width /2
+        else:
+            raise Exception('Could not resolve parent for PortalHInge _calculate_hinge_cut_height')
         
     def __make_ramp_hinge_cut(self):
         length = self._calculate_hinge_cut_length()
@@ -48,17 +54,21 @@ class PortalHinge(Hinge):
         super().make(parent)
         self.__make_ramp_hinge_cut()
         
-    def __build_ramp(self):
-        ramp_y = -(self.parent.height/2 -self.radius - self.plate_spacer)-self.ramp_bottom_margin - self.plate_spacer
-        ramp_z = (self.parent.width / 2) - self.radius
-        
-        ramp = (
-            self.parent.build()
-            .rotate((1,0,0),(0,0,0), -90)
-            .translate((0,ramp_y,ramp_z))
-        )
-        
-        return ramp
+    def __build_ramp(self) -> cq.Workplane:
+        if self.parent:
+            ramp_y = -(self.parent.height / 2 -self.radius - self.plate_spacer)-self.ramp_bottom_margin - self.plate_spacer
+            ramp_z = (self.parent.width / 2) - self.radius
+            
+            ramp = (
+                self.parent.build()
+                .rotate((1,0,0),(0,0,0), -90)
+                .translate((0,ramp_y,ramp_z))
+            )
+            
+            return ramp
+        else:
+            raise Exception('Could not resolve parent for PortalHInge __build_ramp')
+
         
     def build(self):
         hinge = super().build()

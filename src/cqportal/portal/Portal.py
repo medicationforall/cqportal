@@ -21,12 +21,12 @@ class Portal(Base):
         super().__init__()
         
         #parameters
-        self.render_base = True
-        self.render_hinges = True
+        self.render_base:bool = True
+        self.render_hinges:bool = True
         
-        self.ramp_push = 0
-        self.hinge_segments = 3
-        self.plate_spacer = 1
+        self.ramp_push:float = 0
+        self.hinge_segments:int = 3
+        self.plate_spacer:float = 1
         
         # blueprints
         self.bp_base = PortalBase()
@@ -45,7 +45,7 @@ class Portal(Base):
         self.bp_hinge.plate_spacer = self.plate_spacer
         self.bp_hinge.make(self.bp_ramp)
         
-    def build_hinges(self):
+    def build_hinges(self) -> cq.Workplane:
         portal_hinge = self.bp_hinge.build()
         hinge_y = self.bp_frame.width/2 + self.bp_hinge.radius + self.bp_hinge.plate_spacer
         hinge_z = self.bp_base.height + self.bp_hinge.radius
@@ -66,7 +66,7 @@ class Portal(Base):
         return hinges
         
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         
         frame = self.bp_frame.build()

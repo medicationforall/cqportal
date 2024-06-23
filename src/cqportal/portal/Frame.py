@@ -20,30 +20,30 @@ class Frame(Base):
         super().__init__()
         
         # parameters
-        self.length = 150
-        self.width = 15
-        self.height = 150
-        self.top_length = 90 # length at the top of the frame
-        self.base_length = 100 # length at the base of the frame
-        self.base_offset = 35 # offset distance from the center of the frame
-        self.side_inset = 8 # The amount the inset the side frames in relation to the center.
-        self.frame_size = 10 # distance from the outside wall and the inside wall.
+        self.length:float = 150
+        self.width:float = 15
+        self.height:float = 150
+        self.top_length:float = 90 # length at the top of the frame
+        self.base_length:float = 100 # length at the base of the frame
+        self.base_offset:float = 35 # offset distance from the center of the frame
+        self.side_inset:float = 8 # The amount the inset the side frames in relation to the center.
+        self.frame_size:float = 10 # distance from the outside wall and the inside wall.
         
-        self.render_sides = True
+        self.render_sides:bool = True
         
         # shapes
-        self.frame = None
+        self.frame:cq.Workplane|None = None
 
-    def _calculate_mid_offset(self):
+    def _calculate_mid_offset(self) -> float:
         mid_offset = -1*(self.height/2) + self.base_offset
         return mid_offset
     
-    def make_side_cut(self, width = None, margin = 0):
+    def make_side_cut(self, width:float|None = None, margin:float = 0) -> cq.Workplane:
         mid_offset = self._calculate_mid_offset()
         if not width:
             width = self.width/3
 
-        side_cut = shape.coffin(
+        side_cut:cq.Workplane = shape.coffin(
             self.length-(self.frame_size*2) - self.side_inset - margin*2,
             self.height-(self.frame_size*2) - self.side_inset/2 - margin*2,
             width,
@@ -53,7 +53,7 @@ class Frame(Base):
         ).rotate((1,0,0),(0,0,0),-90)
         return side_cut
     
-    def _make_center(self, width):
+    def _make_center(self, width:float) -> cq.Workplane:
         mid_offset = self._calculate_mid_offset()
         center = shape.coffin(
             self.length,
@@ -81,7 +81,7 @@ class Frame(Base):
         
         return center_frame
     
-    def _make_side(self, width):
+    def _make_side(self, width:float) -> cq.Workplane:
         mid_offset = self._calculate_mid_offset()
         
         side = shape.coffin(
@@ -126,6 +126,10 @@ class Frame(Base):
         super().make(parent)
         self._make_frame()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
-        return self.frame
+
+        if self.frame:
+            return self.frame
+        else:
+            raise Exception('Unable to resolve frame')
