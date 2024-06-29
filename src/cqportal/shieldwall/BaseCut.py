@@ -19,14 +19,15 @@ from cadqueryhelper import Base
 class BaseCut(Base):
     def __init__(self):
         super().__init__()
+        
         #properties
-        self.length = 75
-        self.width = 10
-        self.height = 4
-        self.angle = 30
+        self.length:float = 75
+        self.width:float = 10
+        self.height:float = 4
+        self.angle:float = 30
         
         #shapes
-        self.cut_out = None
+        self.cut_out:cq.Workplane|None = None
         
     def __make_cut_out(self):
         angle = 90 - self.angle
@@ -46,6 +47,10 @@ class BaseCut(Base):
         self.__make_cut_out()
         
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
-        return self.cut_out
+
+        if self.cut_out:
+            return self.cut_out
+        else:
+            raise Exception("Unable to resolve BaseCut cut_out")

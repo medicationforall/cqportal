@@ -14,10 +14,9 @@
 
 
 import cadquery as cq
-from cadqueryhelper import Base
-from . import ShieldShape, Magnets
+from . import Magnets, BaseWall, BaseShape, BaseMagnets, ShieldShape
 
-class StraightBasic(Base):
+class StraightBasic(BaseWall):
     def __init__(self):
         super().__init__()
 
@@ -32,8 +31,8 @@ class StraightBasic(Base):
         self.magnet_padding_x=2
 
         # blueprints
-        self.shape_bp = ShieldShape()
-        self.magnets_bp = Magnets()
+        self.shape_bp:BaseShape = ShieldShape()
+        self.magnets_bp:BaseMagnets = Magnets()
 
         #shape
         self.wall = None
@@ -44,9 +43,8 @@ class StraightBasic(Base):
         self.shape_bp.base_height = self.base_height
         self.shape_bp.make(parent)
         
-
     def __make_wall_basic(self):
-        shape = self.shape_bp.shape
+        shape = self.shape_bp.build()
         base_wall = (
             shape
             .extrude(self.length)
@@ -59,14 +57,14 @@ class StraightBasic(Base):
         self.magnets_bp.distance = self.width - self.magnets_bp.pip_radius*2 - self.magnet_padding*2 - self.magnet_padding_x
         self.magnets_bp.make()
         
-    def make(self, parent=None):
+    def make(self, parent = None):
         super().make(parent)
 
         self.__make_shape(parent)
         self.__make_wall_basic()
         self.__make_magnets()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         magnets = self.magnets_bp.build()
         magnet_x = self.length/2 - self.magnets_bp.pip_height/2
@@ -74,7 +72,6 @@ class StraightBasic(Base):
         scene =(
             cq.Workplane("XY")
             .union(self.wall)
-
         )
         
         if self.render_magnets:

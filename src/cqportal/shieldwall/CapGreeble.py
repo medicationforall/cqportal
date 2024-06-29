@@ -14,34 +14,34 @@
 
 
 import cadquery as cq
-from cadqueryhelper import Base
+from . import BaseGreeble
 import math
+from typing import Literal
 
-class CapGreeble(Base):
+class CapGreeble(BaseGreeble):
     def __init__(self):
         super().__init__()
         #properties
-        self.length = 20
-        self.width = 8
-        self.height = 30
-        self.top_fillet = 2.9
-        self.side_fillet = 2.5
-        #self.operation = 'fillet' #chamfer
-        self.operation = 'chamfer'
+        self.length:float = 20
+        self.width:float = 8
+        self.height:float = 30
+        self.top_fillet:float = 2.9
+        self.side_fillet:float = 2.5
+        self.operation:Literal['chamfer', 'fillet'] = 'chamfer'
         
-        self.render_grill = True
-        self.grill_height = 2
-        self.grill_padding_top = 1
-        self.grill_padding_left = 2
-        self.grill_margin =.5
+        self.render_grill:bool = True
+        self.grill_height:float = 2
+        self.grill_padding_top:float = 1
+        self.grill_padding_left:float = 2
+        self.grill_margin:float = .5
         
         #shapes
-        self.body = None
-        self.grill = None
-        self.grill_internal = None
+        self.body:cq.Workplane|None = None
+        self.grill:cq.Workplane|None = None
+        self.grill_internal:cq.Workplane|None = None
         
-        self.grill_set = None
-        self.grill_set_internal = None
+        self.grill_set:cq.Workplane|None = None
+        self.grill_set_internal:cq.Workplane|None = None
         
     def __make_body(self):
         self.body = cq.Workplane('XY').box(
@@ -73,12 +73,12 @@ class CapGreeble(Base):
         self.grill = grill
         self.grill_internal = grill_inside.faces("X").edges("Z").chamfer(1+self.grill_margin*2).translate(((self.grill_margin/2),0,0))
 
-    def __make_grill(self, shape):
+    def __make_grill(self, shape:cq.Workplane):
         grill_height = self.grill_height + self.grill_padding_top*2
         y_count = math.floor(self.height / grill_height) - 1
         
-        def add_shape(loc):
-            return shape.rotate((1,0,0),(0,0,0),90).val().located(loc)
+        def add_shape(loc:cq.Location) -> cq.Shape:
+            return shape.rotate((1,0,0),(0,0,0),90).val().located(loc) #type: ignore
         
         grill_set = (
             cq.Workplane("XY")
@@ -99,22 +99,20 @@ class CapGreeble(Base):
         
         if self.render_grill:
             self.__make_grill_parts()
-            self.grill_set = self.__make_grill(self.grill)
-            self.grill_set_internal = self.__make_grill(self.grill_internal)
+
+            if self.grill:
+                self.grill_set = self.__make_grill(self.grill)
+
+            if self.grill_internal:
+                self.grill_set_internal = self.__make_grill(self.grill_internal)
         
-    def build(self):
-        scene = (
-            cq.Workplane("XY")
-            .union(self.body)
-            #.add(self.grill_internal)
-        )
+    def build(self) -> cq.Workplane:
+        super().build()
+        scene = cq.Workplane("XY").union(self.body)
         
-        if self.render_grill:
-            #pass
+        if self.render_grill and self.grill_set and self.grill_set_internal:
             scene = (
                 scene
-                #.cut(self.grill.translate((self.grill_padding_left/2,0,0)))
-                #.add(self.grill_internal)
                 .cut(self.grill_set.translate((self.grill_padding_left/2,0,0)))
                 .add(self.grill_set_internal)
             )

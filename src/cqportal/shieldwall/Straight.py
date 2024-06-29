@@ -14,49 +14,48 @@
 
 
 import cadquery as cq
-from . import ShieldShape, Mesh, Magnets, BaseCut
-from cadqueryhelper import Base
+from . import BaseShape, BaseMesh, BaseMagnets, BaseCut, BaseWall, ShieldShape, Mesh, Magnets
 
-class Straight(Base):
+class Straight(BaseWall):
     def __init__(self):
         super().__init__()
         #properties
-        self.length = 75
-        self.width = 20
-        self.height = 25
+        self.length:float = 75
+        self.width:float = 20
+        self.height:float = 25
 
-        self.base_height = 5.6
+        self.base_height:float = 5.6
         
-        self.render_magnets = True
-        self.magnet_padding = 1
-        self.magnet_padding_x=2
+        self.render_magnets:bool = True
+        self.magnet_padding:float = 1
+        self.magnet_padding_x:float = 2
         
-        self.cut_padding_x = 3
-        self.cut_padding_z = 3
+        self.cut_padding_x:float = 3
+        self.cut_padding_z:float = 3
         
-        self.post_length = 2
-        self.post_padding_y = 1
-        self.mesh_width = 3
+        self.post_length:float = 2
+        self.post_padding_y:float = 1
+        self.mesh_width:float = 3
         
-        self.cut_width = .8
-        self.key_margin = 0.2
+        self.cut_width:float = .8
+        self.key_margin:float = 0.2
         
         self.render_base_cut = True
-        self.base_cut_height = None
-        self.base_cut_width = None
+        self.base_cut_height:float|None = None
+        self.base_cut_width:float|None = None
         
         #blueprints
-        self.shape_bp = ShieldShape()
-        self.mesh_bp = Mesh()
-        self.magnets_bp = Magnets()
-        self.base_cut_bp = BaseCut()
+        self.shape_bp:BaseShape = ShieldShape()
+        self.mesh_bp:BaseMesh = Mesh()
+        self.magnets_bp:BaseMagnets = Magnets()
+        self.base_cut_bp:BaseCut = BaseCut()
         
         #shapes
-        self.shape = None
-        self.outline = None
-        self.post = None
-        self.key_cut = None
-        self.key_template = None
+        self.shape:cq.Workplane|None = None
+        self.outline:cq.Workplane|None = None
+        self.post:cq.Workplane|None = None
+        self.key_cut:cq.Workplane|None = None
+        self.key_template:cq.Workplane|None = None
         
     def __make_shape(self):
         self.shape_bp.length = self.height
@@ -66,14 +65,15 @@ class Straight(Base):
         self.shape = self.shape_bp.build()
         
     def __make_outline(self):
-        outline = (
-            self.shape.extrude(self.length)
-            .translate((0,0,-1*(self.length/2)))
-            .rotate((0,1,0),(0,0,0),90)
-        )
-        self.outline = outline
+        if self.shape:
+            outline = (
+                self.shape.extrude(self.length)
+                .translate((0,0,-1*(self.length/2)))
+                .rotate((0,1,0),(0,0,0),90)
+            )
+            self.outline = outline
         
-    def _calculate_cut_height(self):
+    def _calculate_cut_height(self) -> float:
         z_diff =  self.shape_bp.base_height+4
         cut_height= self.height - z_diff
         return cut_height
@@ -144,7 +144,7 @@ class Straight(Base):
         self.base_cut_bp.height = self.base_cut_height if self.base_cut_height else self.base_height
         self.base_cut_bp.make()
         
-    def make(self, parent=None):
+    def make(self, parent = None):
         super().make(parent)
         self.__make_shape()
         self.__make_outline()
@@ -155,7 +155,7 @@ class Straight(Base):
         self.__make_magnets()
         self.__make_base_cut()
         
-    def build_magnets(self):
+    def build_magnets(self) -> cq.Workplane:
            magnets = self.magnets_bp.build()
            magnet_x = self.length/2 - self.magnets_bp.pip_height/2
            magnet_z = -(self.height/2) + self.base_height - self.magnets_bp.pip_radius - self.magnet_padding
@@ -166,11 +166,17 @@ class Straight(Base):
            )
            return scene
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
+
         interior_z_translate = 2
         post_x_translate = self.length/2-self.post_length/2 - self.cut_padding_x 
         mesh = self.mesh_bp.build()
+
+        if self.outline and self.post and self.key_cut:
+            pass
+        else:
+            raise Exception('Unable to resolve Straight build components')
 
         scene = (
             cq.Workplane('XY')
@@ -207,11 +213,16 @@ class Straight(Base):
         return scene
         
     
-    def build_assembly(self):
+    def build_assembly(self) -> cq.Assembly:
         super().build()
         interior_z_translate = 2
         post_x_translate = self.length/2-self.post_length/2 - self.cut_padding_x 
         mesh = self.mesh_bp.build()
+
+        if self.outline and self.post and self.key_cut:
+            pass
+        else:
+            raise Exception('Unable to resolve Straight build_assembly components')
         
         frame = (
             cq.Workplane('XY')

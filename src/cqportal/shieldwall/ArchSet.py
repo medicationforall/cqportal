@@ -13,18 +13,13 @@
 # limitations under the License.
 
 
-from . import Set, ArchShape, HexMesh, GothicMesh
+from . import Set, ArchShape, GothicMesh
+from cadqueryhelper import Base
 
 class ArchSet(Set):
     def __init__(self):
         super().__init__()
         
         #blueprints
-        self.shape_bp = ArchShape()
-        self.mesh_bp = GothicMesh()
-        
-        #self.mesh_bp = HexMesh()
-        #self.mesh_bp.tile_length =10
-        #self.mesh_bp.tile_width = 10
-        #self.mesh_bp.tile_padding = 0.0
-        #self.mesh_bp.tile_chamfer = 1
+        self.shape_bp:Base = ArchShape()
+        self.mesh_bp:Base = GothicMesh()

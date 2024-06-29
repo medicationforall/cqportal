@@ -14,18 +14,18 @@
 
 
 import cadquery as cq
-from cadqueryhelper import Base
+from . import BaseMagnets
 
-class Magnets(Base):
+class Magnets(BaseMagnets):
     def __init__(self):
         super().__init__()
-        self.distance = 12.9
-        self.pip_height = 2.4
-        self.pip_radius = 1.56
+        self.distance:float = 12.9
+        self.pip_height:float = 2.4
+        self.pip_radius:float = 1.56
         
         #shapes
-        self.pip = None
-        self.pips = None
+        self.pip:cq.Workplane|None = None
+        self.pips:cq.Workplane|None = None
         
     def _make_pip(self):
         pip = (
@@ -38,23 +38,23 @@ class Magnets(Base):
         
     def __make_pips(self):
         width_translate = self.distance/2
-        pips = (
-            cq.Workplane("XY")
-            .union(self.pip.translate((0,width_translate,0)))
-            .union(self.pip.translate((0,-width_translate,0)))
-        )
-        self.pips = pips
+        if self.pip:
+            pips = (
+                cq.Workplane("XY")
+                .union(self.pip.translate((0,width_translate,0)))
+                .union(self.pip.translate((0,-width_translate,0)))
+            )
+            self.pips = pips
         
     def make(self, parent = None):
         super().make(parent)
         self._make_pip()
         self.__make_pips()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
-        scene = (
-            cq.Workplane("XY")
-            #.union(self.pip)
-            .union(self.pips)
-        )
-        return scene
+        
+        if self.pips:
+            return self.pips
+        else:
+            raise Exception('Unable to resolve Magnets pips')

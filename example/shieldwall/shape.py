@@ -1,7 +1,7 @@
 import cadquery as cq
-from cqportal import shieldwall
+from cqportal.shieldwall import  ShieldShape
 
-shape_bp = shieldwall.ShieldShape()
+shape_bp = ShieldShape()
 shape_bp.make()
 
 shape_ex = shape_bp.build().extrude(2)

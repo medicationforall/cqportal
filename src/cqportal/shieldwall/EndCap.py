@@ -15,34 +15,34 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
-from . import ShieldShape, CapGreeble, Magnets
+from . import ShieldShape, CapGreeble, Magnets, BaseMagnets, BaseGreeble, BaseShape, BaseWall
 
-class EndCap(Base):
+class EndCap(BaseWall):
     def __init__(self):
         super().__init__()
         #properties
-        self.length = 25
-        self.width = 20
-        self.height = 25
-        self.base_height = 5.6
-        self.side_margin = -2
-        self.side_height = 1
-        self.top_height = 2
+        self.length:float = 25
+        self.width:float = 20
+        self.height:float = 25
+        self.base_height:float = 5.6
+        self.side_margin:float = -2
+        self.side_height:float = 1
+        self.top_height:float = 2
         
-        self.cut_width = 3
-        self.middle_width_inset = -6
+        self.cut_width:float = 3
+        self.middle_width_inset:float = -6
         
-        self.render_greeble = True
-        self.greeble_padding_y = 1
+        self.render_greeble:bool = True
+        self.greeble_padding_y:float = 1
         
-        self.render_magnets = True
-        self.magnet_padding = 1
-        self.magnet_padding_x=2
+        self.render_magnets:bool = True
+        self.magnet_padding:float = 1
+        self.magnet_padding_x:float = 2
         
         #blueprints
-        self.shape_bp = ShieldShape()
-        self.greeble_bp = CapGreeble()
-        self.magnets_bp = Magnets()
+        self.shape_bp:BaseShape = ShieldShape()
+        self.greeble_bp:BaseGreeble = CapGreeble()
+        self.magnets_bp:BaseMagnets = Magnets()
         
         #shapes
         self.end_cap = None
@@ -107,7 +107,7 @@ class EndCap(Base):
         self.magnets_bp.make()
         
     def make(self, parent=None):
-        super().make()
+        super().make(parent)
         self.__make_end_cap()
         
         if self.render_greeble:
@@ -115,7 +115,7 @@ class EndCap(Base):
             
         self.__make_magnets()
         
-    def build_magnets(self):
+    def build_magnets(self) -> cq.Workplane:
            magnets = self.magnets_bp.build()
            magnet_x = self.length/2 - self.magnets_bp.pip_height/2
            magnet_z = -(self.height/2) + self.base_height - self.magnets_bp.pip_radius - self.magnet_padding
@@ -126,7 +126,7 @@ class EndCap(Base):
            )
            return scene
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         scene = (
             cq.Workplane("XY")
@@ -144,7 +144,7 @@ class EndCap(Base):
             scene = scene.cut(magnets)
         return scene
     
-    def build_assembly(self):
+    def build_assembly(self) -> cq.Assembly:
         super().build()
         assembly = cq.Assembly()
         

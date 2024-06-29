@@ -73,11 +73,11 @@ class PortalHinge(Hinge):
     def build(self):
         hinge = super().build()
         ramp = self.__build_ramp()
-        ramp_w_cut = (
-            cq.Workplane("XY")
-            .add(ramp)
-            .cut(self.ramp_hinge_cut)
-        )
+        ramp_w_cut = (cq.Workplane("XY").add(ramp))
+
+        if self.ramp_hinge_cut:
+            ramp_w_cut = ramp_w_cut.cut(self.ramp_hinge_cut)
+
         scene = (
             cq.Workplane("XY")
             .add(ramp_w_cut.rotate((1,0,0),(0,0,0), -self.rotate_deg))

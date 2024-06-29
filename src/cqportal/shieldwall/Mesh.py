@@ -14,26 +14,26 @@
 
 
 import cadquery as cq
-from cadqueryhelper import Base
+from . import BaseMesh
 import math
 
-class Mesh(Base):
+class Mesh(BaseMesh):
     def __init__(self):
         super().__init__()
-        #propetries
-        self.length = 75
-        self.width = 3
-        self.height = 25
+        #properties
+        self.length:float = 75
+        self.width:float = 3
+        self.height:float = 25
         
-        self.tile_length = 5
-        self.tile_width = 5
-        self.tile_padding = 0.2
-        self.tile_chamfer = 1.4
+        self.tile_length:float = 5
+        self.tile_width:float = 5
+        self.tile_padding:float = 0.2
+        self.tile_chamfer:float = 1.4
         
         #shapes
-        self.tile=None
-        self.tiles = None
-        self.outline = None
+        self.tile:cq.Workplane|None = None
+        self.tiles:cq.Workplane|None = None
+        self.outline:cq.Workplane|None = None
         
     def __make_outline(self):
         self.outline = (
@@ -62,8 +62,8 @@ class Mesh(Base):
         
         #log(f'{y_count=}')
         
-        def add_star(loc):
-            return self.tile.val().located(loc)
+        def add_star(loc:cq.Location) -> cq.Shape:
+            return self.tile.val().located(loc) # type: ignore
         
         self.tiles = (
             cq.Workplane("XY")
@@ -82,19 +82,23 @@ class Mesh(Base):
         self._make_tile()
         self._make_tiles()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
-        mesh = (
-            cq.Workplane('XY')
-            .union(self.outline)
-            #.cut(self.tile)
-            .cut(self.tiles)
-        ).rotate((1,0,0),(0,0,0),-90).translate((0,-1*(self.width/4),0))
-        
-        scene = (
-            cq.Workplane("XY")
-            .union(mesh) #front
-            .union(mesh.rotate((0,0,1),(0,0,0),180)) #back
-        )
 
-        return scene
+        if self.tiles:
+            mesh = (
+                cq.Workplane('XY')
+                .union(self.outline)
+                #.cut(self.tile)
+                .cut(self.tiles)
+            ).rotate((1,0,0),(0,0,0),-90).translate((0,-1*(self.width/4),0))
+            
+            scene = (
+                cq.Workplane("XY")
+                .union(mesh) #front
+                .union(mesh.rotate((0,0,1),(0,0,0),180)) #back
+            )
+
+            return scene
+        else:
+            raise Exception('Unable to resolve Mesh tiles')

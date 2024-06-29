@@ -15,43 +15,43 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
-from . import ShieldShape, CapGreeble, Magnets
+from . import BaseShape, BaseGreeble, BaseMagnets, ShieldShape, CapGreeble, Magnets, BaseWall
 
-class CornerConnector(Base):
+class CornerConnector(BaseWall):
     def __init__(self):
         super().__init__()
         #properties
-        self.length=20
-        self.width=20
-        self.height=25
+        self.length:float = 20
+        self.width:float = 20
+        self.height:float = 25
         
-        self.base_height = 5.6
+        self.base_height:float = 5.6
         
-        self.render_magnets = True
-        self.magnet_padding = 1
-        self.magnet_padding_x=2
+        self.render_magnets:bool = True
+        self.magnet_padding:float = 1
+        self.magnet_padding_x:float = 2
         
-        self.side_margin = -2
-        self.side_height = 1
-        self.top_height = 2
+        self.side_margin:float = -2
+        self.side_height:float = 1
+        self.top_height:float = 2
         
-        self.cut_width = 3
-        self.middle_width_inset = -6
+        self.cut_width:float = 3
+        self.middle_width_inset:float = -6
         
-        self.render_greeble = True
-        self.greeble_padding_y = 1
+        self.render_greeble:bool = True
+        self.greeble_padding_y:float = 1
         
         #blueprints
-        self.shape_bp = ShieldShape()
-        self.greeble_bp = CapGreeble()
-        self.magnets_bp = Magnets()
+        self.shape_bp:BaseShape = ShieldShape()
+        self.greeble_bp:BaseGreeble = CapGreeble()
+        self.magnets_bp:BaseMagnets = Magnets()
         
         #shapes
-        self.shape = None
-        self.connector = None
+        self.shape:cq.Workplane|None = None
+        self.connector:cq.Workplane|None = None
         
-        self.end_cap = None
-        self.greeble = None
+        self.end_cap:cq.Workplane|None = None
+        self.greeble:cq.Workplane|None = None
           
     def __make_wall_shape(self):
         self.shape_bp.length = self.height
@@ -63,13 +63,13 @@ class CornerConnector(Base):
         
         self.shape_bp.width = self.height
         
-        shape = (
-            self.shape_bp
-            .build()
-            .extrude(self.length)
-            .translate((0,0,-1*self.length/2))
-            
-        )
+        if self.shape_bp:
+            shape = (
+                self.shape_bp
+                .build()
+                .extrude(self.length)
+                .translate((0,0,-1*self.length/2))
+            )
         
         self.shape = shape.rotate((0,1,0),(0,0,0),90)
         
@@ -104,21 +104,23 @@ class CornerConnector(Base):
         )
         
     def __make_corner(self):
-        corner = (
-            cq.Workplane("XY")
-            .union(self.end_cap)
-            .union(self.end_cap.rotate((0,0,1),(0,0,0),90))
-        )
-        self.corner = corner
+        if self.end_cap:
+            corner = (
+                cq.Workplane("XY")
+                .union(self.end_cap)
+                .union(self.end_cap.rotate((0,0,1),(0,0,0),90))
+            )
+            self.corner = corner
 
         
     def __make_connector(self):
-        connector = (
-            cq.Workplane("XY")
-            .add(self.shape)
-            .add(self.shape.rotate((0,0,1),(0,0,0),90))
-        )
-        self.connector = connector
+        if self.shape:
+            connector = (
+                cq.Workplane("XY")
+                .add(self.shape)
+                .add(self.shape.rotate((0,0,1),(0,0,0),90))
+            )
+            self.connector = connector
         
     def __make_greeble(self):
         self.greeble_bp.length = self.length - self.cut_width*2 +-1.5-2.5
@@ -155,7 +157,7 @@ class CornerConnector(Base):
        )
        return scene
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
 
         scene = (
@@ -179,7 +181,7 @@ class CornerConnector(Base):
         return scene
         #return cq.Workplane("XY").box(self.length,self.width,self.height)
         
-    def build_assembly(self):
+    def build_assembly(self) -> cq.Assembly:
         super().build()
         assembly = cq.Assembly()
         

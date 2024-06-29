@@ -15,5 +15,7 @@ arch_set = arch_set_bp.build()
 #show_object(arch_set_bp.straight_bp.key_template.translate((-75,0,1)))
 
 #cq.exporters.export(arch_set, 'stl/shieldwall_arch_set.stl')
+#if arch_set_bp.straight_bp.key_template:
 cq.exporters.export(arch_set.translate((0,0,12.5)).add(arch_set_bp.straight_bp.key_template.translate((-75,0,1))),'stl/shieldwall_arch_set.stl')
-
+#else:
+#    raise Exception('Could not resolve example key template')

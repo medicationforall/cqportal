@@ -14,9 +14,13 @@
 
 
 import cadquery as cq
-from cadqueryhelper import Base
+from . import BaseShape
 
-def arch_pointed(length=30, height=50, inner_height=25):
+def arch_pointed(
+        length:float = 30, 
+        height:float = 50, 
+        inner_height:float = 25
+    ) -> cq.Workplane:
     m_length = length/2 #mirror length
     sPnts = [
         (inner_height+.00001, m_length+0),
@@ -34,18 +38,18 @@ def arch_pointed(length=30, height=50, inner_height=25):
     return result
 
 
-class ArchShape(Base):
+class ArchShape(BaseShape):
     def __init__(self):
         super().__init__()
-        #properties
-        self.length = 25
-        self.width = 20
-        self.base_height =5
-        self.middle_width_inset = -6
         
+        #properties
+        self.length:float = 25
+        self.width:float = 20
+        self.base_height:float = 5
+        self.middle_width_inset:float = -6
         
         #shapes
-        self.shape = None
+        self.shape:cq.Workplane|None = None
         
     def make(self, parent=None):
         super().make(parent)
@@ -55,10 +59,9 @@ class ArchShape(Base):
           inner_height=self.base_height
         )
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
-        return (
-            self.shape
-            #.rotate((0,0,1),(0,0,0),90)
-            #.rotate((0,1,0),(0,0,0),-90)
-        )
+        if self.shape:
+            return self.shape
+        else:
+            raise Exception("Unable to resolve ArchShape shape")

@@ -21,10 +21,10 @@ import math
 class GothicMesh(Mesh):
     def __init__(self):
         super().__init__()
-        self.tile_length = 10
-        self.tile_padding = 0
-        self.arch_frame_width = 1.5
-        self.side_length = None
+        self.tile_length:float = 10
+        self.tile_padding:float = 0
+        self.arch_frame_width:float = 1.5
+        self.side_length:float|None = None
         
     def _make_tile(self):
         tile_width = self.width /2
@@ -101,8 +101,8 @@ class GothicMesh(Mesh):
         self.side_length = self.length - (tile_length * x_count) 
         self.side = cq.Workplane('XY').box(self.side_length, self.width, self.height)
         
-        def add_tile(loc):
-            return self.tile.val().located(loc)
+        def add_tile(loc:cq.Location) -> cq.Shape:
+            return self.tile.val().located(loc) #type: ignore
         
         self.tiles = (
             cq.Workplane("XY")
@@ -115,12 +115,15 @@ class GothicMesh(Mesh):
             .eachpoint(callback = add_tile)
         )
     
-    def build(self):
-        scene = (
-            cq.Workplane("XY")
-            .union(self.tiles.translate((0,-(self.width/4),0)))
-            .union(self.tiles.rotate((0,0,1),(0,0,0), 180).translate((0,(self.width/4),0)))
-            .union(self.side.translate((self.length/2,0,0)))
-            .union(self.side.translate((-(self.length/2),0,0)))
-        )
-        return scene
+    def build(self) -> cq.Workplane:
+        if self.tiles:
+            scene = (
+                cq.Workplane("XY")
+                .union(self.tiles.translate((0,-(self.width/4),0)))
+                .union(self.tiles.rotate((0,0,1),(0,0,0), 180).translate((0,(self.width/4),0)))
+                .union(self.side.translate((self.length/2,0,0)))
+                .union(self.side.translate((-(self.length/2),0,0)))
+            )
+            return scene
+        else:
+            raise Exception('Unable to resolve GothicMesh tiles')

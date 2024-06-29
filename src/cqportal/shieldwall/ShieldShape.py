@@ -12,30 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import cadquery as cq
-from cadqueryhelper import Base
+from . import BaseShape
+from typing import Callable
 
 def shield_shape(
-    length = 20,
-    width = 20,
-    base_height = 4,
-    middle_width_inset = -6,
-    travel_distance = 2
-):
-    pts = [
-        (0,0),
-        (0,width),# base width
-        (base_height,width),#base Height
-        (base_height, width + middle_width_inset), # middle
-
-        (length,width + middle_width_inset),# top
-        (length,-1*(middle_width_inset)),# top
-
-        (base_height, -1*(middle_width_inset)), # middle
-        (base_height,0)
-    ]
-    
+    length:float = 20,
+    width:float = 20,
+    base_height:float = 4,
+    middle_width_inset:float = -6,
+    travel_distance:float = 2
+) -> cq.Workplane:
     base_sPnts = [
         (base_height/2+.00001, width/2),
         (base_height, width/2 - base_height/2 )
@@ -77,34 +64,37 @@ def shield_shape(
 
 #-------------------------
 
-class ShieldShape(Base):
+class ShieldShape(BaseShape):
     def __init__(self):
         super().__init__()
         
         # parameters
-        self.length = 20
-        self.width = 20
-        self.base_height = 5.6
-        self.middle_width_inset = -6
-        self.travel_distance =2
-        self.shape_method = shield_shape
+        self.length:float = 20
+        self.width:float = 20
+        self.base_height:float = 5.6
+        self.middle_width_inset:float = -6
+        self.travel_distance:float = 2
+        self.shape_method:Callable[[float, float, float, float, float], cq.Workplane] = shield_shape
         
         # shapes
-        self.shape=None
+        self.shape:cq.Workplane|None = None
         
     def _make_shape(self):
         self.shape = self.shape_method(
-            length = self.length,
-            width = self.width,
-            base_height = self.base_height,
-            middle_width_inset = self.middle_width_inset,
-            travel_distance = self.travel_distance
+            self.length,
+            self.width,
+            self.base_height,
+            self.middle_width_inset,
+            self.travel_distance
         )
         
-    def make(self, parent=None):
+    def make(self, parent = None):
         super().make(parent)
         self._make_shape()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
-        return self.shape
+        if self.shape:
+            return self.shape
+        else:
+            raise Exception("Unable to resolve SheildShape shape")

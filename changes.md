@@ -8,6 +8,9 @@
 * Added license blocks
 * Updated README.md
 * Modified PortalHinge tab_height and tab_z_translate
+* Anotated shieldwall package
+  * Added BaseGreeble,BaseMagnet, BaseMesh, BaseShape, BaseWall
+  * These setup the interface for what attributes other components rely on when replacing these classes.
 
 ## 3.4.0
 * Added base_coffin.py example and stl

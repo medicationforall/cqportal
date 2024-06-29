@@ -15,31 +15,31 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
-from . import ShieldShape, Magnets
+from . import ShieldShape, Magnets, BaseMagnets, BaseShape
 
 class CurveBasic(Base):
     def __init__(self):
         super().__init__()
         # properties
-        self.width = 20
-        self.height = 25
-        self.base_height = 5.6
+        self.width:float = 20
+        self.height:float = 25
+        self.base_height:float = 5.6
         
-        self.x_radius = 75
-        self.y_radius = 75#ellipse stretch
-        self.angle = 270
-        self.rotation_angle=0
+        self.x_radius:float = 75
+        self.y_radius:float = 75 #ellipse stretch
+        self.angle:float = 270
+        self.rotation_angle:float = 0
         
-        self.render_magnets = True
-        self.magnet_padding = 1
-        self.magnet_padding_x=2
+        self.render_magnets:bool = True
+        self.magnet_padding:float = 1
+        self.magnet_padding_x:float = 2
         
         # blueprints
-        self.shape_bp = ShieldShape()
-        self.magnets_bp = Magnets()
+        self.shape_bp:BaseShape = ShieldShape()
+        self.magnets_bp:BaseMagnets = Magnets()
         
         #shape
-        self.wall = None
+        self.wall:cq.Workplane|None = None
         
     def __make_shape(self, parent=None):
         self.shape_bp.length = self.height
@@ -75,7 +75,7 @@ class CurveBasic(Base):
         self.__make_magnets()
         self.__make_wall()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         magnets = self.magnets_bp.build()
         
