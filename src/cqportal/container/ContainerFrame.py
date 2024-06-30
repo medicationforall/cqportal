@@ -46,5 +46,5 @@ class ContainerFrame(Frame):
     def make(self, parent=None):
         super().make(parent)
             
-    def build(self):
+    def build(self) -> cq.Workplane:
         return super().build()

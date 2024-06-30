@@ -11,6 +11,8 @@
 * Anotated shieldwall package
   * Added BaseGreeble,BaseMagnet, BaseMesh, BaseShape, BaseWall
   * These setup the interface for what attributes other components rely on when replacing these classes.
+* Annotated Container package
+* Annotated Portal package
 
 ## 3.4.0
 * Added base_coffin.py example and stl

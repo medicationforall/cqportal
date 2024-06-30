@@ -16,8 +16,13 @@
 import cadquery as cq
 import math
 from . import Floor
+from typing import Callable
 
-def make_basic_tile(length, width, height):
+def make_basic_tile(
+        length:float, 
+        width:float, 
+        height:float
+) -> cq.Workplane:
     tile = cq.Workplane("XY").box(
         length, 
         width, 
@@ -29,10 +34,11 @@ class FloorTile(Floor):
     def __init__(self):
         super().__init__()
 
-        self.tile_length = 10
-        self.tile_width = 10
-        self.tile_padding = 1
-        self.make_tile_method = make_basic_tile
+        #propertes
+        self.tile_length:float = 10
+        self.tile_width:float = 10
+        self.tile_padding:float = 1
+        self.make_tile_method:Callable[[float, float, float], cq.Workplane] = make_basic_tile
         
     def _make_floor(self):
         if not self.make_tile_method:
@@ -46,8 +52,8 @@ class FloorTile(Floor):
         x_count = math.floor(self.length / tile_length)
         y_count = math.floor(self.width / tile_width)
 
-        def add_tile(loc):
-            return tile.val().located(loc)
+        def add_tile(loc:cq.Location) -> cq.Shape:
+            return tile.val().located(loc) #type: ignore
         
         result = (
             cq.Workplane("XY")
@@ -59,12 +65,11 @@ class FloorTile(Floor):
                 center = True)
             .eachpoint(callback = add_tile)
         )
-        
-        floor = cq.Workplane("XY").box(self.length, self.width, self.height)
+
         self.floor = result
 
-    def make(self, parent=None):
+    def make(self, parent = None):
         super().make(parent)
     
-    def build(self):
+    def build(self) -> cq.Workplane:
         return super().build()

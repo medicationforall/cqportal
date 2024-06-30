@@ -20,4 +20,6 @@ from ..portal import RampGreebled
 class ContainerRamp(RampGreebled):
     def __init__(self):
         super().__init__()
+
+        # blueprints
         self.bp_outside = ContainerDoor()

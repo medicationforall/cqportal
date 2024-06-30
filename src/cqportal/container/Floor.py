@@ -18,13 +18,13 @@ from cadqueryhelper import Base
 class Floor(Base):
     def __init__(self):
         super().__init__()
-        self.length = 75
-        self.width = 75
-        self.height = 4
+        self.length:float = 75
+        self.width:float = 75
+        self.height:float = 4
 
         #shapes
-        self.floor_cut = None
-        self.floor = None
+        self.floor_cut:cq.Workplane|None = None
+        self.floor:cq.Workplane|None = None
 
     def __make_floor_cut(self):
         floor_cut = cq.Workplane("XY").box(self.length, self.width, self.height)
@@ -34,12 +34,14 @@ class Floor(Base):
         floor = cq.Workplane("XY").box(self.length, self.width, self.height)
         self.floor = floor
 
-
     def make(self, parent=None):
         super().make(parent)
         self.__make_floor_cut()
         self._make_floor()
     
-    def build(self):
+    def build(self) ->cq.Workplane:
         super().build()
-        return self.floor
+        if self.floor:
+            return self.floor
+        else:
+            raise Exception("Could not resolve floor")

@@ -22,8 +22,9 @@ class Container(Portal):
         super().__init__()
         
         #params
-        self.render_base = False
+        self.render_base:bool = False
 
+        #blueprints
         self.bp_frame = ContainerFrame()
         self.bp_frame.length = 75
         self.bp_frame.width = 140
@@ -56,11 +57,11 @@ class Container(Portal):
         self.bp_ladder.ladder_depth = 5
         self.bp_ladder.ladder_rung_radius = 1.5
 
-        self.render_floor = True
-        self.render_ladder = True
+        self.render_floor:bool = True
+        self.render_ladder:bool = True
         
         #blueprints
-        self.bp_floor = Floor()
+        self.bp_floor:Floor = Floor()
         
     def make(self, parent=None):
         super().make(parent)
@@ -72,14 +73,14 @@ class Container(Portal):
         self.bp_ladder.width = self.bp_frame.width/5
         self.bp_ladder.make(self.bp_frame)
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         container = super().build()
         scene = (
             cq.Workplane("XY")
             .add(container.translate((0,0,-self.bp_base.height - self.bp_frame.height/2)))
         )
         
-        if self.render_floor:
+        if self.render_floor and self.bp_floor.floor_cut:
             floor = self.bp_floor.build()
             floor_cut = self.bp_floor.floor_cut
             floor_z = self.bp_frame.height-(self.bp_frame.frame_size*2)+self.bp_floor.height
@@ -92,9 +93,11 @@ class Container(Portal):
 
         if self.render_ladder:
             ladder_cut, ladder_rungs = self.bp_ladder.build()
-            scene=(
-                scene
-                .cut(ladder_cut)
-                .union(ladder_rungs)
-            )
+
+            if ladder_cut:
+                scene=(
+                    scene
+                    .cut(ladder_cut)
+                    .union(ladder_rungs)
+                )
         return scene
