@@ -16,4 +16,4 @@ bp_frame.make()
 result = bp_frame.build()
 
 #show_object(result)
-cq.exporters.export(result, 'stl/frame.stl')
+cq.exporters.export(result, 'stl/portal_frame.stl')

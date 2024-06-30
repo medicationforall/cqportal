@@ -20,6 +20,8 @@ from . import BaseCoffin
 class Ramp(Base):
     def __init__(self):
         super().__init__()
+
+        #parameters
         self.length:float = 150
         self.width:float = 10
         self.height:float = 150
@@ -34,7 +36,7 @@ class Ramp(Base):
         self.render_outside:bool = True
         self.render_inside:bool = True
         
-        # Blueprints
+        #blueprints
         self.bp_outside = BaseCoffin()
         self.bp_inside = BaseCoffin()
 

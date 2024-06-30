@@ -28,7 +28,6 @@ class Frame(Base):
         self.base_offset:float = 35 # offset distance from the center of the frame
         self.side_inset:float = 8 # The amount the inset the side frames in relation to the center.
         self.frame_size:float = 10 # distance from the outside wall and the inside wall.
-        
         self.render_sides:bool = True
         
         # shapes

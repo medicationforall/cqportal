@@ -21,4 +21,4 @@ bp_portal.make()
 result = bp_portal.build()
 
 #show_object(result)
-cq.exporters.export(result, 'stl/rotation_demo.stl')
+cq.exporters.export(result, 'stl/portal_rotation_demo.stl')

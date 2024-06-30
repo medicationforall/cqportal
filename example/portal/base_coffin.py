@@ -12,4 +12,4 @@ bp.make()
 ex = bp.build()
 
 #show_object(ex)
-cq.exporters.export(ex, 'stl/base_coffin.stl')
+cq.exporters.export(ex, 'stl/portal_base_coffin.stl')

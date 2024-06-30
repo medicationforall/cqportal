@@ -19,6 +19,7 @@ from cadqueryhelper import Hinge
 class PortalHinge(Hinge):
     def __init__(self):
         super().__init__()
+        #parameters
         self.ramp_bottom_margin:float = 0
         self.tab_height:float = self.radius*2
         self.tab_z_translate:float = self.radius
@@ -80,8 +81,8 @@ class PortalHinge(Hinge):
 
         scene = (
             cq.Workplane("XY")
-            .add(ramp_w_cut.rotate((1,0,0),(0,0,0), -self.rotate_deg))
-            .add(hinge.rotate((0,0,1),(0,0,0), 180))
+            .union(ramp_w_cut.rotate((1,0,0),(0,0,0), -self.rotate_deg))
+            .union(hinge.rotate((0,0,1),(0,0,0), 180))
         )
         
         return scene

@@ -33,4 +33,4 @@ scene = (
     .add(result.translate((bp_frame.length/2,0,bp_frame.height/2)))
     .add(bp_frame.window_cut_key.translate((-(bp_frame.length/2),0,0)))
 )
-cq.exporters.export(scene, 'stl/frame_window.stl')
+cq.exporters.export(scene, 'stl/portal_frame_window.stl')

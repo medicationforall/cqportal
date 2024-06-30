@@ -25,4 +25,4 @@ scene = (
 
 #show_object(scene)
 
-cq.exporters.export(scene, 'stl/ramp_frame.stl')
+cq.exporters.export(scene, 'stl/portal_ramp_frame.stl')
