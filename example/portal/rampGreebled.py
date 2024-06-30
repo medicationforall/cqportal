@@ -1,5 +1,4 @@
 import cadquery as cq
-from cadqueryhelper import Base, shape
 from cqportal.portal import RampGreebled
 
 bp_ramp = RampGreebled()
@@ -9,7 +8,7 @@ bp_ramp = RampGreebled()
 #bp_ramp.top_length = 60
 bp_ramp.base_length = 80
 
-bp_ramp.segment_x_padding = 0
+bp_ramp.segment_x_padding = 1
 bp_ramp.render_inside = True
 bp_ramp.render_inside_outline = False
 bp_ramp.make()

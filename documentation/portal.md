@@ -336,3 +336,45 @@ show_object(result)
 * [source](../src/cqportal/portal/Ramp.py)
 * [example](../example/portal/ramp.py)
 * [stl](../stl/portal_ramp.stl)
+
+---
+
+## Ramp Greebled
+Greebled ramp that inherits from [Ram](#ramp).
+
+### parameters
+* segment_count: int
+* segment_x_padding: float
+* segment_y_padding: float
+* segment_depth: float
+* render_inside_outline: bool
+
+### shapes
+* inside_segments: cq.Workplane|None
+* inside_outline: cq.Workplane|None
+
+``` python
+import cadquery as cq
+from cqportal.portal import RampGreebled
+
+bp_ramp = RampGreebled()
+#bp_ramp.length = 70
+#bp_ramp.width = 10
+#bp_ramp.height = 150
+#bp_ramp.top_length = 60
+bp_ramp.base_length = 80
+
+bp_ramp.segment_x_padding = 1
+bp_ramp.render_inside = True
+bp_ramp.render_inside_outline = False
+bp_ramp.make()
+ex_ramp = bp_ramp.build()
+
+show_object(ex_ramp)
+```
+
+![](image/portal/11.png)
+
+* [source](../src/cqportal/portal/RampGreebled.py)
+* [example](../example/portal/rampGreebled.py)
+* [stl](../stl/portal_ramp_greebled.stl)
