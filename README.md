@@ -1,57 +1,23 @@
 # cqportal
-Python library for making portal and container terrain.
+Python library for making portal, container, and shieldwall terrain.
 
-![](./documentation/image/01.png)<br /><br />
+## Portal
+![](./documentation/image/portal/old/01.png)<br /><br />
 
-### Example Portal Code
-
-``` python
-import cadquery as cq
-from cqportal.portal import Portal
-
-bp_portal = Portal()
-bp_portal.bp_frame.length = 150
-bp_portal.bp_frame.width = 30
-bp_portal.bp_frame.height = 150
-
-bp_portal.render_base = False
-bp_portal.render_ramps = True
-bp_portal.ramp_push = 0
-bp_portal.bp_ramp.width = 10
-
-bp_portal.bp_hinge.rotate_deg = 0
-
-bp_portal.make()
-
-
-result_open = bp_portal.build()
-#show_object(result_open)
-cq.exporters.export(result_open, 'portal_open.stl')
-```
 
 ## Container
-![](./documentation/image/34.png)<br /><br />
+![](./documentation/image/container/31.png)<br /><br />
 
-### Example Container Code
-
-``` python
-import cadquery as cq
-from cqportal.container import Container
-
-bp_container = Container()
-bp_container.bp_hinge.rotate_deg = -70
-
-bp_container.make()
-
-result = bp_container.build()
-#show_object(result)
-cq.exporters.export(result, 'container.stl')
-```
+## Shieldwall
+![](./documentation/image/shieldwall/48.png)<br /><br />
 
 ---
 
-## Project Documention
-* [Portal](documentation/portal.md) 
+## Documention
+* [Container](documentation/container.md)
+* [Portal](documentation/portal.md)
+* [Shieldwall](documentation/shieldwall.md)
+  
 
 ## Changes
 * [Changelog](./changes.md)
