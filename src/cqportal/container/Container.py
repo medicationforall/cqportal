@@ -22,7 +22,9 @@ class Container(Portal):
         super().__init__()
         
         #params
-        self.render_base:bool = False
+        self.render_base = False
+        self.render_floor:bool = True
+        self.render_ladder:bool = True
 
         #blueprints
         self.bp_frame = ContainerFrame()
@@ -56,12 +58,8 @@ class Container(Portal):
         self.bp_ladder.ladder_rungs = 5
         self.bp_ladder.ladder_depth = 5
         self.bp_ladder.ladder_rung_radius = 1.5
-
-        self.render_floor:bool = True
-        self.render_ladder:bool = True
         
-        #blueprints
-        self.bp_floor:Floor = Floor()
+        self.bp_floor = Floor()
         
     def make(self, parent=None):
         super().make(parent)

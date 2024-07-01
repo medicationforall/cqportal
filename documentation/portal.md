@@ -6,7 +6,7 @@ Code for creating portal models with print in place hinges.
 
 ---
 
-## BaseCoffin
+## Base Coffin
 
 ### parameters
 * length: float
@@ -40,7 +40,7 @@ show_object(ex)
 ![](image/portal/01_a.png)
 
 * [source](../src/cqportal/portal/BaseCoffin.py)
-* [example](../example/base_coffin.py)
+* [example](../example/portal/base_coffin.py)
 * [stl](../stl/base_coffin.stl)
 
 ---
@@ -84,7 +84,7 @@ show_object(result)
 ```
 
 * [source](../src/cqportal/portal/Frame.py)
-* [example](../example/frame.py)
+* [example](../example/portal/frame.py)
 * [stl](../stl/frame.stl)
 
 ---
@@ -143,7 +143,7 @@ show_object(bp_frame.window_cut_key.translate((-(bp_frame.length/2),0,0)))
 ![](image/portal/04.png)
 
 * [source](../src/cqportal/portal/FrameWindow.py)
-* [example](../example/frame_window.py)
+* [example](../example/portal/frame_window.py)
 * [stl](../stl/frame_window.stl)
 
 ---

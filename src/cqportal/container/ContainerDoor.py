@@ -20,6 +20,8 @@ from ..portal import BaseCoffin
 class ContainerDoor(BaseCoffin):
     def __init__(self):
         super().__init__()
+
+        #parameters
         self.cut_depth:float = 2
         self.padding:float = 3
         self.frame_width:float = 2
