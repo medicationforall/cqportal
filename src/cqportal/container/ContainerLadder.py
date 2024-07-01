@@ -19,6 +19,8 @@ from cadqueryhelper import Base, shape
 class ContainerLadder(Base):
     def __init__(self):
         super().__init__()
+
+        # parameters
         self.width:float = (150/5)
         self.x_padding:float = 2
         self.ladder_depth:float = 6

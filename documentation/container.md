@@ -112,4 +112,58 @@ show_object(frame)
 * [example](../example/container/container_frame.py)
 * [stl](../stl/container_frame.stl)
 
+---
 
+## Container Ladder
+
+Expects a frame passed in as the parent in order to calculate the ladder. build method returns a tuple of ladder_cut and ladder.
+
+### parameters
+* width: float
+* x_padding: float
+* ladder_depth: float
+* ladder_rungs: int
+* ladder_rung_radius: float
+
+### shapes
+* side_template:cq.Workplane|None
+* ladder_cut:cq.Workplane|None
+* ladder:cq.Workplane|None
+
+### returns
+* tuple[cq.Workplane, cq.Workplane]
+
+```python
+import cadquery as cq 
+from cqportal.container import ContainerLadder, ContainerFrame
+
+bp_frame = ContainerFrame()
+bp_frame.width = 200
+bp_frame.make()
+frame = bp_frame.build()
+
+bp_ladder = ContainerLadder()
+bp_ladder.width = bp_frame.width / 5
+bp_ladder.x_padding = 2
+bp_ladder.ladder_depth = 6
+bp_ladder.ladder_rungs = 8
+bp_ladder.ladder_rung_radius = 2
+
+bp_ladder.make(bp_frame)
+ladder_cut, ladder_rungs = bp_ladder.build()
+
+scene = (
+    cq.Workplane("XY")
+    .add(frame.translate((-20,0,0)))
+    .add(ladder_cut)
+    .add(ladder_rungs.translate((0,-40,0)))
+)
+
+show_object(scene)
+```
+
+![](image/container/38.png)
+
+* [source](../src/cqportal/container/ContainerLadder.py)
+* [example](../example/container/container_ladder.py)
+* [stl](../stl/container_ladder_exploded.stl)
