@@ -83,7 +83,8 @@ show_object(door)
 
 ## Container Frame
 
-Inherits from [Frame](./portal.md#frame). Ovrrides the _make_frame method.
+Inherits from [Frame](./portal.md#frame). 
+Ovrrides the _make_frame method from Frame.
 
 ```python
 import cadquery as cq
@@ -106,5 +107,9 @@ show_object(frame)
 ```
 
 ![](image/container/37.png)
+
+* [source](../src/cqportal/container/ContainerFrame.py)
+* [example](../example/container/container_frame.py)
+* [stl](../stl/container_frame.stl)
 
 
