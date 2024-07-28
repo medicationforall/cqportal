@@ -23,6 +23,7 @@ class PortalHinge(Hinge):
         self.ramp_bottom_margin:float = 0
         self.tab_height:float = self.radius*2
         self.tab_z_translate:float = self.radius
+        self.hinge_flip = False
         
         #shapes
         self.ramp_hinge_cut:cq.Workplane|None = None
@@ -82,7 +83,11 @@ class PortalHinge(Hinge):
         scene = (
             cq.Workplane("XY")
             .union(ramp_w_cut.rotate((1,0,0),(0,0,0), -self.rotate_deg))
-            .union(hinge.rotate((0,0,1),(0,0,0), 180))
         )
+        
+        if self.hinge_flip == False:
+            scene = scene.union(hinge.rotate((1,0,0),(0,0,0), -self.rotate_deg))
+        else:
+            scene = scene.union(hinge.rotate((0,0,1),(0,0,0), 180))
         
         return scene

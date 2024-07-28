@@ -2,6 +2,8 @@ import cadquery as cq
 from cqportal.container import ContainerFrame
 
 bp_frame = ContainerFrame()
+
+# Frame
 bp_frame.length = 150
 bp_frame.width = 150
 bp_frame.height = 150

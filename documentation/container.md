@@ -12,9 +12,9 @@ Orchestration class for assembling a container. Inherits from [Portal](./portal.
 * render_ladder:bool
 
 ### blueprints
-* bp_frame = ContainerFrame()
-* bp_ramp = ContainerRamp()
-* bp_ladder = ContainerLadder()
+* bp_frame = [ContainerFrame](#container-frame)()
+* bp_ramp = [ContainerRamp](#container-ramp)()
+* bp_ladder = [ContainerLadder](#container-ladder)()
 * bp_floor = Floor()
 
 ```python
@@ -167,3 +167,87 @@ show_object(scene)
 * [source](../src/cqportal/container/ContainerLadder.py)
 * [example](../example/container/container_ladder.py)
 * [stl](../stl/container_ladder_exploded.stl)
+
+---
+
+### Container Ramp
+Inherits from [RampGreebled](./portal.md#ramp-greebled).
+
+### parameters
+
+#### Ramp Parameters
+
+* length: float
+* width: float
+* height: float 
+* top_length: float
+* base_length: float
+* base_offset: float - offset distance from the base of the ramp
+* side_inset: float
+* frame_size: float
+* inside_margin: float
+* render_outside: bool
+* render_inside: bool
+
+#### RampGreebled parameters
+
+* segment_count: int
+* segment_x_padding: float
+* segment_y_padding: float
+* segment_depth: float
+* render_inside_outline: bool
+
+### Blueprints
+
+#### Ramp Blueprint
+
+* bp_outside = [BaseCoffin](portal.md#base-coffin)()
+* bp_inside = [BaseCoffin](portal.md#base-coffin)()
+  
+#### ContainerRamp Blueprint
+* bp_outside = [ContainerDoor](#container-door)()
+
+```python
+import cadquery as cq
+from cqportal.container import ContainerRamp, ContainerDoor
+
+bp_ramp = ContainerRamp()
+
+# Ramp
+bp_ramp.length = 150
+bp_ramp.width = 10
+bp_ramp.height = 150
+bp_ramp.top_length = 90
+bp_ramp.base_length = 100
+bp_ramp.base_offset = 35 # offset distance from the base of the ramp
+
+bp_ramp.side_inset = 8
+bp_ramp.frame_size = 10
+bp_ramp.inside_margin = 0.4
+
+bp_ramp.render_outside = True
+bp_ramp.render_inside = True
+
+# RampGreebled
+bp_ramp.segment_count = 20
+bp_ramp.segment_x_padding = 2
+bp_ramp.segment_y_padding = 3
+bp_ramp.segment_depth = 2.5
+bp_ramp.render_inside_outline = False
+
+# ContainerRamp
+bp_ramp.bp_outside = ContainerDoor()
+
+bp_ramp.make()
+ramp_ex = bp_ramp.build()
+
+#show_object(ramp_ex)
+cq.exporters.export(ramp_ex, 'stl/container_ramp.stl') 
+```
+![](image/container/41.png)<br />
+![](image/container/42.png)
+
+
+* [source](../src/cqportal/container/ContainerRamp.py)
+* [example](../example/container/container_ramp.py)
+* [stl](../stl/container_ramp.stl)

@@ -3,7 +3,7 @@
 ## Main wip
 
 ## 4.0.0
-* Updgraded cadqueryhelper version 1.0.2
+* Updgraded cadqueryhelper version 1.0.3
 * Added example_runner.py
   * Moved examples around into sub packages 
 * Added license blocks
@@ -16,6 +16,7 @@
 * Annotated Portal package
 * Added portal_hinge.py example
 * Refactored ramp.py example
+* Added container_ramp example
 
 ## 3.4.0
 * Added base_coffin.py example and stl

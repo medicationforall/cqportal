@@ -8,7 +8,7 @@ bp_hinge = PortalHinge()
 
 bp_hinge.length = 80
 bp_hinge.radius = 2.5
-bp_hinge.segments = 5
+bp_hinge.segments = 3
 bp_hinge.pad = 1
 
 bp_hinge.base_inset = 0.6
@@ -22,6 +22,8 @@ bp_hinge.plate_spacer = 0.4
 bp_hinge.ramp_bottom_margin = 0
 bp_hinge.tab_height = bp_hinge.radius*2
 bp_hinge.tab_z_translate = bp_hinge.radius
+bp_hinge.invert = False
+bp_hinge.hinge_flip = False
 
 bp_hinge.make(bp_ramp)
 

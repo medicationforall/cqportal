@@ -21,6 +21,7 @@ import example.container.container
 import example.container.containerDoor
 import example.container.container_frame
 import example.container.container_ladder
+import example.container.container_ramp
 
 print('building shieldwall')
 import example.shieldwall.archset
