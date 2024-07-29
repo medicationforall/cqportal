@@ -171,7 +171,7 @@ show_object(scene)
 ---
 
 ### Container Ramp
-Inherits from [RampGreebled](./portal.md#ramp-greebled).
+Inherits from [RampGreebled](./portal.md#ramp-greebled). Has the front and back of the component styled.
 
 ### parameters
 
@@ -241,8 +241,7 @@ bp_ramp.bp_outside = ContainerDoor()
 bp_ramp.make()
 ramp_ex = bp_ramp.build()
 
-#show_object(ramp_ex)
-cq.exporters.export(ramp_ex, 'stl/container_ramp.stl') 
+show_object(ramp_ex)
 ```
 ![](image/container/41.png)<br />
 ![](image/container/42.png)
@@ -251,3 +250,97 @@ cq.exporters.export(ramp_ex, 'stl/container_ramp.stl')
 * [source](../src/cqportal/container/ContainerRamp.py)
 * [example](../example/container/container_ramp.py)
 * [stl](../stl/container_ramp.stl)
+
+---
+
+## Floor
+Baseline floor template intended to be replaced in the container model.
+
+### parameters
+* length: float
+* width: float
+* height: float
+
+```python
+import cadquery as cq
+from cqportal.container import Floor
+
+floor_bp = Floor()
+floor_bp.length = 75
+floor_bp.width = 75
+floor_bp.height = 4
+
+floor_bp.make()
+floor_ex = floor_bp.build()
+
+show_object(floor_ex)
+```
+
+![](image/container/43.png)
+
+* [source](../src/cqportal/container/Floor.py)
+* [example](../example/container/floor.py)
+* [stl](../stl/container_floor.stl)
+  
+---
+
+## Floor Tile
+Inherits from [Floor](#floor), adds a tiles pattern.
+
+### parameters
+
+### Floor Parameters
+* length: float
+* width: float
+* height: float
+
+### FloorTile Parameters
+* tile_length: float
+* tile_width: float
+* tile_padding: float
+* make_tile_method: Callable[[float, float, float], cq.Workplane] - ovverride this to add your own tile pattern.
+
+```python
+import cadquery as cq
+from cqportal.container import FloorTile
+
+#-------------
+# Custom tile method
+def make_basic_tile(
+    length:float, 
+    width:float, 
+    height:float
+) -> cq.Workplane:
+    tile = cq.Workplane("XY").box(
+        length, 
+        width, 
+        height
+    )
+    return tile
+
+#------------
+# Floor Tile Instantiation
+bp_floor_tile = FloorTile()
+
+## Floor parameters
+bp_floor_tile.length = 75
+bp_floor_tile.width = 75
+bp_floor_tile.height = 4
+
+## FloorTile parameters
+bp_floor_tile.tile_length = 10
+bp_floor_tile.tile_width = 10
+bp_floor_tile.tile_padding = 1
+bp_floor_tile.make_tile_method = make_basic_tile
+bp_floor_tile.make()
+
+floor_ex = bp_floor_tile.build()
+
+show_object(floor_ex)
+```
+
+![](image/container/44.png)
+
+* [source](../src/cqportal/container/FloorTile.py)
+* [example](../example/container/floor_tile.py)
+* [stl](../stl/container_floor_tile.stl)

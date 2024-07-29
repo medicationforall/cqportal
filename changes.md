@@ -17,6 +17,7 @@
 * Added portal_hinge.py example
 * Refactored ramp.py example
 * Added container_ramp example
+* Added container floor examples
 
 ## 3.4.0
 * Added base_coffin.py example and stl
