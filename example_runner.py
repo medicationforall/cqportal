@@ -27,6 +27,7 @@ import example.container.floor_tile
 
 print('building shieldwall')
 import example.shieldwall.archset
+import example.shieldwall.arch_shape
 import example.shieldwall.corner_connector
 import example.shieldwall.curve_basic
 import example.shieldwall.endcap

@@ -18,6 +18,7 @@
 * Refactored ramp.py example
 * Added container_ramp example
 * Added container floor examples
+* Added arch_shape example
 
 ## 3.4.0
 * Added base_coffin.py example and stl
