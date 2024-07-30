@@ -18,7 +18,9 @@
 * Refactored ramp.py example
 * Added container_ramp example
 * Added container floor examples
-* Added arch_shape example
+* Added shieldwall arch_shape example
+* Added shieldwall base_cut exmple
+* Added shieldwall cap_greeble example
 
 ## 3.4.0
 * Added base_coffin.py example and stl
