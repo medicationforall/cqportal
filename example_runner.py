@@ -32,10 +32,11 @@ import example.shieldwall.base_cut
 import example.shieldwall.cap_greeble
 import example.shieldwall.corner_connector
 import example.shieldwall.curve_basic
-import example.shieldwall.endcap
-import example.shieldwall.gothicMesh
-import example.shieldwall.hexMesh
-import example.shieldwall.hexset
+import example.shieldwall.curve_basic_arch
+import example.shieldwall.end_cap
+import example.shieldwall.gothic_mesh
+import example.shieldwall.hex_mesh
+import example.shieldwall.hex_set
 import example.shieldwall.magnets
 import example.shieldwall.mesh
 import example.shieldwall.set

@@ -19,7 +19,7 @@ class HexStraight(Straight):
     def __init__(self):
         super().__init__()
         #properties
-        self.mesh_width = 4
+        self.mesh_width:float = 4
 
         #blueprints
         self.mesh_bp = HexMesh() 

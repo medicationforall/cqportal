@@ -17,16 +17,14 @@ class BaseWall(Base):
 
         self.base_height:float = 5.6
         self.magnet_padding_x:float = 2
-        self.mesh_width = 6
-        self.render_greeble=True
+        self.mesh_width: float = 6
+        self.render_greeble: bool = True
 
         #blueprints
         self.shape_bp:BaseShape = BaseShape()
         self.mesh_bp:BaseMesh = BaseMesh()
         self.magnets_bp:BaseMagnets = BaseMagnets()
         self.base_cut_bp:BaseCut = BaseCut()
-
-        #shapes
         
 
     def build(self) -> cq.Workplane:

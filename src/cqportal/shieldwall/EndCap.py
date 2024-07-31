@@ -45,8 +45,8 @@ class EndCap(BaseWall):
         self.magnets_bp:BaseMagnets = Magnets()
         
         #shapes
-        self.end_cap = None
-        self.greeble = None
+        self.end_cap:cq.Workplane|None = None
+        self.greeble:cq.Workplane|None = None
         
     def __make_end_cap(self):
         self.shape_bp.length = self.height

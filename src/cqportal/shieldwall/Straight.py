@@ -40,7 +40,7 @@ class Straight(BaseWall):
         self.cut_width:float = .8
         self.key_margin:float = 0.2
         
-        self.render_base_cut = True
+        self.render_base_cut:bool = True
         self.base_cut_height:float|None = None
         self.base_cut_width:float|None = None
         

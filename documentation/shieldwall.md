@@ -340,3 +340,352 @@ show_object(corner_ex)
 * [source](../src/cqportal/shieldwall/CornerConnector.py)
 * [example](../example/shieldwall/corner_connector.py)
 * [stl](../stl/shieldwall_corner_connector.stl)
+
+---
+
+## Curve Basic
+
+### parameters
+* width: float
+* height: float
+* base_height: float
+
+* x_radius: float
+* y_radius: float - ellipse stretch
+* angle: float
+* rotation_angle: float
+
+* render_magnets: bool
+* magnet_padding: float
+* magnet_padding_x: float
+
+### blueprints
+* shape_bp: [BaseShape](#base-shape) = [ShieldShape](#shield-shape)()
+* magnets_bp: [BaseMagnets](#base-magnets) = [Magnets](#magnets)()
+
+### shapes
+* wall: cq.Workplane|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import CurveBasic, ShieldShape, Magnets
+
+
+wall_bp = CurveBasic()
+wall_bp.width = 20
+wall_bp.height = 25
+wall_bp.base_height = 5.6
+
+wall_bp.x_radius = 75
+wall_bp.y_radius = 75 #ellipse stretch
+wall_bp.angle = 270
+wall_bp.rotation_angle = 0
+
+wall_bp.render_magnets = True
+wall_bp.magnet_padding = 1
+wall_bp.magnet_padding_x = 2
+
+# blueprints
+wall_bp.shape_bp = ShieldShape()
+wall_bp.magnets_bp = Magnets()
+
+
+wall_bp.make()
+wall_ex = wall_bp.build()
+
+show_object(wall_ex)
+```
+
+![](image/shieldwall/07.png)
+
+### Examples
+
+#### Curve Basic Arch
+```python
+import cadquery as cq
+from cqportal.shieldwall import CurveBasic, ArchShape
+
+
+wall_bp = CurveBasic()
+wall_bp.shape_bp = ArchShape()
+
+#90 degrees
+wall_bp.angle = 270
+wall_bp.rotation_angle=0
+
+#45 degrees
+#wall_bp.angle = 315
+#wall_bp.rotation_angle=-45
+
+#60 degrees
+#wall_bp.angle = 300
+#wall_bp.rotation_angle=-30
+
+
+wall_bp.make()
+wall_ex = wall_bp.build()
+
+show_object(wall_ex)
+```
+
+![](image/shieldwall/06.png)
+
+* [source](../src/cqportal/shieldwall/CurveBasic.py)
+* [example](../example/shieldwall/curve_basic.py)
+* [example arch](../example/shieldwall/curve_basic_arch.py)
+* [stl](../stl/shieldwall_curve_basic.stl)
+* [stl arch](../stl/shieldwall_curve_basic_arch.stl)
+
+---
+
+## End Cap
+Inherits off of [BaseWall](#base-wall).
+
+### parameters
+* length: float
+* width: float
+* height: float
+* base_height: float
+* side_margin: float
+* side_height: float
+* top_height: float
+* cut_width: float
+* middle_width_inset: float
+* render_greeble: bool
+* greeble_padding_y: float
+* render_magnets: bool
+* magnet_padding: float
+* magnet_padding_x: float
+
+### blueprints
+* shape_bp: [BaseShape](#base-shape) = [ShieldShape](#shield-shape)()
+* greeble_bp: [BaseGreeble](#base-greeble) = [CapGreeble](#cap-greeble)()
+* magnets_bp: [BaseMagnets](#base-magnets) = [Magnets](#magnets)()
+
+### shapes
+* end_cap: cq.Workplane|None
+* greeble: cq.Workplane|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import EndCap
+
+cap_bp =  EndCap()
+cap_bp.length = 15
+cap_bp.width = 20
+cap_bp.height = 25
+cap_bp.base_height = 5.6
+cap_bp.side_margin = -2
+cap_bp.side_height = 1
+cap_bp.top_height = 2
+
+cap_bp.cut_width = 3
+cap_bp.middle_width_inset = -6
+
+cap_bp.render_greeble = True
+cap_bp.greeble_padding_y = 1
+
+cap_bp.render_magnets = True
+cap_bp.magnet_padding = 1
+cap_bp.magnet_padding_x = 2
+
+
+cap_bp.make()
+cap_ex = cap_bp.build()
+cap_ex_assembly = cap_bp.build_assembly()
+
+show_object(cap_ex)
+```
+
+![](image/shieldwall/08.png)
+
+* [source](../src/cqportal/shieldwall/EndCap.py)
+* [example](../example/shieldwall/end_cap.py)
+* [stl](../stl/shieldwall_end_cap.stl)
+
+---
+
+## Gothic Mesh
+Inherits from [Mesh](#mesh).
+
+### parameters
+
+#### Mesh parameters
+* length: float
+* width: float
+* height: float
+* tile_length: float
+* tile_width: float
+* tile_padding: float
+* tile_chamfer: float
+
+### Gothic Mesh parameters
+* arch_frame_width: float
+* side_length: float|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import GothicMesh
+
+gothic_bp = GothicMesh()
+gothic_bp.length = 75
+gothic_bp.width = 3
+gothic_bp.height = 25
+gothic_bp.tile_width = 5
+gothic_bp.tile_chamfer = 1.4
+gothic_bp.tile_length = 10
+gothic_bp.tile_padding = 0
+gothic_bp.arch_frame_width = 1.5
+gothic_bp.side_length = None
+
+gothic_bp.make()
+gothic_ex = gothic_bp.build()
+
+show_object(gothic_ex)
+```
+
+![](image/shieldwall/09.png)
+
+* [source](../src/cqportal/shieldwall/GothicMesh.py)
+* [example](../example/shieldwall/gothic_mesh.py)
+* [stl](../stl/shieldwall_gothic_mesh.stl)
+
+---
+
+## Hex Mesh
+Inherits from [Mesh](#mesh).
+
+### parameters
+* length: float
+* width: float
+* height: float
+* tile_length: float
+* tile_width: float
+* tile_padding: float
+* tile_chamfer: float
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import HexMesh
+
+mesh_bp = HexMesh()
+mesh_bp.length = 75
+mesh_bp.width = 3
+mesh_bp.height = 50
+mesh_bp.tile_length =10
+mesh_bp.tile_width = 10
+mesh_bp.tile_padding = .0
+mesh_bp.tile_chamfer = 0.5
+mesh_bp.make()
+mesh_ex = mesh_bp.build()
+
+show_object(mesh_ex)
+```
+
+![](image/shieldwall/10.png)
+
+* [source](../src/cqportal/shieldwall/HexMesh.py)
+* [example](../example/shieldwall/hex_mesh.py)
+* [stl](../stl/shieldwall_hex_mesh.stl)
+
+---
+
+## Hex Set
+Inherits from [Set](#set).
+
+### parameters
+* straight_count: int
+* padding: float
+* height: float
+* base_height: float
+* magnet_padding_x: float
+* corner_count: int
+* end_cap_count: int
+* end_cap_length: float
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import HexSet
+
+hex_set_bp = HexSet()
+hex_set_bp.base_height = 5.6
+
+hex_set_bp.straight_count = 1
+hex_set_bp.corner_count = 1
+hex_set_bp.end_cap_count = 1
+
+hex_set_bp.make()
+hex_set = hex_set_bp.build()
+
+show_object(hex_set)
+```
+
+![](image/shieldwall/11.png)
+
+* [source](../src/cqportal/shieldwall/HexSet.py)
+* [example](../example/shieldwall/hex_set.py)
+* [stl](../stl/shieldwall_hex_set.stl)
+  
+---
+
+## Hex Straight
+Inherits from [Straight](#straight).
+
+### Parameters
+* length: float
+* width: float
+* height: float
+* base_height: float
+* render_magnets: bool
+* magnet_padding: float
+* magnet_padding_x: float
+* cut_padding_x: float
+* cut_padding_z: float
+* post_length: float
+* post_padding_y: float
+* mesh_width: float
+* cut_width: float
+* key_margin: float
+* render_base_cut: bool
+* base_cut_height: float|None
+* base_cut_width: float|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import HexStraight
+
+hex_bp = HexStraight()
+hex_bp.length = 75
+hex_bp.width = 20
+hex_bp.height = 25
+hex_bp.base_height = 5.6
+hex_bp.render_magnets = True
+hex_bp.magnet_padding = 1
+hex_bp.magnet_padding_x = 2
+hex_bp.cut_padding_x = 3
+hex_bp.cut_padding_z = 3
+hex_bp.post_length = 2
+hex_bp.post_padding_y = 1
+hex_bp.cut_width = .8
+hex_bp.key_margin = 0.2
+hex_bp.render_base_cut = True
+hex_bp.base_cut_height = None
+hex_bp.base_cut_width = None
+hex_bp.mesh_width = 4
+hex_bp.make()
+
+result = hex_bp.build()
+
+show_object(result)
+```
+
+![](image/shieldwall/12.png)
+
+* [source](../src/cqportal/shieldwall/HexStraight.py)
+* [example](../example/shieldwall/hex_straight.py)
+* [stl](../stl/shieldwall_hex_straight.stl)
+
+---
+## Magnets
+
+### parameters

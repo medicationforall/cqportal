@@ -21,6 +21,7 @@
 * Added shieldwall arch_shape example
 * Added shieldwall base_cut exmple
 * Added shieldwall cap_greeble example
+* Added shieldwall hex_straight example
 
 ## 3.4.0
 * Added base_coffin.py example and stl
