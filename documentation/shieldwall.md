@@ -349,12 +349,10 @@ show_object(corner_ex)
 * width: float
 * height: float
 * base_height: float
-
 * x_radius: float
 * y_radius: float - ellipse stretch
 * angle: float
 * rotation_angle: float
-
 * render_magnets: bool
 * magnet_padding: float
 * magnet_padding_x: float
