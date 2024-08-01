@@ -813,3 +813,47 @@ show_object(set_ex)
 * [source](../src/cqportal/shieldwall/Set.py)
 * [example](../example/shieldwall/set.py)
 * [stl](../stl/shieldwall_set.stl)
+
+---
+
+## Shield Shape
+Helper class to generate a shield shape. 
+Inherits off of [BaseShape](#base-shape). The actual shape generation method of this classwas re-written multiple times because mirroring in cadquery can be unpredictable. 
+
+### parameters
+* length: float
+* width: float
+* base_height: float
+* middle_width_inset: float
+* travel_distance: float
+* shape_method: Callable[[float, float, float, float, float], cq.Workplane]
+
+### shapes
+* shape: cq.Workplane|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import  ShieldShape
+
+shape_bp = ShieldShape()
+
+shape_bp.length = 20
+shape_bp.width = 20
+shape_bp.base_height = 5.6
+shape_bp.middle_width_inset = -6
+shape_bp.travel_distance = 2
+
+shape_bp.make()
+
+shape_ex = shape_bp.build().extrude(2)
+show_object(shape_ex)
+```
+
+![](image/shieldwall/16.png)
+
+* [source](../src/cqportal/shieldwall/ShieldShape.py)
+* [example](../example/shieldwall/shield_shape.py)
+* [stl](../stl/shieldwall_shield_shape.stl)
+
+---
+

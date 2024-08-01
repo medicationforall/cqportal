@@ -40,7 +40,7 @@ import example.shieldwall.hex_set
 import example.shieldwall.magnets
 import example.shieldwall.mesh
 import example.shieldwall.set
-import example.shieldwall.shape
+import example.shieldwall.shield_shape
 import example.shieldwall.straight_basic
 import example.shieldwall.straight_hex
 import example.shieldwall.straight
