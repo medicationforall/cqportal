@@ -687,5 +687,129 @@ show_object(result)
 
 ---
 ## Magnets
+Inherits from [BaseMagnets](#base-magnets).
 
 ### parameters
+* distance: float
+* pip_height: float
+* pip_radius: float
+  
+```python
+import cadquery as cq
+from cqportal.shieldwall import Magnets
+
+magnet_bp = Magnets()
+
+magnet_bp.distance = 12.9
+magnet_bp.pip_height = 2.4
+magnet_bp.pip_radius = 1.56
+
+magnet_bp.make()
+magnet_ex = magnet_bp.build()
+
+show_object(magnet_ex)
+```
+
+![](image/shieldwall/13.png)
+
+* [source](../src/cqportal/shieldwall/Magnets.py)
+* [example](../example/shieldwall/magnets.py)
+* [stl](../stl/shieldwall_magnets.stl)
+
+---
+
+## Mesh
+Inherits from [BaseMesh](#base-mesh).
+
+### parameters
+* length:float
+* width:float
+* height:float
+* tile_length:float
+* tile_width:float
+* tile_padding:float
+* tile_chamfer:float
+
+### shapes
+* tile:cq.Workplane|None
+* tiles:cq.Workplane|None
+* outline:cq.Workplane|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import Mesh
+
+mesh_bp = Mesh()
+
+mesh_bp.length = 75
+mesh_bp.width = 3
+mesh_bp.height = 25
+
+mesh_bp.tile_length = 5
+mesh_bp.tile_width = 5
+mesh_bp.tile_padding = 0.2
+mesh_bp.tile_chamfer = 1.4
+
+mesh_bp.make()
+mesh_ex = mesh_bp.build()
+
+show_object(mesh_ex)
+```
+
+![](image/shieldwall/14.png)
+
+* [source](../src/cqportal/shieldwall/Mesh.py)
+* [example](../example/shieldwall/mesh.py)
+* [stl](../stl/shieldwall_mesh.stl)
+
+---
+
+## Set
+orchestration class that creates a build plate of shieldwalls.
+
+### parameters
+* straight_count: int
+* padding: float
+* height: float
+* base_height: float
+* magnet_padding_x: float
+* corner_count: int
+* end_cap_count: int
+* end_cap_length: float
+
+### blueprints
+* shape_bp: [BaseShape](#base-shape) = [ShieldShape](#shield-shape)()
+* mesh_bp: [BaseMesh](#base-mesh) = [Mesh](#mesh)()
+* straight_bp: [BaseWall](#base-wall) = [Straight](#straight)()
+* end_bp: [BaseWall](#base-wall) = [EndCap](#end-cap)()
+* corner_bp: [BaseWall](#base-wall) = [CornerConnector](#corner-connector)()
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import Set
+
+set_bp = Set()
+
+set_bp.straight_count = 4
+set_bp.padding = 5
+set_bp.height = 25
+
+set_bp.base_height = 5.6
+set_bp.magnet_padding_x = 2
+
+set_bp.corner_count = 2
+
+set_bp.end_cap_count = 4
+set_bp.end_cap_length = 15
+
+set_bp.make()
+set_ex = set_bp.build()
+
+show_object(set_ex)
+```
+
+![](image/shieldwall/15.png)
+
+* [source](../src/cqportal/shieldwall/Set.py)
+* [example](../example/shieldwall/set.py)
+* [stl](../stl/shieldwall_set.stl)
