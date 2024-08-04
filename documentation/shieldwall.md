@@ -855,3 +855,124 @@ show_object(shape_ex)
 
 ---
 
+## Straight
+Inherits from [BaseWall](#base-wall).
+
+### parameters
+* length: float
+* width: float
+* height: float
+* base_height: float
+* render_magnets: bool
+* magnet_padding: float
+* magnet_padding_x: float
+* cut_padding_x: float
+* cut_padding_z: float
+* post_length: float
+* post_padding_y: float
+* mesh_width: float
+* cut_width: float
+* key_margin: float
+* render_base_cut: bool
+* base_cut_height: float|None
+* base_cut_width: float|None
+
+### blueprints
+* shape_bp: [BaseShape](#base-shape) = [ShieldShape](#shield-shape)()
+* mesh_bp: [BaseMesh](#base-mesh) = [Mesh](#mesh)()
+* magnets_bp: [BaseMagnets](#base-magnets) = [Magnets](#magnets)()
+* base_cut_bp: [BaseCut](#base-cut) = [BaseCut](#base-cut)()
+
+### shapes
+* shape: cq.Workplane|None
+* outline: cq.Workplane|None
+* post: cq.Workplane|None
+* key_cut: cq.Workplane|None
+* key_template: cq.Workplane|None
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import Straight, HexMesh
+
+straight_bp = Straight()
+straight_bp.length = 75
+straight_bp.width = 20
+straight_bp.height = 25
+
+straight_bp.base_height = 5.6
+
+straight_bp.render_magnets = True
+straight_bp.magnet_padding= 1
+straight_bp.magnet_padding_x = 2
+
+straight_bp.cut_padding_x = 3
+straight_bp.cut_padding_z = 3
+
+straight_bp.post_length= 2
+straight_bp.post_padding_y = 1
+straight_bp.mesh_width = 3
+
+straight_bp.cut_width= .8
+straight_bp.key_margin = 0.2
+
+straight_bp.render_base_cut= True
+straight_bp.base_cut_height = None
+straight_bp.base_cut_width= None
+
+straight_bp.make()
+straight_ex = straight_bp.build()
+
+show_object('straight_ex')
+```
+
+![](image/shieldwall/17.png)
+
+* [source](../src/cqportal/shieldwall/Straight.py)
+* [example](../example/shieldwall/straight.py)
+* [stl](../stl/shieldwall_straight.stl)
+
+---
+
+### Straight Basic
+Inherits from [BaseWall](#base-wall).
+
+### parameters
+* length = 75
+* width = 20
+* height = 20
+* base_height = 5.6
+* render_magnets = True
+* magnet_padding = 1
+* magnet_padding_x=2
+
+### blueprints
+* shape_bp: [BaseShape](#base-shape) = [ShieldShape](#shield-shape)()
+* magnets_bp: [BaseMagnets](#base-magnets) = [Magnets](#magnets)()
+
+```python
+import cadquery as cq
+from cqportal.shieldwall import StraightBasic
+
+straight_bp = StraightBasic()
+
+straight_bp.length = 75
+straight_bp.width = 20
+straight_bp.height = 20
+straight_bp.base_height = 5.6
+straight_bp.render_magnets = True
+straight_bp.magnet_padding = 1
+straight_bp.magnet_padding_x = 2
+
+straight_bp.make()
+straight_ex = straight_bp.build()
+
+show_object(straight_ex)
+```
+
+![](image/shieldwall/18.png)
+
+* [source](../src/cqportal/shieldwall/StraightBasic.py)
+* [example](../example/shieldwall/straight_basic.py)
+* [stl](../stl/shieldwall_straight_basic.stl)
+
+

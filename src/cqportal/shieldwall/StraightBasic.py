@@ -21,14 +21,14 @@ class StraightBasic(BaseWall):
         super().__init__()
 
         #properties
-        self.length = 75
-        self.width = 20
-        self.height = 20
-        self.base_height = 5.6
+        self.length:float = 75
+        self.width:float = 20
+        self.height:float = 20
+        self.base_height:float = 5.6
 
-        self.render_magnets = True
-        self.magnet_padding = 1
-        self.magnet_padding_x=2
+        self.render_magnets:bool = True
+        self.magnet_padding:float = 1
+        self.magnet_padding_x:float = 2
 
         # blueprints
         self.shape_bp:BaseShape = ShieldShape()

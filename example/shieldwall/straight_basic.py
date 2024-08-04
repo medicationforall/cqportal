@@ -1,13 +1,18 @@
 import cadquery as cq
 from cqportal.shieldwall import StraightBasic
 
-wall_bp = StraightBasic()
-#wall_bp.length = 100
-#wall_bp.width = 50
-#wall_bp.height = 10
-wall_bp.render_magnets = True
-wall_bp.make()
-wall_ex = wall_bp.build()
+straight_bp = StraightBasic()
 
-#show_object(wall_ex)
-cq.exporters.export(wall_ex, 'stl/shieldwall_straightbasic.stl')
+straight_bp.length = 75
+straight_bp.width = 20
+straight_bp.height = 20
+straight_bp.base_height = 5.6
+straight_bp.render_magnets = True
+straight_bp.magnet_padding = 1
+straight_bp.magnet_padding_x = 2
+
+straight_bp.make()
+straight_ex = straight_bp.build()
+
+#show_object(straight_ex)
+cq.exporters.export(straight_ex, 'stl/shieldwall_straight_basic.stl')
