@@ -19,6 +19,14 @@ from . import Mesh
 class HexMesh(Mesh):
     def __init__(self):
         super().__init__()
+
+    def build_hex_key(self):
+        tile = (
+            cq.Workplane('XY')
+            .polygon(6, self.tile_length-0.6)
+        ).extrude(30)
+
+        return tile
         
     def _make_tile(self):
         tile = (

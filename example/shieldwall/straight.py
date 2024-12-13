@@ -29,5 +29,7 @@ straight_bp.base_cut_width= None
 straight_bp.make()
 straight_ex = straight_bp.build()
 
-#show_object('straight_ex')
+key = straight_bp.key_template
+
+#show_object(straight_ex)
 cq.exporters.export(straight_ex, 'stl/shieldwall_straight.stl')

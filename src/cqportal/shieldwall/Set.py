@@ -111,8 +111,14 @@ class Set(Base):
         corner_translate = self.straight_bp.length/2 + self.end_bp.length + self.padding + self.corner_bp.length/2 + self.padding
         scene = (
             cq.Workplane("XY")
-            .union(straight_walls)
-            .union(end_caps.translate((cap_translate,0,0)))
-            .add(corners.translate((corner_translate,0,0)))
         )
+
+        if self.straight_count > 0:
+            scene = scene.union(straight_walls)
+
+        if self.end_cap_count > 0:
+            scene = scene.union(end_caps.translate((cap_translate,0,0)))
+
+        if self.corner_count > 0:
+            scene = scene.union(corners.translate((corner_translate,0,0)))
         return scene

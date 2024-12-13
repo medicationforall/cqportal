@@ -2,8 +2,15 @@
 
 ## Main wip
 
+## 4.1.0
+* fixed example syntax in shieldwall documentation
+* Fixed syntax shieldwall straight example
+* Added hexkey generation to hexmesh
+* Conditionally build components is shieldwall set depending on if the count is zero
+* Updgraded cqterrain version 2.1.0
+
 ## 4.0.0
-* Updgraded cadqueryhelper version 1.0.3
+* Updgraded cqterrain version 1.0.3
 * Added example_runner.py
   * Moved examples around into sub packages 
 * Added license blocks

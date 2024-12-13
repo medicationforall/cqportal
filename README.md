@@ -26,6 +26,10 @@ Python library for making portal, container, and shieldwall terrain.
 * [CadQuery 2.x](https://github.com/CadQuery/cadquery)
 * [cqterrain](https://github.com/medicationforall/cqterrain)
 
+## Projects
+* [Shipping Container Terrain](https://miniforall.com/shippingcontainer)
+* [Shield Wall Terrain Set](https://miniforall.com/shieldwall)
+
 ---
 
 

@@ -38,7 +38,13 @@ class Straight(BaseWall):
         self.mesh_width:float = 3
         
         self.cut_width:float = .8
-        self.key_margin:float = 0.2
+        self.cut_margin:float = 0.2
+        self.key_margin:float = 0.5
+
+        self.key_height:float = 2
+        self.key_text:str = "Shieldwall key" 
+        self.key_text_height:float = 1.5
+        self.key_text_size:float = 10
         
         self.render_base_cut:bool = True
         self.base_cut_height:float|None = None
@@ -114,24 +120,38 @@ class Straight(BaseWall):
         self.mesh_bp.make()
         
     def __make_key_cut(self):
-        key_length = self.length - self.cut_padding_x*2 - self.post_length*2 + (self.key_margin*2)
-        key_height = self.height - 2  + self.key_margin
+        cut_length = self.length - self.cut_padding_x*2 - self.post_length*2 + (self.cut_margin*2)
+        cut_height = self.height - 2  + self.cut_margin
+        key_length = self.length - self.cut_padding_x*2 - self.post_length*2 - (self.key_margin*2)
+        key_height = self.height - 2  - self.key_margin*2
         self.key_cut = (
             cq.Workplane('XY')
             .box(
-                key_length, 
+                cut_length, 
                 self.cut_width, 
-                key_height
+                cut_height
             )
         )
 
-        self.key_template = (
+        logo_text = (
+            cq.Workplane("XY")
+            .text(self.key_text, self.key_text_size, self.key_text_height )
+            .translate((-.5,0,0))
+        )
+
+        key_shape = (
             cq.Workplane('XY')
             .box(
                 key_length, 
                 key_height,
-                2 
+                self.key_height
             )
+        )
+
+        self.key_template = (
+            cq.Workplane("XY")
+            .union(key_shape)
+            .union(logo_text.translate((0,0,self.key_height/2)))
         )
         
     def __make_magnets(self):

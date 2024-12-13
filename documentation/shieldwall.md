@@ -922,7 +922,7 @@ straight_bp.base_cut_width= None
 straight_bp.make()
 straight_ex = straight_bp.build()
 
-show_object('straight_ex')
+show_object(straight_ex)
 ```
 
 ![](image/shieldwall/17.png)
