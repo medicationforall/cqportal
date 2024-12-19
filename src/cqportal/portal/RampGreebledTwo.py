@@ -18,7 +18,7 @@ from . import RampGreebled, CoffinTextured, BaseCoffin
 class RampGreebledTwo(RampGreebled):
     def __init__(self):
         super().__init__()
-        self.bp_outside = BaseCoffin()
+        self.bp_outside = CoffinTextured()
 
     def make(self, parent=None):
         super().make(parent)

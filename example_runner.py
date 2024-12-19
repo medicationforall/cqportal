@@ -2,6 +2,7 @@ print('building cqportal examples')
 
 print('building portal')
 import example.portal.base_coffin
+import example.portal.coffin_textured
 import example.portal.energy_insert
 import example.portal.frame_window
 import example.portal.frame

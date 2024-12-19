@@ -10,6 +10,7 @@
 * removed unused parameter ramp_push
 * Integrated EnergyInsert into portal
 * Fix container code which I broke when I renamed protected method _make_frame to public make_frame.
+* Added portal CoffinTextured 
 
 ## 4.1.0
 * Fixed example syntax in shieldwall documentation
