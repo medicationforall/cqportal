@@ -2,8 +2,17 @@
 
 ## Main wip
 
+## 4.2.0
+* Updgraded cqterrain version 2.3.0
+* Added FrameBlock
+* Added FrameWindowBlock
+* Added EnergyInsert
+* removed unused parameter ramp_push
+* Integrated EnergyInsert into portal
+* Fix container code which I broke when I renamed protected method _make_frame to public make_frame.
+
 ## 4.1.0
-* fixed example syntax in shieldwall documentation
+* Fixed example syntax in shieldwall documentation
 * Fixed syntax shieldwall straight example
 * Added hexkey generation to hexmesh
 * Conditionally build components is shieldwall set depending on if the count is zero

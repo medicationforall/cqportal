@@ -73,9 +73,14 @@ class Container(Portal):
         
     def build(self) -> cq.Workplane:
         container = super().build()
+
+        base_z_translate = 0
+        if self.render_base and self.render_base:
+            base_z_translate = self.bp_base.height
+
         scene = (
             cq.Workplane("XY")
-            .add(container.translate((0,0,-self.bp_base.height - self.bp_frame.height/2)))
+            .add(container.translate((0,0,-base_z_translate - self.bp_frame.height/2)))
         )
         
         if self.render_floor and self.bp_floor.floor_cut:

@@ -154,7 +154,6 @@ Orchestration component. Combines a base, a frame, two ramps, and two hinges. Al
 ### parameters
 * render_base: bool
 * render_hinges: bool
-* ramp_push: float
 * hinge_segments: int
 * plate_spacer: float
 
@@ -175,7 +174,6 @@ bp_portal.bp_frame.height = 150
 
 bp_portal.render_base = False
 bp_portal.render_hinges = True
-bp_portal.ramp_push = 0
 bp_portal.bp_ramp.width = 10
 bp_portal.make()
 

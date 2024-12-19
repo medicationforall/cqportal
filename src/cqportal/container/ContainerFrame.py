@@ -19,7 +19,7 @@ class ContainerFrame(Frame):
     def __init__(self):
         super().__init__()
         
-    def _make_frame(self):
+    def make_frame(self):
         #log('make_frame_override')
         center = self._make_center(self.width/5)
         side = self._make_side(self.width/5)

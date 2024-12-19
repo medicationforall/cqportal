@@ -37,7 +37,7 @@ class Frame(Base):
         mid_offset = -1*(self.height/2) + self.base_offset
         return mid_offset
     
-    def make_side_cut(self, width:float|None = None, margin:float = 0) -> cq.Workplane:
+    def _make_side_cut(self, width:float|None = None, margin:float = 0) -> cq.Workplane:
         mid_offset = self._calculate_mid_offset()
         if not width:
             width = self.width/3
@@ -92,7 +92,7 @@ class Frame(Base):
             mid_offset = mid_offset + (self.side_inset/4)
         ).rotate((1,0,0),(0,0,0),-90)
         
-        side_cut = self.make_side_cut(width = width)
+        side_cut = self._make_side_cut(width = width)
         
         side_frame = (
             cq.Workplane("XY")
@@ -102,7 +102,7 @@ class Frame(Base):
         
         return side_frame
         
-    def _make_frame(self):
+    def make_frame(self):
         center = self._make_center(self.width/3)
         side = self._make_side(self.width/3)
         
@@ -116,14 +116,14 @@ class Frame(Base):
             frame = (
                 frame
                 .union(side.translate((0,self.width/3,side_z)))
-                .union(side.translate((0,-1*(self.width/3),side_z)))
+                .union(side.rotate((0,0,1),(0,0,0),180).translate((0,-1*(self.width/3),side_z)))
             )
         
         self.frame = frame
         
     def make(self, parent=None):
         super().make(parent)
-        self._make_frame()
+        self.make_frame()
         
     def build(self) -> cq.Workplane:
         super().build()
