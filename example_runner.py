@@ -6,6 +6,7 @@ import example.portal.coffin_textured
 import example.portal.energy_insert
 import example.portal.frame_window
 import example.portal.frame
+import example.portal.portal_cutaway
 import example.portal.portal_frame_window_block
 import example.portal.portal_greebled_ramp_window
 import example.portal.portal_greebled_ramp

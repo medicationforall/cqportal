@@ -12,6 +12,8 @@ bp_portal.bp_frame.width = 30
 bp_portal.bp_frame.height = 150
 
 bp_portal.bp_ramp = RampGreebledTwo()
+bp_portal.bp_ramp.bp_outside.seed = "torque"
+bp_portal.bp_ramp.bp_outside.passes_count = 35
 
 bp_portal.render_base = False
 bp_portal.render_hinges = True
@@ -21,6 +23,8 @@ if bp_portal.bp_hinge:
  bp_portal.bp_hinge.rotate_deg = -0
 
 bp_portal.bp_iris = EnergyInsert()
+bp_portal.bp_iris.render_truchet_grid = True
+bp_portal.bp_iris.truchet_chamfer = 0.5
 bp_portal.make()
 
 result_open = bp_portal.build()

@@ -50,9 +50,10 @@ class Portal(Base):
             window_padding = 0
             if self.bp_frame is FrameWindow and self.bp_frame.window_cut_padding:
                 window_padding = self.bp_frame.window_cut_padding
-
-            length = self.bp_base.length-(self.bp_frame.frame_size*2) + (window_padding*2)
+            top_length = self.bp_frame.top_length - (self.bp_frame.frame_size) + (window_padding*2)
+            length = self.bp_frame.length-(self.bp_frame.frame_size*2) + (window_padding*2)
             height = self.bp_frame.height-(self.bp_frame.frame_size) + (window_padding*2)
+            self.bp_iris.top_length = top_length
             self.bp_iris.length = length
             self.bp_iris.height = height
             self.bp_iris.base_offset = self.bp_frame.base_offset
@@ -128,5 +129,26 @@ class Portal(Base):
 
         if self.bp_iris:
             scene.add(self.build_iris())
+
+        return scene
+    
+    def build_cutaway(self):
+        model = self.build()
+
+        base_z_translate = 0
+        if self.render_base and self.render_base:
+            base_z_translate = self.bp_base.height
+
+        cut = cq.Workplane("XY").box(
+            self.bp_frame.length, 
+            self.bp_frame.width + self.bp_frame.height*2+20, 
+            self.bp_frame.height+base_z_translate
+        )
+
+        scene = (
+            cq.Workplane("XY")
+            .union(model)
+            .cut(cut.translate((self.bp_frame.length/2,0,(self.bp_frame.height+base_z_translate)/2)))
+        )
 
         return scene

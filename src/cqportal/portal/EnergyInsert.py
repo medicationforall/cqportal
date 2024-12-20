@@ -15,7 +15,31 @@
 import cadquery as cq
 from cadqueryhelper import Base, shape, randomized_rotation_grid
 from cqterrain.damage import uneven_plane
-from cqterrain.tile import truchet_circle_two
+
+def truchet_circle_three(
+        length:float = 10,
+        width:float = 10,
+        radius:float = 1.5
+    ) -> cq.Workplane:
+    torus_radius = length if length>width else width
+    torus_radius = (torus_radius/2)
+    
+    cylinder = cq.Workplane("XY").cylinder(radius*2, width/2+radius/2)
+    in_cylinder = cq.Workplane("XY").cylinder(radius*2, width/2-radius/2)
+    torus = cylinder.cut(in_cylinder)
+    outline = cq.Workplane('XY').box(length,width,radius*2)
+    
+    scene = (
+        cq.Workplane("XY")
+        .add(torus.translate((width/2,width/2,0)))
+        .intersect(outline)
+        .translate((0,0,0))
+    )
+    
+    scene = scene.union(scene.rotate((0,0,1),(0,0,0),180))
+    return scene
+
+#------------------
 
 class EnergyInsert(Base):
     def __init__(self):
@@ -37,6 +61,8 @@ class EnergyInsert(Base):
         self.truchet_tolerance = 0.05
         self.truchet_seed = 'retro'
         self.debug_plane = False
+        self.render_truchet_grid = True
+        self.truchet_chamfer = .4
 
         #shapes
         self.window:cq.Workplane|None = None
@@ -63,8 +89,6 @@ class EnergyInsert(Base):
             length,
             mid_offset = mid_offset
         ).rotate((1,0,0),(0,0,0),-90).translate((0,0,0))
-        
-        cut_base = cq.Workplane("XY").box(length,width, self.base_height)
         
         cut_combined = (
             cq.Workplane("XY")
@@ -109,7 +133,7 @@ class EnergyInsert(Base):
         
         
     def _make_truchet_grid(self):
-        truchet_tile = truchet_circle_two(
+        truchet_tile = truchet_circle_three(
             length=15,
             width=15,
             radius=2.5 
@@ -132,22 +156,25 @@ class EnergyInsert(Base):
             )
             
             self.truchet_grid = i_random_grid
-        
+        #self.truchet_grid = truchet_tile
 
     def make(self, parent=None):
         super().make(parent)
         self._make_window()
         self._make_uneven_plane()
-        self._make_truchet_grid()
+
+        if self.render_truchet_grid:
+            self._make_truchet_grid()
 
     def build(self):
         super().build()
         scene = cq.Workplane("XY")
-
-        if self.uneven_plane:   
-            scene = scene.add(self.uneven_plane)
-
-        if self.truchet_grid:
-            scene = scene.add(self.truchet_grid)
+    
+        if self.render_truchet_grid and self.truchet_grid:
+            scene = scene.union(self.truchet_grid)
+            scene = scene.faces("Y or -Y").chamfer(self.truchet_chamfer)
+            
+        if self.uneven_plane:
+            scene = scene.union(self.uneven_plane)
 
         return scene
