@@ -23,9 +23,20 @@ class FrameBlock(Frame):
         
         # parameters
         self.seed = 'test'
+        self.power_offset  = 4
         
         # blueprints
         self.bp_power:CapGreeble|None = CapGreeble()
+        self.bp_power.width = 19
+        self.bp_power.height = 30
+        self.bp_power.top_fillet = 2.9
+        self.bp_power.side_fillet = 3
+        self.bp_power.operation = 'chamfer'
+        self.bp_power.render_grill = True
+        self.bp_power.grill_height = 2
+        self.bp_power.grill_padding_top = 1
+        self.bp_power.grill_padding_left = 2
+        self.bp_power.grill_margin = .75
         
         # shapes
         self.i_grid:cq.Workplane|None = None
@@ -35,24 +46,12 @@ class FrameBlock(Frame):
         if self.bp_power:
             bp_cap = self.bp_power
             diff = (self.length - self.base_length)/2 + self.side_inset/2
-
-            offset = 4
-            bp_cap.length = diff-offset
-            bp_cap.width = 19
-            bp_cap.height = 30
-            bp_cap.top_fillet = 2.9
-            bp_cap.side_fillet = 3
-            bp_cap.operation = 'chamfer'
-
-            bp_cap.render_grill = True
-            bp_cap.grill_height = 2
-            bp_cap.grill_padding_top = 1
-            bp_cap.grill_padding_left = 2
-            bp_cap.grill_margin = .75
+            
+            bp_cap.length = diff-self.power_offset
             bp_cap.make()
 
             self.power_greeble = bp_cap.build().translate((
-                self.length/2-bp_cap.length/2-offset,
+                self.length/2-bp_cap.length/2 - self.power_offset,
                 0,
                 -self.height/2+bp_cap.height/2
             ))
