@@ -31,4 +31,4 @@ result_open = bp_portal.build()
 
 #show_object(result_open)
 
-cq.exporters.export(result_open,'stl/portal_frame_window_block.stl')
+cq.exporters.export(result_open,'stl/portal_class_frame_window_block.stl')

@@ -22,8 +22,13 @@ class FrameBlock(Frame):
         super().__init__()
         
         # parameters
-        self.seed = 'test'
-        self.power_offset  = 4
+        self.seed:str|None = 'test'
+        self.max_columns:int = 2
+        self.max_rows:int = 3
+        self.col_size:float = 10
+        self.row_size:float = 10
+        self.passes_count:int = 1000
+        self.power_offset:float  = 4
         
         # blueprints
         self.bp_power:CapGreeble|None = CapGreeble()
@@ -62,13 +67,13 @@ class FrameBlock(Frame):
             width = self.height,
             height = (self.width/3)-4,
             max_height = (self.width/3),
-            max_columns = 2,
-            max_rows = 3,
-            col_size = 10,
-            row_size = 10,
+            max_columns = self.max_columns,
+            max_rows = self.max_rows,
+            col_size = self.col_size,
+            row_size = self.row_size,
             align_z = False,
             include_outline = True,
-            passes_count = 1000,
+            passes_count = self.passes_count,
             seed = self.seed,
             make_item = None,
             union_grid = False,

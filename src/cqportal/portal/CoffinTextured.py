@@ -6,7 +6,7 @@ class CoffinTextured(BaseCoffin):
     def __init__(self):
         super().__init__()
         #parameters
-        self.seed = 'rabblerabble'
+        self.seed:str|None = 'rabblerabble'
         self.max_columns:int = 4
         self.max_rows:int = 2
         self.col_size:float = 15

@@ -4,8 +4,10 @@ print('building portal')
 import example.portal.base_coffin
 import example.portal.coffin_textured
 import example.portal.energy_insert
-import example.portal.frame_window
 import example.portal.frame
+import example.portal.frame_block
+import example.portal.frame_window
+import example.portal.frame_window_block
 import example.portal.portal_cutaway
 import example.portal.portal_frame_window_block
 import example.portal.portal_greebled_ramp_window
@@ -16,6 +18,7 @@ import example.portal.portal_hinge
 import example.portal.ramp_frame
 import example.portal.ramp
 import example.portal.rampGreebled
+import example.portal.ramp_greebled_two
 import example.portal.rotation_demo
 
 print('building container')

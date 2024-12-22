@@ -3,17 +3,20 @@
 ## Main wip
 
 ## 4.2.0
-* Updgraded cqterrain version 2.3.0
+* Updgraded cqterrain version 2.4.0
 * Added FrameBlock
 * Added FrameWindowBlock
 * Added EnergyInsert
+* Added portal CoffinTextured
+* Added portal_cutaway example
+* Added RampGreebledTwo
+* Wrote documentation
+* Added missing examples.
 * removed unused parameter ramp_push
 * Integrated EnergyInsert into portal
 * Fix container code which I broke when I renamed protected method _make_frame to public make_frame.
-* Added portal CoffinTextured
 * Fixed Portal bp_iris top length calculation.
-* Added portal_cutaway example
-* Rewrote truchet circle again, finally got unions to work correctly which fixes the generated stl file sizes
+* Rewrote truchet circle again, finally got unions to work correctly which fixes the generated stl file sizes.
 
 ## 4.1.0
 * Fixed example syntax in shieldwall documentation

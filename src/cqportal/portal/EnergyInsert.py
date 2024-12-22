@@ -15,31 +15,8 @@
 import cadquery as cq
 from cadqueryhelper import Base, shape, randomized_rotation_grid
 from cqterrain.damage import uneven_plane
-
-def truchet_circle_three(
-        length:float = 10,
-        width:float = 10,
-        radius:float = 1.5
-    ) -> cq.Workplane:
-    torus_radius = length if length>width else width
-    torus_radius = (torus_radius/2)
-    
-    cylinder = cq.Workplane("XY").cylinder(radius*2, width/2+radius/2)
-    in_cylinder = cq.Workplane("XY").cylinder(radius*2, width/2-radius/2)
-    torus = cylinder.cut(in_cylinder)
-    outline = cq.Workplane('XY').box(length,width,radius*2)
-    
-    scene = (
-        cq.Workplane("XY")
-        .add(torus.translate((width/2,width/2,0)))
-        .intersect(outline)
-        .translate((0,0,0))
-    )
-    
-    scene = scene.union(scene.rotate((0,0,1),(0,0,0),180))
-    return scene
-
-#------------------
+from cqterrain.tile import truchet_circle_three
+from typing import Tuple
 
 class EnergyInsert(Base):
     def __init__(self):
@@ -53,16 +30,19 @@ class EnergyInsert(Base):
         self.base_length:float = 100
         self.base_offset:float = 35
         self.base_height:float = 10
-        self.uneven_plane_seed = 'left'
-        self.uneven_peak_count = (5,6)
-        self.uneven_segments = 10
-        self.uneven_spacer = 2.25
-        self.uneven_step = .5
-        self.truchet_tolerance = 0.05
-        self.truchet_seed = 'retro'
-        self.debug_plane = False
-        self.render_truchet_grid = True
-        self.truchet_chamfer = .4
+        self.uneven_plane_height:float = 4
+        self.uneven_min_height:float = 0.25
+        self.uneven_plane_seed:str|None = 'left'
+        self.uneven_peak_count:int| Tuple[int, int] = (5,6)
+        self.uneven_segments:int = 10
+        self.uneven_spacer:float = 2.25
+        self.uneven_step:float = .5
+        self.uneven_plate_height:float = 0.25
+        self.truchet_tolerance:float = 0.05
+        self.truchet_seed:str|None = 'retro'
+        self.debug_plane:bool = False
+        self.render_truchet_grid:bool = True
+        self.truchet_chamfer:float = .4
 
         #shapes
         self.window:cq.Workplane|None = None
@@ -103,13 +83,13 @@ class EnergyInsert(Base):
             length = self.length, 
             width = self.height,
             segments = self.uneven_segments,
-            height = 4,
-            min_height = .25,
+            height =  self.uneven_plane_height,
+            min_height = self.uneven_min_height,
             step = self.uneven_step,
             peak_count = self.uneven_peak_count, 
             seed = self.uneven_plane_seed,
             render_plate = True,
-            plate_height = 0.25
+            plate_height = self.uneven_plate_height
         )
         if self.debug_plane:
             scene = (

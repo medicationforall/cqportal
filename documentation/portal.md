@@ -45,6 +45,105 @@ show_object(ex)
 
 ---
 
+## Coffin Textured
+Inherits from [BaseCoffin](#base-coffin)
+
+### parameters
+* seed: string|None = 'rabblerabble'
+* max_columns: int
+* max_rows: int
+* col_size: float
+* row_size: float
+* passes_count: int
+
+``` python
+import cadquery as cq
+from cqportal.portal import CoffinTextured
+
+bp_coffin = CoffinTextured()
+bp_coffin.seed = 'rough'
+
+bp_coffin.max_columns = 4
+bp_coffin.max_rows = 2
+bp_coffin.col_size = 15
+bp_coffin.row_size = 15
+
+bp_coffin.passes_count = 36
+bp_coffin.make()
+
+coffin = bp_coffin.build()
+
+#show_object(coffin)
+```
+
+![](image/portal/12.png)
+
+* [source](../src/cqportal/portal/CoffinTextured.py)
+* [example](../example/portal/coffin_textured.py)
+* [stl](../stl/portal_coffin_textured.stl)
+
+---
+
+## Energy Insert
+
+### parameters
+* length: float
+* height: float
+* width: float
+* top_length: float
+* base_length: float
+* base_offset: float
+* base_height: float
+* uneven_plane_height: float
+* uneven_min_height: float
+* uneven_plane_seed: str|None
+* uneven_peak_count: int| Tuple[int, int]
+* uneven_segments: int
+* uneven_spacer: float
+* uneven_step: float
+* uneven_plate_height: float
+* truchet_tolerance: float
+* truchet_seed: str|None
+* debug_plane: bool
+* render_truchet_grid: bool
+* truchet_chamfer: float
+
+
+``` python
+import cadquery as cq
+from cqportal.portal import EnergyInsert
+
+bp_iris = EnergyInsert()
+bp_iris.length = 150
+bp_iris.height = 150
+bp_iris.width = 5
+bp_iris.top_length = 90
+bp_iris.base_length = 100
+bp_iris.base_offset = 35
+bp_iris.base_height = 10
+bp_iris.uneven_plane_seed = 'left'
+bp_iris.uneven_peak_count = (5,6)
+bp_iris.uneven_segments = 10
+bp_iris.uneven_spacer = 2.25
+bp_iris.uneven_step = .5
+bp_iris.truchet_tolerance = 0.05
+bp_iris.truchet_seed = 'retro'
+bp_iris.debug_plane = False
+bp_iris.make()
+
+iris = bp_iris.build()
+
+show_object(iris)
+```
+
+![](image/portal/13.png)
+
+* [source](../src/cqportal/portal/EnergyInsert.py)
+* [example](../example/portal/energy_insert.py)
+* [stl](../stl/portal_energy_insert.stl)
+
+---
+
 ## Frame
 
 ### parameters
@@ -86,6 +185,59 @@ show_object(result)
 * [source](../src/cqportal/portal/Frame.py)
 * [example](../example/portal/frame.py)
 * [stl](../stl/frame.stl)
+  
+---
+
+## Frame Block
+Portal frame textured with uneven blocks. Inherits from [Frame](#frame)
+
+### parameter
+* seed:str|None
+* max_columns:int
+* max_rows:int
+* col_size:float
+* row_size:float
+* passes_count:int
+* power_offset:float
+
+### blueprints
+* bp_power: CapGreeble|None
+  
+``` python
+import cadquery as cq
+from cqportal.portal import FrameBlock
+
+bp_frame = FrameBlock()
+bp_frame.length = 150
+bp_frame.width = 22
+bp_frame.height = 150
+bp_frame.top_length = 90 # length at the top of the frame
+bp_frame.base_length = 100 # length at the base of the frame
+bp_frame.base_offset = 35 # offset distance from the center of the frame
+bp_frame.side_inset = 8 # The amount the inset the side frames in relation to the center.
+bp_frame.frame_size = 10 # distance from the outside wall and the inside wall.
+bp_frame.render_sides = True
+
+bp_frame.seed = 'test'
+bp_frame.max_columns = 2
+bp_frame.max_rows = 3
+bp_frame.col_size = 10
+bp_frame.row_size = 10
+bp_frame.passes_count = 1000
+bp_frame.power_offset  = 4
+
+bp_frame.make()
+
+result = bp_frame.build()
+
+show_object(result)
+```
+
+![](image/portal/14.png)
+
+* [source](../src/cqportal/portal/FrameBlock.py)
+* [example](../example/portal/frame_block.py)
+* [stl](../stl/portal_frame_block.stl)
 
 ---
 
@@ -146,6 +298,55 @@ show_object(bp_frame.window_cut_key.translate((-(bp_frame.length/2),0,0)))
 * [example](../example/portal/frame_window.py)
 * [stl](../stl/frame_window.stl)
 
+---
+
+## Frame Window Block
+
+Inherits from the [FrameBlock](#frame-block) class. Adds a cutout for a window insert see [Energy Insert](#energy-insert).
+
+### parameters
+* window_cut_width:float
+* window_cut_padding:float
+
+``` python
+import cadquery as cq
+from cqportal.portal import FrameWindowBlock
+
+bp_frame = FrameWindowBlock()
+bp_frame.length = 150
+bp_frame.width = 22
+bp_frame.height = 150
+bp_frame.top_length = 90 # length at the top of the frame
+bp_frame.base_length = 100 # length at the base of the frame
+bp_frame.base_offset = 35 # offset distance from the center of the frame
+bp_frame.side_inset = 8 # The amount the inset the side frames in relation to the center.
+bp_frame.frame_size = 10 # distance from the outside wall and the inside wall.
+bp_frame.render_sides = True
+
+bp_frame.seed = 'test'
+bp_frame.max_columns = 2
+bp_frame.max_rows = 3
+bp_frame.col_size = 10
+bp_frame.row_size = 10
+bp_frame.passes_count = 1000
+bp_frame.power_offset  = 4
+
+bp_frame.window_cut_width = 3
+bp_frame.window_cut_padding = 1
+
+bp_frame.make()
+
+result = bp_frame.build()
+
+show_object(result)
+```
+
+![](image/portal/14.png)
+![](image/portal/15.png)
+
+* [source](../src/cqportal/portal/FrameWindowBlock.py)
+* [example](../example/portal/frame_window_block.py)
+* [stl](../stl/portal_frame_window_block.stl)
 ---
 
 ## Portal
@@ -338,7 +539,7 @@ show_object(result)
 ---
 
 ## Ramp Greebled
-Greebled ramp that inherits from [Ram](#ramp).
+Greebled ramp that inherits from [Ramp](#ramp).
 
 ### parameters
 * segment_count: int
@@ -376,3 +577,38 @@ show_object(ex_ramp)
 * [source](../src/cqportal/portal/RampGreebled.py)
 * [example](../example/portal/rampGreebled.py)
 * [stl](../stl/portal_ramp_greebled.stl)
+
+---
+
+## Ramp Greebled Two
+Greebled ramp that inherits from [RampGreebled](#ramp-greebled).
+
+### parameters
+
+
+``` python
+import cadquery as cq
+from cqportal.portal import RampGreebledTwo
+
+bp_ramp = RampGreebledTwo()
+#bp_ramp.length = 70
+#bp_ramp.width = 10
+#bp_ramp.height = 150
+#bp_ramp.top_length = 60
+bp_ramp.base_length = 80
+
+bp_ramp.segment_x_padding = 1
+bp_ramp.render_inside = True
+bp_ramp.render_inside_outline = False
+bp_ramp.make()
+ex_ramp = bp_ramp.build()
+
+show_object(ex_ramp)
+```
+
+![](image/portal/16.png)
+![](image/portal/17.png)
+
+* [source](../src/cqportal/portal/RampGreebledTwo.py)
+* [example](../example/portal/ramp_greebled_two.py)
+* [stl](../stl/portal_ramp_greebled_two.stl)
