@@ -17,6 +17,7 @@
 * Fix container code which I broke when I renamed protected method _make_frame to public make_frame.
 * Fixed Portal bp_iris top length calculation.
 * Rewrote truchet circle again, finally got unions to work correctly which fixes the generated stl file sizes.
+* Updated README.md
 
 ## 4.1.0
 * Fixed example syntax in shieldwall documentation
