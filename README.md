@@ -1,6 +1,13 @@
 # cqportal
 Python library for making portal, container, and shieldwall terrain.
 
+---
+
+## ARCHIVE
+This repo is an archive, active development has been moved to [cqindustry](https://github.com/medicationforall/cqindustry)
+
+---
+
 ## Portal
 [![](./documentation/image/portal/cover.png)](documentation/portal.md)<br /><br />
 
